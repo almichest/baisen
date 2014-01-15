@@ -2,7 +2,7 @@
 //  CRRoast.h
 //  CoffeeRoastLogger
 //
-//  Created by Hiraku Ohno on 2014/01/13.
+//  Created by Hiraku Ohno on 2014/01/15.
 //  Copyright (c) 2014年 Hiraku Ohno. All rights reserved.
 //
 
@@ -14,13 +14,18 @@
 @interface CRRoast : NSManagedObject
 
 @property (nonatomic, retain) NSString * result;
-@property (nonatomic, retain) NSNumber * score;
-@property (nonatomic, retain) CRBean *bean;
+@property (nonatomic) int16_t score;
+@property (nonatomic, retain) NSSet *beans;
 @property (nonatomic, retain) CREnvironment *environment;
 @property (nonatomic, retain) NSSet *heating;
 @end
 
 @interface CRRoast (CoreDataGeneratedAccessors)
+
+- (void)addBeansObject:(CRBean *)value;
+- (void)removeBeansObject:(CRBean *)value;
+- (void)addBeans:(NSSet *)values;
+- (void)removeBeans:(NSSet *)values;
 
 - (void)addHeatingObject:(CRHeating *)value;
 - (void)removeHeatingObject:(CRHeating *)value;

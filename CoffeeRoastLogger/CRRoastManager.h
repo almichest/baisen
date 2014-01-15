@@ -8,10 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+@class CRRoast;
+@class CRRoastInformation;
 @interface CRRoastManager : NSObject
 
 + (CRRoastManager *)sharedManager;
 
+- (CRRoast *)addNewRoastInformation:(CRRoastInformation *)information;
+- (void)removeRoastInformationAtIndex:(NSUInteger)index;
 - (void)saveRoastRecords;
 
 @end

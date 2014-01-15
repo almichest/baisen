@@ -25,15 +25,15 @@
 		428AA45518840D1400401165 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 428AA45318840D1400401165 /* InfoPlist.strings */; };
 		428AA45718840D1400401165 /* CoffeeRoastLoggerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 428AA45618840D1400401165 /* CoffeeRoastLoggerTests.m */; };
 		428AA46318840D3D00401165 /* CRCoffeeData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 428AA46118840D3D00401165 /* CRCoffeeData.xcdatamodeld */; };
-		428AA484188426A600401165 /* CRBean.m in Sources */ = {isa = PBXBuildFile; fileRef = 428AA483188426A600401165 /* CRBean.m */; };
-		428AA487188426A700401165 /* CREnvironment.m in Sources */ = {isa = PBXBuildFile; fileRef = 428AA486188426A700401165 /* CREnvironment.m */; };
-		428AA48A188426A700401165 /* CRHeating.m in Sources */ = {isa = PBXBuildFile; fileRef = 428AA489188426A700401165 /* CRHeating.m */; };
-		428AA48D18842B5300401165 /* CRRoast.m in Sources */ = {isa = PBXBuildFile; fileRef = 428AA48C18842B5300401165 /* CRRoast.m */; };
 		428AA49018842B9800401165 /* CRRoastManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 428AA48F18842B9800401165 /* CRRoastManager.m */; };
 		428AA49418842D3400401165 /* CRRoastInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 428AA49318842D3400401165 /* CRRoastInformation.m */; };
 		428AA49718842DD200401165 /* CRHeatingInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 428AA49618842DD200401165 /* CRHeatingInformation.m */; };
 		428AA49A18842DEB00401165 /* CREnvironmentInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 428AA49918842DEB00401165 /* CREnvironmentInformation.m */; };
 		428AA49D18842DFB00401165 /* CRBeanInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 428AA49C18842DFB00401165 /* CRBeanInformation.m */; };
+		428AA4AF1886CE6B00401165 /* CRBean.m in Sources */ = {isa = PBXBuildFile; fileRef = 428AA4AE1886CE6B00401165 /* CRBean.m */; };
+		428AA4B21886CE6B00401165 /* CRHeating.m in Sources */ = {isa = PBXBuildFile; fileRef = 428AA4B11886CE6B00401165 /* CRHeating.m */; };
+		428AA4B51886CE6B00401165 /* CREnvironment.m in Sources */ = {isa = PBXBuildFile; fileRef = 428AA4B41886CE6B00401165 /* CREnvironment.m */; };
+		428AA4B81886CE6B00401165 /* CRRoast.m in Sources */ = {isa = PBXBuildFile; fileRef = 428AA4B71886CE6B00401165 /* CRRoast.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,14 +70,6 @@
 		428AA45418840D1400401165 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		428AA45618840D1400401165 /* CoffeeRoastLoggerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoffeeRoastLoggerTests.m; sourceTree = "<group>"; };
 		428AA46218840D3D00401165 /* CRCoffeeData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CRCoffeeData.xcdatamodel; sourceTree = "<group>"; };
-		428AA482188426A600401165 /* CRBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRBean.h; sourceTree = "<group>"; };
-		428AA483188426A600401165 /* CRBean.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRBean.m; sourceTree = "<group>"; };
-		428AA485188426A600401165 /* CREnvironment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CREnvironment.h; sourceTree = "<group>"; };
-		428AA486188426A700401165 /* CREnvironment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CREnvironment.m; sourceTree = "<group>"; };
-		428AA488188426A700401165 /* CRHeating.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRHeating.h; sourceTree = "<group>"; };
-		428AA489188426A700401165 /* CRHeating.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRHeating.m; sourceTree = "<group>"; };
-		428AA48B18842B5300401165 /* CRRoast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRRoast.h; path = CoffeeRoastLogger/Model/CRRoast.h; sourceTree = SOURCE_ROOT; };
-		428AA48C18842B5300401165 /* CRRoast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRRoast.m; path = CoffeeRoastLogger/Model/CRRoast.m; sourceTree = SOURCE_ROOT; };
 		428AA48E18842B9800401165 /* CRRoastManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRRoastManager.h; sourceTree = "<group>"; };
 		428AA48F18842B9800401165 /* CRRoastManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRRoastManager.m; sourceTree = "<group>"; };
 		428AA49218842D3400401165 /* CRRoastInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRRoastInformation.h; sourceTree = "<group>"; };
@@ -88,6 +80,14 @@
 		428AA49918842DEB00401165 /* CREnvironmentInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CREnvironmentInformation.m; sourceTree = "<group>"; };
 		428AA49B18842DFB00401165 /* CRBeanInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRBeanInformation.h; sourceTree = "<group>"; };
 		428AA49C18842DFB00401165 /* CRBeanInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRBeanInformation.m; sourceTree = "<group>"; };
+		428AA4AD1886CE6B00401165 /* CRBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRBean.h; sourceTree = "<group>"; };
+		428AA4AE1886CE6B00401165 /* CRBean.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRBean.m; sourceTree = "<group>"; };
+		428AA4B01886CE6B00401165 /* CRHeating.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRHeating.h; sourceTree = "<group>"; };
+		428AA4B11886CE6B00401165 /* CRHeating.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRHeating.m; sourceTree = "<group>"; };
+		428AA4B31886CE6B00401165 /* CREnvironment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CREnvironment.h; sourceTree = "<group>"; };
+		428AA4B41886CE6B00401165 /* CREnvironment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CREnvironment.m; sourceTree = "<group>"; };
+		428AA4B61886CE6B00401165 /* CRRoast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRRoast.h; sourceTree = "<group>"; };
+		428AA4B71886CE6B00401165 /* CRRoast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRRoast.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,14 +208,14 @@
 		428AA47E1884269400401165 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				428AA482188426A600401165 /* CRBean.h */,
-				428AA483188426A600401165 /* CRBean.m */,
-				428AA485188426A600401165 /* CREnvironment.h */,
-				428AA486188426A700401165 /* CREnvironment.m */,
-				428AA488188426A700401165 /* CRHeating.h */,
-				428AA489188426A700401165 /* CRHeating.m */,
-				428AA48B18842B5300401165 /* CRRoast.h */,
-				428AA48C18842B5300401165 /* CRRoast.m */,
+				428AA4B61886CE6B00401165 /* CRRoast.h */,
+				428AA4B71886CE6B00401165 /* CRRoast.m */,
+				428AA4B31886CE6B00401165 /* CREnvironment.h */,
+				428AA4B41886CE6B00401165 /* CREnvironment.m */,
+				428AA4B01886CE6B00401165 /* CRHeating.h */,
+				428AA4B11886CE6B00401165 /* CRHeating.m */,
+				428AA4AD1886CE6B00401165 /* CRBean.h */,
+				428AA4AE1886CE6B00401165 /* CRBean.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -333,19 +333,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				428AA4B81886CE6B00401165 /* CRRoast.m in Sources */,
 				428AA49718842DD200401165 /* CRHeatingInformation.m in Sources */,
 				428AA49A18842DEB00401165 /* CREnvironmentInformation.m in Sources */,
 				428AA46318840D3D00401165 /* CRCoffeeData.xcdatamodeld in Sources */,
-				428AA484188426A600401165 /* CRBean.m in Sources */,
+				428AA4B21886CE6B00401165 /* CRHeating.m in Sources */,
 				428AA44118840D1400401165 /* CRDetailViewController.m in Sources */,
+				428AA4AF1886CE6B00401165 /* CRBean.m in Sources */,
 				428AA49D18842DFB00401165 /* CRBeanInformation.m in Sources */,
-				428AA487188426A700401165 /* CREnvironment.m in Sources */,
 				428AA43118840D1400401165 /* main.m in Sources */,
-				428AA48D18842B5300401165 /* CRRoast.m in Sources */,
 				428AA49018842B9800401165 /* CRRoastManager.m in Sources */,
-				428AA48A188426A700401165 /* CRHeating.m in Sources */,
 				428AA43518840D1400401165 /* CRAppDelegate.m in Sources */,
 				428AA49418842D3400401165 /* CRRoastInformation.m in Sources */,
+				428AA4B51886CE6B00401165 /* CREnvironment.m in Sources */,
 				428AA43E18840D1400401165 /* CRMasterViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

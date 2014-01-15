@@ -2,7 +2,7 @@
 //  CRRoast.m
 //  CoffeeRoastLogger
 //
-//  Created by Hiraku Ohno on 2014/01/13.
+//  Created by Hiraku Ohno on 2014/01/15.
 //  Copyright (c) 2014年 Hiraku Ohno. All rights reserved.
 //
 
@@ -16,7 +16,7 @@
 
 @dynamic result;
 @dynamic score;
-@dynamic bean;
+@dynamic beans;
 @dynamic environment;
 @dynamic heating;
 

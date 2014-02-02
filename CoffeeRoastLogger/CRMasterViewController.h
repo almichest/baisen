@@ -10,9 +10,6 @@
 
 #import <CoreData/CoreData.h>
 
-@interface CRMasterViewController : UITableViewController <NSFetchedResultsControllerDelegate>
-
-@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
-@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@interface CRMasterViewController : UITableViewController
 
 @end

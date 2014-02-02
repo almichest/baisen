@@ -12,10 +12,16 @@
 @class CREnvironmentInformation;
 @interface CRRoastInformation : NSObject
 
-@property (nonatomic, retain) NSString * result;
-@property (nonatomic, retain) NSNumber * score;
-@property (nonatomic, retain) CRBeanInformation *bean;
-@property (nonatomic, retain) CREnvironmentInformation *environment;
-@property (nonatomic, retain) NSArray *heatingInformations;
+@property (nonatomic) NSString *result;
+
+@property (nonatomic) NSInteger score;
+
+/** Array of CRBeanInformation */
+@property (nonatomic) NSArray *beans;
+
+@property (nonatomic) CREnvironmentInformation *environment;
+
+/** Array of CRHeatingInformation */
+@property (nonatomic) NSArray *heatingInformations;
 
 @end

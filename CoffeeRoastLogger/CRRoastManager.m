@@ -8,7 +8,11 @@
 
 #import "CRRoastManager.h"
 
+#import "CRRoastDataSource.h"
+#import "CRRoastInformation.h"
+
 @implementation CRRoastManager
+
 static CRRoastManager *_sharedManager;
 
 + (CRRoastManager *)sharedManager
@@ -19,6 +23,26 @@ static CRRoastManager *_sharedManager;
     });
     
     return _sharedManager;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if(self) {
+        _dataSource = [[CRRoastDataSource alloc] init];
+    }
+    
+    return self;
+}
+
+- (CRRoast *)addNewRoastInformation:(CRRoastInformation *)information;
+{
+    return [_dataSource addRoastInformation:information];
+}
+
+- (void)removeRoastInformationAtIndex:(NSUInteger)index;
+{
+    [_dataSource removeRoastInformationAtIndex:index];
 }
 
 @end

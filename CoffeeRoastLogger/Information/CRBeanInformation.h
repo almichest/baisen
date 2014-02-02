@@ -10,8 +10,8 @@
 
 @interface CRBeanInformation : NSObject
 
-@property (nonatomic, retain) NSString * area;
+@property (nonatomic, retain) NSString *area;
 @property (nonatomic) NSInteger quantity;
-@property (nonatomic, retain) NSString * state;
+@property (nonatomic, retain) NSString *state;
 
 @end

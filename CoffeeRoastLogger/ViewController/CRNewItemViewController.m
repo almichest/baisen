@@ -46,12 +46,27 @@
 #define kScoreFieldTag              700
 #define kMemoViewTag                800
 
+#define kImageSelectionActionSheetTag           0
+#define kRoomTempratureUnitActionSheetTag       1
+#define kHeatingTempratureUnitActionSheetTag    2
+#define kHeatingLengthUnitActionSheetTag        3
+
+#define kFahrenheitIndexInActionSheet   0
+#define kCelsiusIndexInActionSheet      1
+
+#define kMinuteIndexInActionSheet       0
+#define kSecondIndexInActionSheet       1
+
+#define kFahrenheit @"°F"
+#define kCelcius    @"°C"
+
 #define kMaxBeanCount                10
 #define kMaxHeatingCount             50
 @interface CRNewItemViewController ()<UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UITextViewDelegate>
 
 @property(nonatomic) BOOL useFahrenheitForRoom;
-@property(nonatomic) BOOL useFahrenheitForRoast;
+@property(nonatomic) BOOL useFahrenheitForHeating;
+@property(nonatomic) BOOL useMinuteForRoastLength;
 
 @end
 
@@ -122,23 +137,36 @@
         [self resizeImage:image];
         [self.tableView reloadData];
     }];
-}
-
-
-- (void)closeSoftKeyboard
-{
-    [self.view endEditing:YES];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    
+    [[CRConfiguration sharedConfiguration] addObserver:self forKeyPath:@"useFahrenheitForRoom" options:NSKeyValueObservingOptionNew context:nil];
+    [[CRConfiguration sharedConfiguration] addObserver:self forKeyPath:@"useFahrenheitForRoast" options:NSKeyValueObservingOptionNew context:nil];
+    [[CRConfiguration sharedConfiguration] addObserver:self forKeyPath:@"useMinutesForHeatingLength" options:NSKeyValueObservingOptionNew context:nil];
+    
 }
 
 - (void)dealloc
 {
+    [[CRConfiguration sharedConfiguration] removeObserver:self forKeyPath:@"useFahrenheitForRoom"];
+    [[CRConfiguration sharedConfiguration] removeObserver:self forKeyPath:@"useFahrenheitForRoast"];
+    [[CRConfiguration sharedConfiguration] removeObserver:self forKeyPath:@"useMinutesForHeatingLength"];
+    
     [[NSNotificationCenter defaultCenter] removeObserver:_observer];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if([keyPath isEqualToString:@"useFahrenheitForRoom"]) {
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:kOtherConditionSection] withRowAnimation:UITableViewRowAnimationAutomatic];
+    } else if([keyPath isEqualToString:@"useFahrenheitForRoast"]) {
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:kHeatingSection] withRowAnimation:UITableViewRowAnimationAutomatic];
+    } else if([keyPath isEqualToString:@"useMinutesForHeatingLength"]) {
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:kHeatingSection] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+}
+
+- (void)closeSoftKeyboard
+{
+    [self.view endEditing:YES];
 }
 
 #pragma mark - action
@@ -273,11 +301,13 @@
                 itemCell.firstItemField.text = information.area;
                 
                 itemCell.secondItemField.hidden = NO;
-                itemCell.secondItemField.placeholder = @"Quantity [g]";
+                itemCell.secondItemField.placeholder = @"Quantity";
                 itemCell.secondItemField.keyboardType = UIKeyboardTypeNumberPad;
                 itemCell.secondItemField.text = @"";
                 itemCell.secondItemField.tag = kBeanQuantityInputBaseTag + indexPath.row;
                 itemCell.secondItemField.delegate = self;
+                [itemCell.secondItemFieldButton setTitle:@"g" forState:UIControlStateNormal];
+                
                 NSString *quantityString = information.quantity > 0 ? [NSString stringWithFormat:@"%d", information.quantity] : @"";
                 itemCell.secondItemField.text = quantityString;
                 
@@ -293,6 +323,9 @@
                 [itemCell.button removeTarget:nil action:nil forControlEvents:UIControlEventAllEvents];
                 [itemCell.button addTarget:self action:@selector(addNewCellForBean) forControlEvents:UIControlEventTouchUpInside];
                 itemCell.button.userInteractionEnabled = YES;
+                
+                [itemCell.firstItemFieldButton setTitle:@"" forState:UIControlStateNormal];
+                [itemCell.secondItemFieldButton setTitle:@"" forState:UIControlStateNormal];
             }
             break;
         case kHeatingSection :
@@ -303,6 +336,14 @@
                 [itemCell.button removeTarget:nil action:nil forControlEvents:UIControlEventAllEvents];
                 [itemCell.button addTarget:self action:@selector(removeHeatingCell:) forControlEvents:UIControlEventTouchUpInside];
                 itemCell.button.userInteractionEnabled = YES;
+                
+                NSString *firstButtonTitle = self.useFahrenheitForHeating ? [NSString stringWithFormat:@"%@ >", kFahrenheit] : [NSString stringWithFormat:@"%@ >", kCelcius];
+                [itemCell.firstItemFieldButton setTitle:firstButtonTitle forState:UIControlStateNormal];
+                [itemCell.firstItemFieldButton addTarget:self action:@selector(showHeationgTempratureUnitSelectionSheet) forControlEvents:UIControlEventTouchUpInside];
+                
+                NSString *secondButtonTitle = self.useMinuteForRoastLength ? @" min. >" : @" sec. >";
+                [itemCell.secondItemFieldButton setTitle:secondButtonTitle forState:UIControlStateNormal];
+                [itemCell.secondItemFieldButton addTarget:self action:@selector(showHeatingLengthUnitSelectionSheet) forControlEvents:UIControlEventTouchUpInside];
                 
                 CRHeatingInformation *information = _heatingInformations[indexPath.row];
                 
@@ -319,7 +360,7 @@
                 itemCell.secondItemField.keyboardType = UIKeyboardTypeNumberPad;
                 itemCell.secondItemField.text = @"";
                 itemCell.secondItemField.tag = kHeatingLengthBaseTag + indexPath.row;
-                NSString *lengthString = information.time > 0 ? [NSString stringWithFormat:@"%.0lf", information.time] : @"";
+                NSString *lengthString = information.time > 0 ? [NSString stringWithFormat:@"%d", roastLengthFromValue(information.time)] : @"";
                 itemCell.secondItemField.text = lengthString;
                 
                 _heatingButtonsArray[indexPath.row] = itemCell.button;
@@ -336,25 +377,36 @@
                 [itemCell.button removeTarget:nil action:nil forControlEvents:UIControlEventAllEvents];
                 [itemCell.button addTarget:self action:@selector(addNewCellForHeating) forControlEvents:UIControlEventTouchUpInside];
                 itemCell.button.userInteractionEnabled = YES;
-            }
-            break;
-        case kOtherConditionSection :
-            cell = [tableView dequeueReusableCellWithIdentifier:kConditionCellIdentifier];
-            if(indexPath.row == 0) {
-                ((CRConditionCell *)cell).valueTextField.placeholder = @"Temprature";
-                ((CRConditionCell *)cell).valueTextField.tag = kTempratureFieldTag;
-                ((CRConditionCell *)cell).valueTextField.delegate = self;
-                NSString *tempratureString = _environmentInformation.temperature > 0 ? [NSString stringWithFormat:@"%.0lf", roomTempratureFromValue(_environmentInformation.temperature)] : @"";
-                ((CRConditionCell *)cell).valueTextField.text = tempratureString;
                 
-            } else if(indexPath.row == 1) {
-                ((CRConditionCell *)cell).valueTextField.placeholder = @"Humidity [%]";
-                ((CRConditionCell *)cell).valueTextField.tag = kHumidityFieldTag;
-                NSString *humidityString = _environmentInformation.humidity > 0 ? [NSString stringWithFormat:@"%.0lf", _environmentInformation.humidity] : @"";
-                ((CRConditionCell *)cell).valueTextField.text = humidityString;
-                ((CRConditionCell *)cell).valueTextField.delegate = self;
+                [itemCell.firstItemFieldButton setTitle:@"" forState:UIControlStateNormal];
+                [itemCell.secondItemFieldButton setTitle:@"" forState:UIControlStateNormal];
             }
             break;
+        case kOtherConditionSection : {
+            
+            cell = [tableView dequeueReusableCellWithIdentifier:kConditionCellIdentifier];
+            CRConditionCell *conditionCell = (CRConditionCell *)cell;
+            if(indexPath.row == 0) {
+                conditionCell.valueTextField.placeholder = @"Temprature";
+                conditionCell.valueTextField.tag = kTempratureFieldTag;
+                conditionCell.valueTextField.delegate = self;
+                NSString *tempratureString = _environmentInformation.temperature > 0 ? [NSString stringWithFormat:@"%.0lf", roomTempratureFromValue(_environmentInformation.temperature)] : @"";
+                conditionCell.valueTextField.text = tempratureString;
+                [conditionCell.button addTarget:self action:@selector(showRoomTempratureUnitSelectionSheet) forControlEvents:UIControlEventTouchUpInside];
+                
+                NSString *buttonTitle = self.useFahrenheitForRoom ? [NSString stringWithFormat:@"%@ >",kFahrenheit] : [NSString stringWithFormat:@"%@ >", kCelcius];
+                [conditionCell.button setTitle:buttonTitle forState:UIControlStateNormal];
+            } else if(indexPath.row == 1) {
+                conditionCell.valueTextField.placeholder = @"Humidity";
+                conditionCell.valueTextField.tag = kHumidityFieldTag;
+                NSString *humidityString = _environmentInformation.humidity > 0 ? [NSString stringWithFormat:@"%.0lf", _environmentInformation.humidity] : @"";
+                conditionCell.valueTextField.text = humidityString;
+                conditionCell.valueTextField.delegate = self;
+                NSString *buttonTitle = @"%";
+                [conditionCell.button setTitle:buttonTitle forState:UIControlStateNormal];
+            }
+            break;
+        }
         case kResultSection :
             if(indexPath.row == 0) {
                 cell = [tableView dequeueReusableCellWithIdentifier:kConditionCellIdentifier];
@@ -491,14 +543,132 @@
     [self showImageSelectionSheet];
 }
 
+#pragma mark - Show UIActionSheet
 - (void)showImageSelectionSheet
 {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Select Photo" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Select From Library", @"New Photo", nil];
     actionSheet.destructiveButtonIndex = 10;
     actionSheet.cancelButtonIndex = 2;
+    actionSheet.tag = kImageSelectionActionSheetTag;
+    actionSheet.delegate = self;
     [actionSheet showInView:self.view];
 }
 
+- (void)showRoomTempratureUnitSelectionSheet
+{
+    [self closeSoftKeyboard];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Set Heating Temprature To : " delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:kFahrenheit, kCelcius, nil];
+    actionSheet.tag =
+    actionSheet.destructiveButtonIndex = 10;
+    actionSheet.cancelButtonIndex = 2;
+    actionSheet.tag = kRoomTempratureUnitActionSheetTag;
+    actionSheet.delegate = self;
+    [actionSheet showInView:self.view];
+}
+
+- (void)showHeationgTempratureUnitSelectionSheet
+{
+    [self closeSoftKeyboard];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Set Room Temprature To : " delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:kFahrenheit, kCelcius, nil];
+    actionSheet.destructiveButtonIndex = 10;
+    actionSheet.cancelButtonIndex = 2;
+    actionSheet.tag = kHeatingTempratureUnitActionSheetTag;
+    actionSheet.delegate = self;
+    [actionSheet showInView:self.view];
+}
+
+- (void)showHeatingLengthUnitSelectionSheet
+{
+    [self closeSoftKeyboard];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Set Heating Length To : " delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Minute", @"Second", nil];
+    actionSheet.destructiveButtonIndex = 10;
+    actionSheet.cancelButtonIndex = 2;
+    actionSheet.tag = kHeatingLengthUnitActionSheetTag;
+    actionSheet.delegate = self;
+    [actionSheet showInView:self.view];
+}
+
+#pragma mark - UIActionSheetDelegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (actionSheet.tag) {
+        case kImageSelectionActionSheetTag :
+            [self selectImageWithButtonIndex:buttonIndex];
+            break;
+        case kRoomTempratureUnitActionSheetTag :
+            [self selectRoomTempratureUnitWithButtonIndex:buttonIndex];
+            break;
+        case kHeatingTempratureUnitActionSheetTag :
+            [self selectHeatingTempratureUnitWithButtonIndex:buttonIndex];
+            break;
+        case kHeatingLengthUnitActionSheetTag :
+            [self selectHeatingLengthUnitWithButtonIndex:buttonIndex];
+            break;
+        default :
+            break;
+            
+    }
+}
+
+- (void)selectImageWithButtonIndex:(NSUInteger)index
+{
+    switch (index) {
+        case 0 :
+            [self selectImageFromLibrary];
+            break;
+        case 1 :
+            [self takePhoto];
+            break;
+        default :
+            break;
+    }
+    
+}
+
+- (void)selectHeatingTempratureUnitWithButtonIndex:(NSUInteger)index
+{
+    switch (index) {
+        case kFahrenheitIndexInActionSheet :
+            [self setUseFahrenheitForHeating:YES];
+            break;
+        case kCelsiusIndexInActionSheet :
+            [self setUseFahrenheitForHeating:NO];
+            break;
+        default :
+            break;
+    }
+}
+
+- (void)selectRoomTempratureUnitWithButtonIndex:(NSUInteger)index
+{
+   switch (index) {
+    case kFahrenheitIndexInActionSheet :
+           [self setUseFahrenheitForRoom:YES];
+           break;
+    case kCelsiusIndexInActionSheet :
+           [self setUseFahrenheitForRoom:NO];
+           break;
+    default :
+        break;
+   }
+}
+
+- (void)selectHeatingLengthUnitWithButtonIndex:(NSUInteger)index
+{
+   switch (index) {
+    case kMinuteIndexInActionSheet :
+           [self setUseMinuteForRoastLength:YES];
+           break;
+    case kSecondIndexInActionSheet :
+           [self setUseMinuteForRoastLength:NO];
+           break;
+    default :
+        break;
+   }
+}
+
+#pragma mark - Select Image
 - (void)selectImageFromLibrary
 {
     [self performSegueWithIdentifier:@"selectImage" sender:nil];
@@ -513,21 +683,6 @@
     [self presentViewController:imagePicker animated:YES completion:nil];
 }
 
-#pragma mark - UIActionSheetDelegate
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    switch (buttonIndex) {
-        case 0 :
-            [self selectImageFromLibrary];
-            break;
-        case 1 :
-            [self takePhoto];
-            break;
-        default :
-            break;
-    }
-}
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
@@ -621,14 +776,24 @@
     [CRConfiguration sharedConfiguration].useFahrenheitForRoom = useFahrenheitForRoom;
 }
 
-- (BOOL)useFahrenheitForRoast
+- (BOOL)useFahrenheitForHeating
 {
     return [CRConfiguration sharedConfiguration].useFahrenheitForRoast;
 }
 
-- (void)setUseFahrenheitForRoast:(BOOL)useFahrenheitForRoast
+- (void)setUseFahrenheitForHeating:(BOOL)useFahrenheitForRoast
 {
     [CRConfiguration sharedConfiguration].useFahrenheitForRoast = useFahrenheitForRoast;
+}
+
+- (BOOL)useMinuteForRoastLength
+{
+    return [CRConfiguration sharedConfiguration].useMinutesForHeatingLength;
+}
+
+- (void)setUseMinuteForRoastLength:(BOOL)useMinuteForRoastLength
+{
+    [CRConfiguration sharedConfiguration].useMinutesForHeatingLength = useMinuteForRoastLength;
 }
 
 @end

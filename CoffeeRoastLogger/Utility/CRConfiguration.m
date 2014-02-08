@@ -59,12 +59,12 @@ static CRConfiguration *_sharedConfiguration;
     [[NSUserDefaults standardUserDefaults] setBool:useFahrenheitForRoast forKey:kRoastFahrenheitKey];
 }
 
-- (BOOL)useMinitesForHeatingLength
+- (BOOL)useMinutesForHeatingLength
 {
     return [[NSUserDefaults standardUserDefaults] boolForKey:kRoastUnitMinutesKey];
 }
 
-- (void)setUseMinitesForHeatingLength:(BOOL)useMinitesForHeatingLength
+- (void)setUseMinutesForHeatingLength:(BOOL)useMinitesForHeatingLength
 {
     [[NSUserDefaults standardUserDefaults] setBool:useMinitesForHeatingLength forKey:kRoastUnitMinutesKey];
 }

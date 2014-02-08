@@ -14,6 +14,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *firstItemField;
 @property (weak, nonatomic) IBOutlet UITextField *secondItemField;
 
+@property (weak, nonatomic) IBOutlet UIButton *firstItemFieldButton;
+@property (weak, nonatomic) IBOutlet UIButton *secondItemFieldButton;
 
 
 @end

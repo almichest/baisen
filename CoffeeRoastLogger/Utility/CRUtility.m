@@ -57,7 +57,7 @@ float celsiusRoastTempratureFromValue(float value)
 
 NSInteger roastLengthFromValue(NSTimeInterval seconds)
 {
-    if([CRConfiguration sharedConfiguration].useMinitesForHeatingLength) {
+    if([CRConfiguration sharedConfiguration].useMinutesForHeatingLength) {
         return (seconds / 60);
     } else {
         return seconds;
@@ -66,7 +66,7 @@ NSInteger roastLengthFromValue(NSTimeInterval seconds)
 
 NSTimeInterval secondRoastLengthFromValue(NSTimeInterval value)
 {
-    if([CRConfiguration sharedConfiguration].useMinitesForHeatingLength) {
+    if([CRConfiguration sharedConfiguration].useMinutesForHeatingLength) {
         return value * 60;
     } else {
         return value;

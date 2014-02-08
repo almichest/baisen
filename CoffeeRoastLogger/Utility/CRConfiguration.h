@@ -15,6 +15,6 @@
 @property(nonatomic) BOOL useFahrenheitForRoom;
 @property(nonatomic) BOOL useFahrenheitForRoast;
 
-@property(nonatomic) BOOL useMinitesForHeatingLength;
+@property(nonatomic) BOOL useMinutesForHeatingLength;
 
 @end

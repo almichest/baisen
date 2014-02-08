@@ -2,7 +2,7 @@
 //  CRRoast.h
 //  CoffeeRoastLogger
 //
-//  Created by Hiraku Ohno on 2014/01/15.
+//  Created by OhnoHiraku on 2014/02/02.
 //  Copyright (c) 2014年 Hiraku Ohno. All rights reserved.
 //
 
@@ -15,6 +15,7 @@
 
 @property (nonatomic, retain) NSString * result;
 @property (nonatomic) int16_t score;
+@property (nonatomic, retain) NSData * imageData;
 @property (nonatomic, retain) NSSet *beans;
 @property (nonatomic, retain) CREnvironment *environment;
 @property (nonatomic, retain) NSSet *heating;

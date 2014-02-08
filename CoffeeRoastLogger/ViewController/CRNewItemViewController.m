@@ -9,10 +9,14 @@
 #import <QuartzCore/QuartzCore.h>
 #import "CRNewItemViewController.h"
 #import "CRDateEditingViewController.h"
+#import "CRSelectedPhotoViewController.h"
 #import "CRConditionCell.h"
 #import "CRMemoTextView.h"
 #import "CRTwoItemsCell.h"
+#import "CRTwoItemsCellButton.h"
+
 #import "CRUtility.h"
+#import "CRConfiguration.h"
 
 #import "CRBeanInformation.h"
 #import "CREnvironmentInformation.h"
@@ -26,15 +30,17 @@
 #define kConditionCellIdentifier    @"ConditionCell"
 #define kEmptyCellIdentifier        @"EmptyCell"
 #define kDateSection            0
-#define kBeanSection            1
-#define kHeatingSection         2
-#define kOtherConditionSection  3
-#define kResultSection          4
-#define kImageSection           5
+#define kImageSection           1
+#define kBeanSection            2
+#define kHeatingSection         3
+#define kOtherConditionSection  4
+#define kResultSection          5
 
-#define kDateLabelTag                10
-#define kBeanCellTag                100
-#define kHeatingCellTag             200
+#define kBeanKindInputBaseTag       100
+#define kBeanQuantityInputBaseTag   200
+#define kHeatingTempratureBaseTag   300
+#define kHeatingLengthBaseTag       400
+
 #define kTempratureFieldTag         500
 #define kHumidityFieldTag           600
 #define kScoreFieldTag              700
@@ -42,12 +48,21 @@
 
 #define kMaxBeanCount                10
 #define kMaxHeatingCount             50
-@interface CRNewItemViewController ()
+@interface CRNewItemViewController ()<UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UITextViewDelegate>
+
+@property(nonatomic) BOOL useFahrenheitForRoom;
+@property(nonatomic) BOOL useFahrenheitForRoast;
 
 @end
 
 @implementation CRNewItemViewController
 {
+    CRRoastInformation *_roastInformation;
+    NSMutableArray *_beanInformations;
+    CREnvironmentInformation *_environmentInformation;
+    NSMutableArray *_heatingInformations;
+    
+    
     UIDatePicker *_datePicker;
     NSUInteger _beanCount;
     NSUInteger _heatCount;
@@ -56,6 +71,9 @@
     
     NSMutableArray *_beanButtonsArray;
     NSMutableArray *_heatingButtonsArray;
+    
+    id _observer;
+    
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -69,6 +87,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    _roastInformation = [[CRRoastInformation alloc] init];
+    _roastInformation.score = NSIntegerMin;
+    _beanInformations = @[[[CRBeanInformation alloc] init]].mutableCopy;
+    _environmentInformation = [[CREnvironmentInformation alloc] init];
+    _heatingInformations = @[[[CRHeatingInformation alloc] init]].mutableCopy;
+    
     UIBarButtonItem const *cancelItem = self.cancelButton;
     cancelItem.target = self;
     cancelItem.action = @selector(didPushDismissButton:);
@@ -87,13 +112,20 @@
     _beanCount = 1;
     _heatCount = 1;
     _date = [NSDate date];
+    _environmentInformation.date = _date.timeIntervalSince1970;
     
-    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeSoftKeyboard:)];
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeSoftKeyboard)];
     [self.view addGestureRecognizer:gestureRecognizer];
+    
+    _observer = [[NSNotificationCenter defaultCenter] addObserverForName:CRSelectedPhotoViewControllerPhotoSelectNotification object:Nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+        UIImage *image = note.userInfo[CRSelectedPhotoViewControllerPhotoSelectNotificationKeyPhoto];
+        [self resizeImage:image];
+        [self.tableView reloadData];
+    }];
 }
 
 
-- (void)closeSoftKeyboard:(UIGestureRecognizer *)recognizer
+- (void)closeSoftKeyboard
 {
     [self.view endEditing:YES];
 }
@@ -104,6 +136,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:_observer];
+}
+
 #pragma mark - action
 - (void)didPushDismissButton:(UIBarButtonItem *)item
 {
@@ -112,60 +149,19 @@
 
 - (void)didPushCompleteButton:(UIBarButtonItem *)item
 {
+    [self closeSoftKeyboard];
     [self save];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)save
 {
-    CRRoastInformation *information = [[CRRoastInformation alloc] init];
-    information.beans = [self beanInformations];
-    information.environment = [self environmentInformation];
-    information.heatingInformations = [self heatingInformations];
+    _roastInformation.beans = _beanInformations;
+    _roastInformation.environment = _environmentInformation;
+    _roastInformation.heatingInformations = _heatingInformations;
+    _roastInformation.image = _image;
     
-    information.score = ((UITextField *)[self.tableView viewWithTag:kScoreFieldTag]).text.integerValue;
-    information.result = ((UITextView *)[self.tableView viewWithTag:kMemoViewTag]).text;
-    
-    [[CRRoastManager sharedManager] addNewRoastInformation:information];
-}
-
-- (NSArray *)beanInformations
-{
-    NSMutableArray *mutableBeanInformations = [[NSMutableArray alloc] initWithCapacity:_beanCount];
-    
-    for(NSUInteger index = 0; index < _beanCount; index++) {
-        CRBeanInformation *information = [[CRBeanInformation alloc] init];
-        CRTwoItemsCell *cell = (CRTwoItemsCell *)[self.tableView viewWithTag:kBeanCellTag + index];
-        information.area = cell.firstItemField.text;
-        information.quantity = cell.secondItemField.text.integerValue;
-        mutableBeanInformations[index] = information;
-    }
-    
-    return mutableBeanInformations.copy;
-}
-
-- (CREnvironmentInformation *)environmentInformation
-{
-    CREnvironmentInformation *information = [[CREnvironmentInformation alloc] init];
-    information.temperature = ((UITextField *)[self.tableView viewWithTag:kTempratureFieldTag]).text.integerValue;
-    information.humidity = ((UITextField *)[self.tableView viewWithTag:kHumidityFieldTag]).text.integerValue;
-    information.date = _date.timeIntervalSince1970;
-    return information;
-}
-
-- (NSArray *)heatingInformations
-{
-    NSMutableArray *mutableHeatingInformations = [[NSMutableArray alloc] initWithCapacity:_heatCount];
-    
-    for(NSUInteger index = 0; index < _heatCount; index++) {
-        CRHeatingInformation *information = [[CRHeatingInformation alloc] init];
-        CRTwoItemsCell *cell = (CRTwoItemsCell *)[self.tableView viewWithTag:kHeatingCellTag + index];
-        information.temperature = cell.firstItemField.text.floatValue;
-        information.time = cell.secondItemField.text.integerValue;
-        mutableHeatingInformations[index] = information;
-    }
-    
-    return mutableHeatingInformations.copy;
+    [[CRRoastManager sharedManager] addNewRoastInformation:_roastInformation];
 }
 
 #pragma mark - Table view data source
@@ -179,7 +175,7 @@
             if(_image == nil)
                 return 43;
             else
-                return _image.size.height;
+                return _image.size.height + 10;
         default :
             return 43;
     }
@@ -244,13 +240,17 @@
             cell = [tableView dequeueReusableCellWithIdentifier:kDefaultCellIdentifier forIndexPath:indexPath];
             cell.textLabel.text = dateStringFromNSDate(_date);
             cell.textLabel.font = [UIFont systemFontOfSize:14];
-            cell.textLabel.tag = kDateLabelTag;
-            UIButton *editButton = [[UIButton alloc] initWithFrame:CGRectMake(cell.contentView.frame.size.width - 50, 0, 50, cell.frame.size.height)];
+            UIButton *editButton = [UIButton buttonWithType:UIButtonTypeSystem];
+            editButton.frame = CGRectMake(0, 0, 30, 30);
+            editButton.layer.borderColor = editButton.tintColor.CGColor;
+            editButton.layer.borderWidth = 1.0f;
+            editButton.layer.cornerRadius = 4.5f;
             [editButton addTarget:self action:@selector(showDatePickerView) forControlEvents:UIControlEventTouchUpInside];
             [editButton setTitle:@"Edit" forState:UIControlStateNormal];
             [editButton setTitleColor:editButton.tintColor forState:UIControlStateNormal];
             [editButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-            [cell addSubview:editButton];
+            editButton.titleLabel.font = [UIFont systemFontOfSize:14];
+            cell.accessoryView = editButton;
             
             break;
         }
@@ -258,54 +258,112 @@
             if(indexPath.row < _beanCount) {
                 cell = [tableView dequeueReusableCellWithIdentifier:kTwoItemCellIdentifier];
                 CRTwoItemsCell *itemCell = (CRTwoItemsCell *)cell;
+                [itemCell.button setTitle:@"-" forState:UIControlStateNormal];
+                [itemCell.button removeTarget:nil action:nil forControlEvents:UIControlEventAllEvents];
+                [itemCell.button addTarget:self action:@selector(removeBeanCell:) forControlEvents:UIControlEventTouchUpInside];
+                itemCell.button.userInteractionEnabled = YES;
+                
+                CRBeanInformation *information = _beanInformations[indexPath.row];
+                
+                itemCell.firstItemField.hidden = NO;
                 itemCell.firstItemField.placeholder = @"Kind";
-                itemCell.secondItemField.placeholder = @"Quantity";
-                itemCell.secondItemField.keyboardType = UIKeyboardTypeNumberPad;
                 itemCell.firstItemField.text = @"";
+                itemCell.firstItemField.tag = kBeanKindInputBaseTag + indexPath.row;
+                itemCell.firstItemField.delegate = self;
+                itemCell.firstItemField.text = information.area;
+                
+                itemCell.secondItemField.hidden = NO;
+                itemCell.secondItemField.placeholder = @"Quantity [g]";
+                itemCell.secondItemField.keyboardType = UIKeyboardTypeNumberPad;
                 itemCell.secondItemField.text = @"";
-                itemCell.tag = kBeanCellTag + indexPath.row;
-                UIButton *button = [self buttonToRemoveBean];
-                _beanButtonsArray[indexPath.row] = button;
-                [cell.contentView addSubview:button];
+                itemCell.secondItemField.tag = kBeanQuantityInputBaseTag + indexPath.row;
+                itemCell.secondItemField.delegate = self;
+                NSString *quantityString = information.quantity > 0 ? [NSString stringWithFormat:@"%d", information.quantity] : @"";
+                itemCell.secondItemField.text = quantityString;
+                
+                _beanButtonsArray[indexPath.row] = itemCell.button;
+                itemCell.button.indexPath = indexPath;
+                
             } else {
-                cell = [tableView dequeueReusableCellWithIdentifier:kEmptyCellIdentifier forIndexPath:indexPath];
-                [cell.contentView addSubview:[self buttonToAddBean]];
+                cell = [tableView dequeueReusableCellWithIdentifier:kTwoItemCellIdentifier];
+                CRTwoItemsCell *itemCell = (CRTwoItemsCell *)cell;
+                itemCell.firstItemField.hidden = YES;
+                itemCell.secondItemField.hidden = YES;
+                [itemCell.button setTitle:@"+" forState:UIControlStateNormal];
+                [itemCell.button removeTarget:nil action:nil forControlEvents:UIControlEventAllEvents];
+                [itemCell.button addTarget:self action:@selector(addNewCellForBean) forControlEvents:UIControlEventTouchUpInside];
+                itemCell.button.userInteractionEnabled = YES;
             }
             break;
         case kHeatingSection :
             if(indexPath.row < _heatCount) {
                 cell = [tableView dequeueReusableCellWithIdentifier:kTwoItemCellIdentifier];
                 CRTwoItemsCell *itemCell = (CRTwoItemsCell *)cell;
+                [itemCell.button setTitle:@"-" forState:UIControlStateNormal];
+                [itemCell.button removeTarget:nil action:nil forControlEvents:UIControlEventAllEvents];
+                [itemCell.button addTarget:self action:@selector(removeHeatingCell:) forControlEvents:UIControlEventTouchUpInside];
+                itemCell.button.userInteractionEnabled = YES;
+                
+                CRHeatingInformation *information = _heatingInformations[indexPath.row];
+                
+                itemCell.firstItemField.hidden = NO;
                 itemCell.firstItemField.placeholder = @"Temprature";
-                itemCell.secondItemField.placeholder = @"Length";
                 itemCell.firstItemField.keyboardType = UIKeyboardTypeNumberPad;
-                itemCell.secondItemField.keyboardType = UIKeyboardTypeNumberPad;
                 itemCell.firstItemField.text = @"";
+                itemCell.firstItemField.tag = kHeatingTempratureBaseTag + indexPath.row;
+                NSString *tempratureString = information.temperature > 0 ? [NSString stringWithFormat:@"%.0f", roastTempratureFromValue(information.temperature)] : @"";
+                itemCell.firstItemField.text = tempratureString;
+                
+                itemCell.secondItemField.hidden = NO;
+                itemCell.secondItemField.placeholder = @"Length";
+                itemCell.secondItemField.keyboardType = UIKeyboardTypeNumberPad;
                 itemCell.secondItemField.text = @"";
-                itemCell.tag = kHeatingCellTag + indexPath.row;
-                UIButton *button = [self buttonToRemoveHeating];
-                _heatingButtonsArray[indexPath.row] = button;
-                [cell.contentView addSubview:button];
+                itemCell.secondItemField.tag = kHeatingLengthBaseTag + indexPath.row;
+                NSString *lengthString = information.time > 0 ? [NSString stringWithFormat:@"%.0lf", information.time] : @"";
+                itemCell.secondItemField.text = lengthString;
+                
+                _heatingButtonsArray[indexPath.row] = itemCell.button;
+                itemCell.button.indexPath = indexPath;
+                
+                itemCell.firstItemField.delegate = self;
+                itemCell.secondItemField.delegate = self;
             } else {
-                cell = [tableView dequeueReusableCellWithIdentifier:kEmptyCellIdentifier forIndexPath:indexPath];
-                [cell.contentView addSubview:[self buttonToAddHeating]];
+                cell = [tableView dequeueReusableCellWithIdentifier:kTwoItemCellIdentifier];
+                CRTwoItemsCell *itemCell = (CRTwoItemsCell *)cell;
+                itemCell.firstItemField.hidden = YES;
+                itemCell.secondItemField.hidden = YES;
+                [itemCell.button setTitle:@"+" forState:UIControlStateNormal];
+                [itemCell.button removeTarget:nil action:nil forControlEvents:UIControlEventAllEvents];
+                [itemCell.button addTarget:self action:@selector(addNewCellForHeating) forControlEvents:UIControlEventTouchUpInside];
+                itemCell.button.userInteractionEnabled = YES;
             }
             break;
         case kOtherConditionSection :
             cell = [tableView dequeueReusableCellWithIdentifier:kConditionCellIdentifier];
             if(indexPath.row == 0) {
                 ((CRConditionCell *)cell).valueTextField.placeholder = @"Temprature";
-                cell.tag = kTempratureFieldTag;
+                ((CRConditionCell *)cell).valueTextField.tag = kTempratureFieldTag;
+                ((CRConditionCell *)cell).valueTextField.delegate = self;
+                NSString *tempratureString = _environmentInformation.temperature > 0 ? [NSString stringWithFormat:@"%.0lf", roomTempratureFromValue(_environmentInformation.temperature)] : @"";
+                ((CRConditionCell *)cell).valueTextField.text = tempratureString;
+                
             } else if(indexPath.row == 1) {
-                ((CRConditionCell *)cell).valueTextField.placeholder = @"Humidity";
-                cell.tag = kHumidityFieldTag;
+                ((CRConditionCell *)cell).valueTextField.placeholder = @"Humidity [%]";
+                ((CRConditionCell *)cell).valueTextField.tag = kHumidityFieldTag;
+                NSString *humidityString = _environmentInformation.humidity > 0 ? [NSString stringWithFormat:@"%.0lf", _environmentInformation.humidity] : @"";
+                ((CRConditionCell *)cell).valueTextField.text = humidityString;
+                ((CRConditionCell *)cell).valueTextField.delegate = self;
             }
             break;
         case kResultSection :
             if(indexPath.row == 0) {
                 cell = [tableView dequeueReusableCellWithIdentifier:kConditionCellIdentifier];
                 ((CRConditionCell *)cell).valueTextField.placeholder = @"Score";
-                cell.tag = kScoreFieldTag;
+                ((CRConditionCell *)cell).valueTextField.tag = kScoreFieldTag;
+                ((CRConditionCell *)cell).valueTextField.delegate = self;
+                if(_roastInformation.score != NSIntegerMin) {
+                    ((CRConditionCell *)cell).valueTextField.text = [NSString stringWithFormat:@"%d", _roastInformation.score];
+                }
             } else {
                 cell = [tableView dequeueReusableCellWithIdentifier:kEmptyCellIdentifier forIndexPath:indexPath];
                 CGRect frame = CGRectMake(11, 10, 294, cell.frame.size.height - 20);
@@ -316,17 +374,24 @@
                 memoTextView.font = [UIFont systemFontOfSize:14];
                 memoTextView.placeHolder = @"Memo";
                 memoTextView.placeHolderColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1];
-                [cell.contentView addSubview:memoTextView];
-                cell.tag = kMemoViewTag;
+                [cell addSubview:memoTextView];
+                memoTextView.tag = kMemoViewTag;
+                memoTextView.text = _roastInformation.result;
+                memoTextView.delegate = self;
             }
             break;
         case kImageSection :
             cell = [tableView dequeueReusableCellWithIdentifier:kEmptyCellIdentifier];
             if(_image == nil) {
-                [cell.contentView addSubview:[self buttonToSetImage]];
+                [cell addSubview:[self buttonToSetImage]];
+            } else {
+                UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 5, _image.size.width, _image.size.height)];
+                imageView.image = _image;
+                imageView.userInteractionEnabled = YES;
+                [cell addSubview:imageView];
+                UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(setImage)];
+                [imageView addGestureRecognizer:gestureRecognizer];
             }
-            cell.imageView.image = nil;
-            cell.textLabel.text = @"";
             break;
         default :
             cell = [tableView dequeueReusableCellWithIdentifier:kDefaultCellIdentifier forIndexPath:indexPath];
@@ -339,7 +404,6 @@
 - (void)showDatePickerView
 {
     [self performSegueWithIdentifier:@"editDate" sender:nil];
-    
 }
 
 - (UIDatePicker *)datePickerForFrame:(CGRect)frame;
@@ -349,43 +413,6 @@
     }
     
     return _datePicker;
-}
-
-- (UIButton *)buttonToAddBean
-{
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 43)];
-    [button addTarget:self action:@selector(addNewCellForBean) forControlEvents:UIControlEventTouchUpInside];
-    [button setTitle:@"+" forState:UIControlStateNormal];
-    [button setTitleColor:button.tintColor forState:UIControlStateNormal];
-    return button;
-}
-
-- (UIButton *)buttonToRemoveBean
-{
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 43)];
-    [button addTarget:self action:@selector(removeBeanCell:) forControlEvents:UIControlEventTouchUpInside];
-    [button setTitle:@"-" forState:UIControlStateNormal];
-    [button setTitleColor:button.tintColor forState:UIControlStateNormal];
-    return button;
-    
-}
-
-- (UIButton *)buttonToAddHeating
-{
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 43)];
-    [button addTarget:self action:@selector(addNewCellForHeating) forControlEvents:UIControlEventTouchUpInside];
-    [button setTitle:@"+" forState:UIControlStateNormal];
-    [button setTitleColor:button.tintColor forState:UIControlStateNormal];
-    return button;
-}
-
-- (UIButton *)buttonToRemoveHeating
-{
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 43)];
-    [button addTarget:self action:@selector(removeHeatingCell:) forControlEvents:UIControlEventTouchUpInside];
-    [button setTitle:@"-" forState:UIControlStateNormal];
-    [button setTitleColor:button.tintColor forState:UIControlStateNormal];
-    return button;
 }
 
 - (UIButton *)buttonToSetImage
@@ -404,21 +431,28 @@
         [alertView show];
         return;
     }
+    [_beanInformations addObject:[[CRBeanInformation alloc] init]];
     _beanCount++;
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_beanCount - 1 inSection:kBeanSection];
+    MyLog();
     [self.tableView beginUpdates];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.tableView endUpdates];
+    MyLog();
 }
 
-- (void)removeBeanCell:(UIButton *)button
+- (void)removeBeanCell:(CRTwoItemsCellButton *)button
 {
-    _beanCount--;
+    [self closeSoftKeyboard];
+    button.userInteractionEnabled = NO;
     NSUInteger index = [_beanButtonsArray indexOfObject:button];
-    [_beanButtonsArray removeObjectAtIndex:index];
+    _beanCount--;
+    [_beanButtonsArray removeObject:button];
+    [_beanInformations removeObjectAtIndex:index];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:kBeanSection];
     [self.tableView beginUpdates];
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:kBeanSection] withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.tableView endUpdates];
 }
 
@@ -429,6 +463,7 @@
         [alertView show];
         return;
     }
+    [_heatingInformations addObject:[[CRHeatingInformation alloc] init]];
     _heatCount++;
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_heatCount - 1 inSection:kHeatingSection];
     [self.tableView beginUpdates];
@@ -436,20 +471,71 @@
     [self.tableView endUpdates];
 }
 
-- (void)removeHeatingCell:(UIButton *)button
+- (void)removeHeatingCell:(CRTwoItemsCellButton *)button
 {
-    _heatCount--;
+    [self closeSoftKeyboard];
     NSUInteger index = [_heatingButtonsArray indexOfObject:button];
-    [_heatingButtonsArray removeObjectAtIndex:index];
+    [_heatingButtonsArray removeObject:button];
+    [_heatingInformations removeObjectAtIndex:index];
+    _heatCount--;
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:kHeatingSection];
     [self.tableView beginUpdates];
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+       [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:kHeatingSection] withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.tableView endUpdates];
 }
 
 - (void)setImage
 {
-    
+    [self showImageSelectionSheet];
+}
+
+- (void)showImageSelectionSheet
+{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Select Photo" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Select From Library", @"New Photo", nil];
+    actionSheet.destructiveButtonIndex = 10;
+    actionSheet.cancelButtonIndex = 2;
+    [actionSheet showInView:self.view];
+}
+
+- (void)selectImageFromLibrary
+{
+    [self performSegueWithIdentifier:@"selectImage" sender:nil];
+}
+
+
+- (void)takePhoto
+{
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    imagePicker.delegate = self;
+    [self presentViewController:imagePicker animated:YES completion:nil];
+}
+
+#pragma mark - UIActionSheetDelegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0 :
+            [self selectImageFromLibrary];
+            break;
+        case 1 :
+            [self takePhoto];
+            break;
+        default :
+            break;
+    }
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *image = info[UIImagePickerControllerOriginalImage];
+    [self resizeImage:image];
+    [picker dismissViewControllerAnimated:YES completion:^{
+        [self.tableView reloadData];
+    }];
 }
 
 #pragma mark - Segue
@@ -459,9 +545,90 @@
         CRDateEditingViewController *viewController = segue.destinationViewController;
         viewController.completion = ^(NSDate *date) {
             _date = date;
+            _environmentInformation.date = date.timeIntervalSince1970;
             [self.tableView reloadData];
         };
     }
+}
+
+#pragma mark - Private
+- (void)resizeImage:(UIImage *)image
+{
+    UIImage *resizedImage;
+    if(image.size.width > 320) {
+        float ratio = 320 / image.size.width;
+        UIGraphicsBeginImageContext(CGSizeMake(ratio * image.size.width, ratio * image.size.height));
+        [image drawInRect:CGRectMake(0, 0, ratio * image.size.width, ratio * image.size.height)];
+        resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+    } else {
+        resizedImage = image;
+    }
+    
+    _image = resizedImage;
+    
+}
+
+#pragma mark - UITextFieldDelegate
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    MyLog(@"tag = %d", textField.tag);
+    if(textField.tag == kScoreFieldTag) {
+        NSInteger score = textField.text.integerValue;
+        if(score < -100 || score > 100) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Sorry" message:@"Score can be input from -100 to 100" delegate:Nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alertView show];
+            textField.text = @"";
+        } else {
+            _roastInformation.score = score;
+        }
+    } else if(textField.tag == kTempratureFieldTag) {
+        float saveValue = celsiusRoomTempratureFromValue(textField.text.floatValue);
+        _environmentInformation.temperature = saveValue;
+    } else if(textField.tag == kHumidityFieldTag) {
+        _environmentInformation.humidity = textField.text.integerValue;
+    } else if(textField.tag >= kBeanKindInputBaseTag && textField.tag < kBeanQuantityInputBaseTag) {
+        NSUInteger index = textField.tag % 100;
+        ((CRBeanInformation *)(_beanInformations[index])).area = textField.text;
+    } else if(textField.tag >= kBeanQuantityInputBaseTag && textField.tag < kHeatingTempratureBaseTag) {
+        NSUInteger index = textField.tag % 100;
+        ((CRBeanInformation *)(_beanInformations[index])).quantity = textField.text.integerValue;
+    } else if(textField.tag >= kHeatingTempratureBaseTag && textField.tag < kHeatingLengthBaseTag) {
+        NSUInteger index = textField.tag % 100;
+        float saveValue = celsiusRoastTempratureFromValue(textField.text.floatValue);
+        ((CRHeatingInformation *)(_heatingInformations[index])).temperature = saveValue;
+    } else if(textField.tag >= kHeatingLengthBaseTag && textField.tag < kTempratureFieldTag) {
+        NSUInteger index = textField.tag % 100;
+        NSTimeInterval saveValue = secondRoastLengthFromValue(textField.text.integerValue);
+        ((CRHeatingInformation *)(_heatingInformations[index])).time = saveValue;
+    }
+}
+
+#pragma mark - UITextViewDelegate
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    _roastInformation.result = textView.text;
+}
+
+#pragma mark - getter
+- (BOOL)useFahrenheitForRoom
+{
+    return [CRConfiguration sharedConfiguration].useFahrenheitForRoom;
+}
+
+- (void)setUseFahrenheitForRoom:(BOOL)useFahrenheitForRoom
+{
+    [CRConfiguration sharedConfiguration].useFahrenheitForRoom = useFahrenheitForRoom;
+}
+
+- (BOOL)useFahrenheitForRoast
+{
+    return [CRConfiguration sharedConfiguration].useFahrenheitForRoast;
+}
+
+- (void)setUseFahrenheitForRoast:(BOOL)useFahrenheitForRoast
+{
+    [CRConfiguration sharedConfiguration].useFahrenheitForRoast = useFahrenheitForRoast;
 }
 
 @end

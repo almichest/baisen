@@ -8,8 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@class CRTwoItemsCellButton;
 @interface CRTwoItemsCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet CRTwoItemsCellButton *button;
 @property (weak, nonatomic) IBOutlet UITextField *firstItemField;
 @property (weak, nonatomic) IBOutlet UITextField *secondItemField;
 
+
+
 @end
+

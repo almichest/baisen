@@ -67,6 +67,13 @@
     roast.environment = [self environmentWithEnvironmentInformation:information.environment];
     roast.beans = [self beansWithBeansInformations:information.beans];
     roast.heating = [self heatingsWithHeatingInformations:information.heatingInformations];
+    
+    roast.score = information.score;
+    roast.result = information.result;
+    if(information.image) {
+        roast.imageData = [self dataFromImage:information.image];
+        NSLog(@"image size = %d", roast.imageData.length);
+    }
     [self save];
     
     return roast;
@@ -120,6 +127,11 @@
     return set;
 }
 
+- (NSData *)dataFromImage:(UIImage *)image
+{
+    return UIImageJPEGRepresentation(image, 0.7f);
+}
+
 #pragma mark - remove
 - (void)removeRoastInformationAtIndex:(NSUInteger)index
 {
@@ -154,7 +166,7 @@
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Roast" inManagedObjectContext:self.managedObjectContext];
     request.entity = entity;
-    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"environment.date" ascending:YES];
+    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"environment.date" ascending:NO];
     request.sortDescriptors = @[descriptor];
     
     _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];

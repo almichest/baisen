@@ -24,4 +24,6 @@
 /** Array of CRHeatingInformation */
 @property (nonatomic) NSArray *heatingInformations;
 
+@property (nonatomic) UIImage *image;
+
 @end

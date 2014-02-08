@@ -18,6 +18,7 @@
         <relationship name="roast" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Roast" inverseName="heating" inverseEntity="Roast" syncable="YES"/>
     </entity>
     <entity name="Roast" representedClassName="CRRoast" syncable="YES">
+        <attribute name="imageData" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="result" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="score" optional="YES" attributeType="Integer 16" minValueString="0" maxValueString="100" defaultValueString="0" syncable="YES"/>
         <relationship name="beans" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Bean" inverseName="roast" inverseEntity="Bean" syncable="YES"/>

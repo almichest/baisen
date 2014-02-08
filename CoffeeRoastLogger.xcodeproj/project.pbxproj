@@ -16,7 +16,6 @@
 		428AA43518840D1400401165 /* CRAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 428AA43418840D1400401165 /* CRAppDelegate.m */; };
 		428AA43818840D1400401165 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 428AA43618840D1400401165 /* Main.storyboard */; };
 		428AA43E18840D1400401165 /* CRMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 428AA43D18840D1400401165 /* CRMasterViewController.m */; };
-		428AA44118840D1400401165 /* CRDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 428AA44018840D1400401165 /* CRDetailViewController.m */; };
 		428AA44318840D1400401165 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 428AA44218840D1400401165 /* Images.xcassets */; };
 		428AA44A18840D1400401165 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 428AA44918840D1400401165 /* XCTest.framework */; };
 		428AA44B18840D1400401165 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 428AA42218840D1400401165 /* Foundation.framework */; };
@@ -33,7 +32,35 @@
 		428AA4AF1886CE6B00401165 /* CRBean.m in Sources */ = {isa = PBXBuildFile; fileRef = 428AA4AE1886CE6B00401165 /* CRBean.m */; };
 		428AA4B21886CE6B00401165 /* CRHeating.m in Sources */ = {isa = PBXBuildFile; fileRef = 428AA4B11886CE6B00401165 /* CRHeating.m */; };
 		428AA4B51886CE6B00401165 /* CREnvironment.m in Sources */ = {isa = PBXBuildFile; fileRef = 428AA4B41886CE6B00401165 /* CREnvironment.m */; };
-		428AA4B81886CE6B00401165 /* CRRoast.m in Sources */ = {isa = PBXBuildFile; fileRef = 428AA4B71886CE6B00401165 /* CRRoast.m */; };
+		428AA4BB1886DB7100401165 /* CRRoastDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 428AA4BA1886DB7100401165 /* CRRoastDataSource.m */; };
+		42B5DB401894E93200F0710E /* CRNewItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B5DB3F1894E93200F0710E /* CRNewItemViewController.m */; };
+		42CCF2D11897C0AC00E87843 /* TwoItemsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42CCF2D01897C0AC00E87843 /* TwoItemsCell.xib */; };
+		42CCF2D51897C16200E87843 /* CRTwoItemsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 42CCF2D41897C16200E87843 /* CRTwoItemsCell.m */; };
+		42CCF31B1897E80900E87843 /* CRDateEditingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42CCF31A1897E80900E87843 /* CRDateEditingViewController.m */; };
+		42CCF31D189951BD00E87843 /* ConditionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42CCF31C189951BD00E87843 /* ConditionCell.xib */; };
+		42CCF3201899527500E87843 /* CRConditionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 42CCF31F1899527500E87843 /* CRConditionCell.m */; };
+		42CCF322189D56EC00E87843 /* EmptyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42CCF321189D56EC00E87843 /* EmptyCell.xib */; };
+		42CCF325189D570400E87843 /* CREmptyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 42CCF324189D570400E87843 /* CREmptyCell.m */; };
+		42CCF328189FC93A00E87843 /* CRSelectedPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42CCF327189FC93A00E87843 /* CRSelectedPhotoViewController.m */; };
+		42CCF32F18A12BFC00E87843 /* CRDatePickerAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 42CCF32E18A12BFC00E87843 /* CRDatePickerAlertView.m */; };
+		42CCF33118A2510900E87843 /* RoastItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42CCF33018A2510900E87843 /* RoastItemCell.xib */; };
+		42CCF33418A2519D00E87843 /* CRRoastItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 42CCF33318A2519D00E87843 /* CRRoastItemCell.m */; };
+		42CCF33718A2577100E87843 /* CRRoastItemResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42CCF33618A2577100E87843 /* CRRoastItemResultViewController.m */; };
+		42CCF33A18A295FB00E87843 /* CRTwoItemsCellButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 42CCF33918A295FB00E87843 /* CRTwoItemsCellButton.m */; };
+		42CCF34018A3EC2A00E87843 /* TwoItemResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42CCF33F18A3EC2A00E87843 /* TwoItemResultCell.xib */; };
+		42CCF34318A6015300E87843 /* ResultItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42CCF34218A6015300E87843 /* ResultItemCell.xib */; };
+		42CCF34618A601E700E87843 /* CRResultItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 42CCF34518A601E700E87843 /* CRResultItemCell.m */; };
+		42CCF34818A60D4200E87843 /* ResultItemHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42CCF34718A60D4200E87843 /* ResultItemHeaderCell.xib */; };
+		42CCF34B18A613DD00E87843 /* CRResultItemHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 42CCF34A18A613DD00E87843 /* CRResultItemHeaderCell.m */; };
+		42D0A5EE189CF6B500CCE450 /* CRMemoTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 42D0A5ED189CF6B500CCE450 /* CRMemoTextView.m */; };
+		42D0A5F2189D086C00CCE450 /* CRUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 42D0A5F1189D086C00CCE450 /* CRUtility.m */; };
+		42D0A5F4189E281200CCE450 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42D0A5F3189E281200CCE450 /* AssetsLibrary.framework */; };
+		42D0A5F7189E28A700CCE450 /* CRImagePickerRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42D0A5F6189E28A700CCE450 /* CRImagePickerRootViewController.m */; };
+		42D0A5F9189E304A00CCE450 /* ImageRootCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42D0A5F8189E304A00CCE450 /* ImageRootCell.xib */; };
+		42D0A5FC189E30DD00CCE450 /* CRImageRootViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 42D0A5FB189E30DD00CCE450 /* CRImageRootViewCell.m */; };
+		42D0A5FF189E338200CCE450 /* CRAlbumContentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42D0A5FE189E338200CCE450 /* CRAlbumContentsViewController.m */; };
+		42D0A605189E3A2000CCE450 /* CRRoast.m in Sources */ = {isa = PBXBuildFile; fileRef = 42D0A604189E3A2000CCE450 /* CRRoast.m */; };
+		42FA30D818A6969F0061B778 /* CRConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 42FA30D718A6969F0061B778 /* CRConfiguration.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,8 +88,6 @@
 		428AA43718840D1400401165 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		428AA43C18840D1400401165 /* CRMasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CRMasterViewController.h; sourceTree = "<group>"; };
 		428AA43D18840D1400401165 /* CRMasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CRMasterViewController.m; sourceTree = "<group>"; };
-		428AA43F18840D1400401165 /* CRDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CRDetailViewController.h; sourceTree = "<group>"; };
-		428AA44018840D1400401165 /* CRDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CRDetailViewController.m; sourceTree = "<group>"; };
 		428AA44218840D1400401165 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		428AA44818840D1400401165 /* CoffeeRoastLoggerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoffeeRoastLoggerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		428AA44918840D1400401165 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -86,8 +111,56 @@
 		428AA4B11886CE6B00401165 /* CRHeating.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRHeating.m; sourceTree = "<group>"; };
 		428AA4B31886CE6B00401165 /* CREnvironment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CREnvironment.h; sourceTree = "<group>"; };
 		428AA4B41886CE6B00401165 /* CREnvironment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CREnvironment.m; sourceTree = "<group>"; };
-		428AA4B61886CE6B00401165 /* CRRoast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRRoast.h; sourceTree = "<group>"; };
-		428AA4B71886CE6B00401165 /* CRRoast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRRoast.m; sourceTree = "<group>"; };
+		428AA4B91886DB7100401165 /* CRRoastDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRRoastDataSource.h; sourceTree = "<group>"; };
+		428AA4BA1886DB7100401165 /* CRRoastDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRRoastDataSource.m; sourceTree = "<group>"; };
+		42B5DB3E1894E93200F0710E /* CRNewItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRNewItemViewController.h; path = ViewController/CRNewItemViewController.h; sourceTree = "<group>"; };
+		42B5DB3F1894E93200F0710E /* CRNewItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRNewItemViewController.m; path = ViewController/CRNewItemViewController.m; sourceTree = "<group>"; };
+		42CCF2D01897C0AC00E87843 /* TwoItemsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TwoItemsCell.xib; sourceTree = "<group>"; };
+		42CCF2D31897C16200E87843 /* CRTwoItemsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRTwoItemsCell.h; path = View/CRTwoItemsCell.h; sourceTree = "<group>"; };
+		42CCF2D41897C16200E87843 /* CRTwoItemsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRTwoItemsCell.m; path = View/CRTwoItemsCell.m; sourceTree = "<group>"; };
+		42CCF3191897E80900E87843 /* CRDateEditingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRDateEditingViewController.h; path = ViewController/CRDateEditingViewController.h; sourceTree = "<group>"; };
+		42CCF31A1897E80900E87843 /* CRDateEditingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRDateEditingViewController.m; path = ViewController/CRDateEditingViewController.m; sourceTree = "<group>"; };
+		42CCF31C189951BD00E87843 /* ConditionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConditionCell.xib; sourceTree = "<group>"; };
+		42CCF31E1899527500E87843 /* CRConditionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRConditionCell.h; path = View/CRConditionCell.h; sourceTree = "<group>"; };
+		42CCF31F1899527500E87843 /* CRConditionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRConditionCell.m; path = View/CRConditionCell.m; sourceTree = "<group>"; };
+		42CCF321189D56EC00E87843 /* EmptyCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyCell.xib; sourceTree = "<group>"; };
+		42CCF323189D570400E87843 /* CREmptyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CREmptyCell.h; path = View/CREmptyCell.h; sourceTree = "<group>"; };
+		42CCF324189D570400E87843 /* CREmptyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CREmptyCell.m; path = View/CREmptyCell.m; sourceTree = "<group>"; };
+		42CCF326189FC93A00E87843 /* CRSelectedPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRSelectedPhotoViewController.h; path = ViewController/CRSelectedPhotoViewController.h; sourceTree = "<group>"; };
+		42CCF327189FC93A00E87843 /* CRSelectedPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRSelectedPhotoViewController.m; path = ViewController/CRSelectedPhotoViewController.m; sourceTree = "<group>"; };
+		42CCF32D18A12BFC00E87843 /* CRDatePickerAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRDatePickerAlertView.h; path = View/CRDatePickerAlertView.h; sourceTree = "<group>"; };
+		42CCF32E18A12BFC00E87843 /* CRDatePickerAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRDatePickerAlertView.m; path = View/CRDatePickerAlertView.m; sourceTree = "<group>"; };
+		42CCF33018A2510900E87843 /* RoastItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RoastItemCell.xib; sourceTree = "<group>"; };
+		42CCF33218A2519D00E87843 /* CRRoastItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRRoastItemCell.h; path = View/CRRoastItemCell.h; sourceTree = "<group>"; };
+		42CCF33318A2519D00E87843 /* CRRoastItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRRoastItemCell.m; path = View/CRRoastItemCell.m; sourceTree = "<group>"; };
+		42CCF33518A2577100E87843 /* CRRoastItemResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRRoastItemResultViewController.h; path = ViewController/CRRoastItemResultViewController.h; sourceTree = "<group>"; };
+		42CCF33618A2577100E87843 /* CRRoastItemResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRRoastItemResultViewController.m; path = ViewController/CRRoastItemResultViewController.m; sourceTree = "<group>"; };
+		42CCF33818A295FB00E87843 /* CRTwoItemsCellButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRTwoItemsCellButton.h; path = View/CRTwoItemsCellButton.h; sourceTree = "<group>"; };
+		42CCF33918A295FB00E87843 /* CRTwoItemsCellButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRTwoItemsCellButton.m; path = View/CRTwoItemsCellButton.m; sourceTree = "<group>"; };
+		42CCF33F18A3EC2A00E87843 /* TwoItemResultCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TwoItemResultCell.xib; sourceTree = "<group>"; };
+		42CCF34118A3EEC500E87843 /* CoffeeRoastLogger.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = CoffeeRoastLogger.entitlements; sourceTree = "<group>"; };
+		42CCF34218A6015300E87843 /* ResultItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResultItemCell.xib; sourceTree = "<group>"; };
+		42CCF34418A601E700E87843 /* CRResultItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRResultItemCell.h; path = View/CRResultItemCell.h; sourceTree = "<group>"; };
+		42CCF34518A601E700E87843 /* CRResultItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRResultItemCell.m; path = View/CRResultItemCell.m; sourceTree = "<group>"; };
+		42CCF34718A60D4200E87843 /* ResultItemHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResultItemHeaderCell.xib; sourceTree = "<group>"; };
+		42CCF34918A613DD00E87843 /* CRResultItemHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRResultItemHeaderCell.h; path = View/CRResultItemHeaderCell.h; sourceTree = "<group>"; };
+		42CCF34A18A613DD00E87843 /* CRResultItemHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRResultItemHeaderCell.m; path = View/CRResultItemHeaderCell.m; sourceTree = "<group>"; };
+		42D0A5EC189CF6B500CCE450 /* CRMemoTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRMemoTextView.h; path = View/CRMemoTextView.h; sourceTree = "<group>"; };
+		42D0A5ED189CF6B500CCE450 /* CRMemoTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRMemoTextView.m; path = View/CRMemoTextView.m; sourceTree = "<group>"; };
+		42D0A5F0189D086C00CCE450 /* CRUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRUtility.h; path = Utility/CRUtility.h; sourceTree = "<group>"; };
+		42D0A5F1189D086C00CCE450 /* CRUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRUtility.m; path = Utility/CRUtility.m; sourceTree = "<group>"; };
+		42D0A5F3189E281200CCE450 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		42D0A5F5189E28A700CCE450 /* CRImagePickerRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRImagePickerRootViewController.h; path = ViewController/CRImagePickerRootViewController.h; sourceTree = "<group>"; };
+		42D0A5F6189E28A700CCE450 /* CRImagePickerRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRImagePickerRootViewController.m; path = ViewController/CRImagePickerRootViewController.m; sourceTree = "<group>"; };
+		42D0A5F8189E304A00CCE450 /* ImageRootCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageRootCell.xib; sourceTree = "<group>"; };
+		42D0A5FA189E30DD00CCE450 /* CRImageRootViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRImageRootViewCell.h; path = View/CRImageRootViewCell.h; sourceTree = "<group>"; };
+		42D0A5FB189E30DD00CCE450 /* CRImageRootViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRImageRootViewCell.m; path = View/CRImageRootViewCell.m; sourceTree = "<group>"; };
+		42D0A5FD189E338200CCE450 /* CRAlbumContentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRAlbumContentsViewController.h; path = ViewController/CRAlbumContentsViewController.h; sourceTree = "<group>"; };
+		42D0A5FE189E338200CCE450 /* CRAlbumContentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRAlbumContentsViewController.m; path = ViewController/CRAlbumContentsViewController.m; sourceTree = "<group>"; };
+		42D0A603189E3A2000CCE450 /* CRRoast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRRoast.h; path = CoffeeRoastLogger/Model/CRRoast.h; sourceTree = SOURCE_ROOT; };
+		42D0A604189E3A2000CCE450 /* CRRoast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRRoast.m; path = CoffeeRoastLogger/Model/CRRoast.m; sourceTree = SOURCE_ROOT; };
+		42FA30D618A6969F0061B778 /* CRConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRConfiguration.h; path = Utility/CRConfiguration.h; sourceTree = "<group>"; };
+		42FA30D718A6969F0061B778 /* CRConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRConfiguration.m; path = Utility/CRConfiguration.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +168,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42D0A5F4189E281200CCE450 /* AssetsLibrary.framework in Frameworks */,
 				428AA42518840D1400401165 /* CoreGraphics.framework in Frameworks */,
 				428AA42918840D1400401165 /* CoreData.framework in Frameworks */,
 				428AA42718840D1400401165 /* UIKit.framework in Frameworks */,
@@ -138,6 +212,7 @@
 		428AA42118840D1400401165 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				42D0A5F3189E281200CCE450 /* AssetsLibrary.framework */,
 				428AA42218840D1400401165 /* Foundation.framework */,
 				428AA42418840D1400401165 /* CoreGraphics.framework */,
 				428AA42618840D1400401165 /* UIKit.framework */,
@@ -150,20 +225,22 @@
 		428AA42A18840D1400401165 /* CoffeeRoastLogger */ = {
 			isa = PBXGroup;
 			children = (
+				42CCF34118A3EEC500E87843 /* CoffeeRoastLogger.entitlements */,
+				42D0A5EF189D085000CCE450 /* Uitility */,
+				42CCF2D21897C14300E87843 /* View */,
+				42B5DB3D1894E3B200F0710E /* ViewController */,
 				428AA49118842D2500401165 /* Information */,
 				428AA47E1884269400401165 /* Model */,
 				428AA46018840D2E00401165 /* Resources */,
 				428AA43318840D1400401165 /* CRAppDelegate.h */,
 				428AA43418840D1400401165 /* CRAppDelegate.m */,
 				428AA43618840D1400401165 /* Main.storyboard */,
-				428AA43C18840D1400401165 /* CRMasterViewController.h */,
-				428AA43D18840D1400401165 /* CRMasterViewController.m */,
-				428AA43F18840D1400401165 /* CRDetailViewController.h */,
-				428AA44018840D1400401165 /* CRDetailViewController.m */,
 				428AA44218840D1400401165 /* Images.xcassets */,
 				428AA42B18840D1400401165 /* Supporting Files */,
 				428AA48E18842B9800401165 /* CRRoastManager.h */,
 				428AA48F18842B9800401165 /* CRRoastManager.m */,
+				428AA4B91886DB7100401165 /* CRRoastDataSource.h */,
+				428AA4BA1886DB7100401165 /* CRRoastDataSource.m */,
 			);
 			path = CoffeeRoastLogger;
 			sourceTree = "<group>";
@@ -201,6 +278,14 @@
 			isa = PBXGroup;
 			children = (
 				428AA46118840D3D00401165 /* CRCoffeeData.xcdatamodeld */,
+				42CCF2D01897C0AC00E87843 /* TwoItemsCell.xib */,
+				42CCF31C189951BD00E87843 /* ConditionCell.xib */,
+				42CCF321189D56EC00E87843 /* EmptyCell.xib */,
+				42D0A5F8189E304A00CCE450 /* ImageRootCell.xib */,
+				42CCF33018A2510900E87843 /* RoastItemCell.xib */,
+				42CCF33F18A3EC2A00E87843 /* TwoItemResultCell.xib */,
+				42CCF34218A6015300E87843 /* ResultItemCell.xib */,
+				42CCF34718A60D4200E87843 /* ResultItemHeaderCell.xib */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -208,8 +293,8 @@
 		428AA47E1884269400401165 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				428AA4B61886CE6B00401165 /* CRRoast.h */,
-				428AA4B71886CE6B00401165 /* CRRoast.m */,
+				42D0A603189E3A2000CCE450 /* CRRoast.h */,
+				42D0A604189E3A2000CCE450 /* CRRoast.m */,
 				428AA4B31886CE6B00401165 /* CREnvironment.h */,
 				428AA4B41886CE6B00401165 /* CREnvironment.m */,
 				428AA4B01886CE6B00401165 /* CRHeating.h */,
@@ -233,6 +318,65 @@
 				428AA49318842D3400401165 /* CRRoastInformation.m */,
 			);
 			path = Information;
+			sourceTree = "<group>";
+		};
+		42B5DB3D1894E3B200F0710E /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				428AA43C18840D1400401165 /* CRMasterViewController.h */,
+				428AA43D18840D1400401165 /* CRMasterViewController.m */,
+				42B5DB3E1894E93200F0710E /* CRNewItemViewController.h */,
+				42B5DB3F1894E93200F0710E /* CRNewItemViewController.m */,
+				42CCF3191897E80900E87843 /* CRDateEditingViewController.h */,
+				42CCF31A1897E80900E87843 /* CRDateEditingViewController.m */,
+				42D0A5F5189E28A700CCE450 /* CRImagePickerRootViewController.h */,
+				42D0A5F6189E28A700CCE450 /* CRImagePickerRootViewController.m */,
+				42D0A5FD189E338200CCE450 /* CRAlbumContentsViewController.h */,
+				42D0A5FE189E338200CCE450 /* CRAlbumContentsViewController.m */,
+				42CCF326189FC93A00E87843 /* CRSelectedPhotoViewController.h */,
+				42CCF327189FC93A00E87843 /* CRSelectedPhotoViewController.m */,
+				42CCF33518A2577100E87843 /* CRRoastItemResultViewController.h */,
+				42CCF33618A2577100E87843 /* CRRoastItemResultViewController.m */,
+			);
+			name = ViewController;
+			sourceTree = "<group>";
+		};
+		42CCF2D21897C14300E87843 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				42CCF2D31897C16200E87843 /* CRTwoItemsCell.h */,
+				42CCF2D41897C16200E87843 /* CRTwoItemsCell.m */,
+				42CCF31E1899527500E87843 /* CRConditionCell.h */,
+				42CCF31F1899527500E87843 /* CRConditionCell.m */,
+				42D0A5EC189CF6B500CCE450 /* CRMemoTextView.h */,
+				42D0A5ED189CF6B500CCE450 /* CRMemoTextView.m */,
+				42CCF323189D570400E87843 /* CREmptyCell.h */,
+				42CCF324189D570400E87843 /* CREmptyCell.m */,
+				42D0A5FA189E30DD00CCE450 /* CRImageRootViewCell.h */,
+				42D0A5FB189E30DD00CCE450 /* CRImageRootViewCell.m */,
+				42CCF32D18A12BFC00E87843 /* CRDatePickerAlertView.h */,
+				42CCF32E18A12BFC00E87843 /* CRDatePickerAlertView.m */,
+				42CCF33218A2519D00E87843 /* CRRoastItemCell.h */,
+				42CCF33318A2519D00E87843 /* CRRoastItemCell.m */,
+				42CCF33818A295FB00E87843 /* CRTwoItemsCellButton.h */,
+				42CCF33918A295FB00E87843 /* CRTwoItemsCellButton.m */,
+				42CCF34418A601E700E87843 /* CRResultItemCell.h */,
+				42CCF34518A601E700E87843 /* CRResultItemCell.m */,
+				42CCF34918A613DD00E87843 /* CRResultItemHeaderCell.h */,
+				42CCF34A18A613DD00E87843 /* CRResultItemHeaderCell.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		42D0A5EF189D085000CCE450 /* Uitility */ = {
+			isa = PBXGroup;
+			children = (
+				42D0A5F0189D086C00CCE450 /* CRUtility.h */,
+				42D0A5F1189D086C00CCE450 /* CRUtility.m */,
+				42FA30D618A6969F0061B778 /* CRConfiguration.h */,
+				42FA30D718A6969F0061B778 /* CRConfiguration.m */,
+			);
+			name = Uitility;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -283,6 +427,14 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Hiraku Ohno";
 				TargetAttributes = {
+					428AA41E18840D1400401165 = {
+						DevelopmentTeam = 5M2EQKMGE5;
+						SystemCapabilities = {
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
+					};
 					428AA44718840D1400401165 = {
 						TestTargetID = 428AA41E18840D1400401165;
 					};
@@ -313,8 +465,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				428AA44318840D1400401165 /* Images.xcassets in Resources */,
+				42CCF34818A60D4200E87843 /* ResultItemHeaderCell.xib in Resources */,
 				428AA42F18840D1400401165 /* InfoPlist.strings in Resources */,
+				42CCF33118A2510900E87843 /* RoastItemCell.xib in Resources */,
+				42CCF34318A6015300E87843 /* ResultItemCell.xib in Resources */,
+				42CCF31D189951BD00E87843 /* ConditionCell.xib in Resources */,
 				428AA43818840D1400401165 /* Main.storyboard in Resources */,
+				42CCF34018A3EC2A00E87843 /* TwoItemResultCell.xib in Resources */,
+				42CCF2D11897C0AC00E87843 /* TwoItemsCell.xib in Resources */,
+				42D0A5F9189E304A00CCE450 /* ImageRootCell.xib in Resources */,
+				42CCF322189D56EC00E87843 /* EmptyCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -333,20 +493,38 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				428AA4B81886CE6B00401165 /* CRRoast.m in Sources */,
 				428AA49718842DD200401165 /* CRHeatingInformation.m in Sources */,
+				42CCF2D51897C16200E87843 /* CRTwoItemsCell.m in Sources */,
+				42CCF33718A2577100E87843 /* CRRoastItemResultViewController.m in Sources */,
+				42D0A605189E3A2000CCE450 /* CRRoast.m in Sources */,
+				42D0A5F2189D086C00CCE450 /* CRUtility.m in Sources */,
 				428AA49A18842DEB00401165 /* CREnvironmentInformation.m in Sources */,
+				42D0A5FF189E338200CCE450 /* CRAlbumContentsViewController.m in Sources */,
+				42CCF31B1897E80900E87843 /* CRDateEditingViewController.m in Sources */,
 				428AA46318840D3D00401165 /* CRCoffeeData.xcdatamodeld in Sources */,
+				42CCF32F18A12BFC00E87843 /* CRDatePickerAlertView.m in Sources */,
+				42CCF34618A601E700E87843 /* CRResultItemCell.m in Sources */,
+				42CCF34B18A613DD00E87843 /* CRResultItemHeaderCell.m in Sources */,
+				42CCF33418A2519D00E87843 /* CRRoastItemCell.m in Sources */,
+				42CCF328189FC93A00E87843 /* CRSelectedPhotoViewController.m in Sources */,
 				428AA4B21886CE6B00401165 /* CRHeating.m in Sources */,
-				428AA44118840D1400401165 /* CRDetailViewController.m in Sources */,
 				428AA4AF1886CE6B00401165 /* CRBean.m in Sources */,
+				42D0A5F7189E28A700CCE450 /* CRImagePickerRootViewController.m in Sources */,
+				42CCF325189D570400E87843 /* CREmptyCell.m in Sources */,
 				428AA49D18842DFB00401165 /* CRBeanInformation.m in Sources */,
+				42D0A5FC189E30DD00CCE450 /* CRImageRootViewCell.m in Sources */,
 				428AA43118840D1400401165 /* main.m in Sources */,
 				428AA49018842B9800401165 /* CRRoastManager.m in Sources */,
 				428AA43518840D1400401165 /* CRAppDelegate.m in Sources */,
+				42D0A5EE189CF6B500CCE450 /* CRMemoTextView.m in Sources */,
 				428AA49418842D3400401165 /* CRRoastInformation.m in Sources */,
+				42FA30D818A6969F0061B778 /* CRConfiguration.m in Sources */,
+				42CCF33A18A295FB00E87843 /* CRTwoItemsCellButton.m in Sources */,
 				428AA4B51886CE6B00401165 /* CREnvironment.m in Sources */,
+				42CCF3201899527500E87843 /* CRConditionCell.m in Sources */,
 				428AA43E18840D1400401165 /* CRMasterViewController.m in Sources */,
+				428AA4BB1886DB7100401165 /* CRRoastDataSource.m in Sources */,
+				42B5DB401894E93200F0710E /* CRNewItemViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -473,10 +651,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = CoffeeRoastLogger/CoffeeRoastLogger.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Hiraku Ohno (CVMC67499R)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CoffeeRoastLogger/CoffeeRoastLogger-Prefix.pch";
 				INFOPLIST_FILE = "CoffeeRoastLogger/CoffeeRoastLogger-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "48DE90D9-763C-4294-B34C-90E65EC6268F";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -486,10 +667,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = CoffeeRoastLogger/CoffeeRoastLogger.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Hiraku Ohno (CVMC67499R)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CoffeeRoastLogger/CoffeeRoastLogger-Prefix.pch";
 				INFOPLIST_FILE = "CoffeeRoastLogger/CoffeeRoastLogger-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "48DE90D9-763C-4294-B34C-90E65EC6268F";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -555,6 +739,7 @@
 				428AA45C18840D1400401165 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		428AA45D18840D1400401165 /* Build configuration list for PBXNativeTarget "CoffeeRoastLoggerTests" */ = {
 			isa = XCConfigurationList;
@@ -563,6 +748,7 @@
 				428AA45F18840D1400401165 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

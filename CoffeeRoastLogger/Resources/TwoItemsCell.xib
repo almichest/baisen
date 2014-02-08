@@ -25,9 +25,17 @@
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                     </textField>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0ey-zc-vgc" customClass="CRTwoItemsCellButton">
+                        <rect key="frame" x="0.0" y="7" width="30" height="30"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <state key="normal">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
                 </subviews>
             </tableViewCellContentView>
             <connections>
+                <outlet property="button" destination="0ey-zc-vgc" id="JUr-1N-VeY"/>
                 <outlet property="firstItemField" destination="GfB-Xa-esU" id="asY-8J-2SH"/>
                 <outlet property="secondItemField" destination="T1L-Ay-YUB" id="twB-qR-jJJ"/>
             </connections>

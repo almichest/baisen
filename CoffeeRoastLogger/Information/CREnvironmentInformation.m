@@ -9,5 +9,4 @@
 #import "CREnvironmentInformation.h"
 
 @implementation CREnvironmentInformation
-
 @end

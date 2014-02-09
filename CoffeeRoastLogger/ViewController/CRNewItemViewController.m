@@ -87,6 +87,7 @@
     
     id _observer;
     
+    UITextField *_currentTextField;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -356,6 +357,7 @@
                 itemCell.secondItemField.hidden = NO;
                 itemCell.secondItemField.placeholder = @"Length";
                 itemCell.secondItemField.keyboardType = UIKeyboardTypeNumberPad;
+                itemCell.secondItemField.inputAccessoryView = [self separatorViewInKeyboard];
                 itemCell.secondItemField.text = @"";
                 itemCell.secondItemField.tag = kHeatingLengthBaseTag + indexPath.row;
                 NSString *lengthString = information.time > 0 ? [NSString stringWithFormat:@"%d", roastLengthFromValue(information.time)] : @"";
@@ -737,7 +739,20 @@
     
 }
 
+- (void)appendSeparatorToCurrentTextField
+{
+    NSString *currentString = _currentTextField.text;
+    if(currentString.length > 0 && [currentString rangeOfString:@"."].location == NSNotFound) {
+        _currentTextField.text = [NSString stringWithFormat:@"%@.", _currentTextField.text];
+    }
+}
+
 #pragma mark - UITextFieldDelegate
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    _currentTextField = textField;
+}
+
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     MyLog(@"tag = %d", textField.tag);
@@ -826,4 +841,26 @@
     }
 }
 
+- (UIView *)separatorViewInKeyboard
+{
+    UIView *accessoryView = [[UIView alloc] initWithFrame:CGRectMake(240, 0, 120, 30)];
+    accessoryView.backgroundColor = [UIColor whiteColor];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(215, 0, 105, 30)];
+    label.text = @".";
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor blackColor];
+    label.backgroundColor = [UIColor whiteColor];
+    label.layer.borderWidth = 1.0f;
+    label.layer.borderColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.2].CGColor;
+    label.userInteractionEnabled = YES;
+    
+    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(appendSeparatorToCurrentTextField)];
+    [label addGestureRecognizer:recognizer];
+    
+    [accessoryView addSubview:label];
+    
+    return accessoryView;
+}
+
 @end
+

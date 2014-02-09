@@ -16,7 +16,11 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *firstItemFieldButton;
 @property (weak, nonatomic) IBOutlet UIButton *secondItemFieldButton;
+@property (weak, nonatomic) IBOutlet UIImageView *firstItemIndicator;
+@property (weak, nonatomic) IBOutlet UIImageView *secondItemIndicator;
 
+@property (weak, nonatomic) IBOutlet UIView *firstItemRecognizerArea;
+@property (weak, nonatomic) IBOutlet UIView *secondItemRecognizerArea;
 
 @end
 

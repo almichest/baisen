@@ -123,7 +123,7 @@
                     <connections>
                         <outlet property="cancelButton" destination="L6b-WP-YHA" id="LKE-Uq-nvu"/>
                         <outlet property="completeButton" destination="EbT-1v-J5p" id="qir-BD-XuZ"/>
-                        <segue destination="0PT-6i-V0L" kind="modal" identifier="editDate" id="3py-lN-4Du"/>
+                        <segue destination="0PT-6i-V0L" kind="push" identifier="editDate" id="3py-lN-4Du"/>
                         <segue destination="fgs-Zy-qCv" kind="modal" identifier="selectImage" id="aQx-Rt-DaA"/>
                     </connections>
                 </tableViewController>
@@ -161,6 +161,9 @@
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="i5i-17-rQA">
                                 <rect key="frame" x="0.0" y="64" width="320" height="162"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="162" id="RWN-Hz-XvY"/>
+                                </constraints>
                                 <date key="date" timeIntervalSinceReferenceDate="412607704.95702797">
                                     <!--2014-01-28 13:15:04 +0000-->
                                 </date>
@@ -186,33 +189,24 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
 </data>
                                 </timeZone>
                             </datePicker>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hTO-2A-odx">
-                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="320" id="RyY-i4-JAa"/>
-                                </constraints>
-                                <items>
-                                    <navigationItem title="Edit Date" id="Knq-e8-4Ej">
-                                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="mPf-MZ-Vm3"/>
-                                        <barButtonItem key="rightBarButtonItem" title="OK" id="oyq-bb-RWx"/>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Gf-u5-hDJ">
+                                <rect key="frame" x="145" y="258" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="OK">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="i5i-17-rQA" firstAttribute="leading" secondItem="xQ9-eH-Yl9" secondAttribute="leading" id="0UY-gx-Msj"/>
                             <constraint firstAttribute="trailing" secondItem="i5i-17-rQA" secondAttribute="trailing" id="8gl-qn-jdw"/>
-                            <constraint firstItem="i5i-17-rQA" firstAttribute="top" secondItem="hTO-2A-odx" secondAttribute="bottom" id="FYF-WL-X5I"/>
-                            <constraint firstAttribute="centerX" secondItem="hTO-2A-odx" secondAttribute="centerX" id="Yq9-zl-kSt"/>
-                            <constraint firstItem="hTO-2A-odx" firstAttribute="top" secondItem="xQ9-eH-Yl9" secondAttribute="top" constant="20" id="jRj-Gs-dkg"/>
+                            <constraint firstItem="i5i-17-rQA" firstAttribute="top" secondItem="ye9-eG-fpH" secondAttribute="bottom" id="vlr-2i-ETh"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="cancelButton" destination="mPf-MZ-Vm3" id="HQQ-cI-MsM"/>
                         <outlet property="datePicker" destination="i5i-17-rQA" id="qmn-Rg-5yP"/>
-                        <outlet property="okButton" destination="oyq-bb-RWx" id="m8b-Bf-Lno"/>
+                        <outlet property="okButton" destination="7Gf-u5-hDJ" id="qHL-t6-r3g"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ueV-sp-azX" userLabel="First Responder" sceneMemberID="firstResponder"/>

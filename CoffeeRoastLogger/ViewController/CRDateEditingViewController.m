@@ -27,9 +27,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.okButton.action = @selector(didPushOKButton);
-    self.cancelButton.action = @selector(didPushCancelButton);
+    [self.okButton addTarget:self action:@selector(didPushOKButton:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)didReceiveMemoryWarning
@@ -38,18 +36,12 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)didPushOKButton
+- (void)didPushOKButton:(UIButton *)button
 {
-    [self dismissViewControllerAnimated:YES completion:^{
-        if(self.completion) {
-            self.completion(self.datePicker.date);
-        }
-    }];
-}
-
-- (void)didPushCancelButton
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
+    if(self.completion) {
+        self.completion(self.datePicker.date);
+    }
     
 }
 

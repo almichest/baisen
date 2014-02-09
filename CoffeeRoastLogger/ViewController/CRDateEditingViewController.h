@@ -10,9 +10,8 @@
 
 @interface CRDateEditingViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *okButton;
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
+@property (weak, nonatomic) IBOutlet UIButton *okButton;
 
 @property(nonatomic, copy) void (^completion)(NSDate *date);
 

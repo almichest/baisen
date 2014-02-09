@@ -61,6 +61,7 @@
 		42D0A5FF189E338200CCE450 /* CRAlbumContentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42D0A5FE189E338200CCE450 /* CRAlbumContentsViewController.m */; };
 		42D0A605189E3A2000CCE450 /* CRRoast.m in Sources */ = {isa = PBXBuildFile; fileRef = 42D0A604189E3A2000CCE450 /* CRRoast.m */; };
 		42FA30D818A6969F0061B778 /* CRConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 42FA30D718A6969F0061B778 /* CRConfiguration.m */; };
+		42FA30DB18A7743A0061B778 /* table_indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 42FA30DA18A7743A0061B778 /* table_indicator.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -161,6 +162,7 @@
 		42D0A604189E3A2000CCE450 /* CRRoast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRRoast.m; path = CoffeeRoastLogger/Model/CRRoast.m; sourceTree = SOURCE_ROOT; };
 		42FA30D618A6969F0061B778 /* CRConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRConfiguration.h; path = Utility/CRConfiguration.h; sourceTree = "<group>"; };
 		42FA30D718A6969F0061B778 /* CRConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRConfiguration.m; path = Utility/CRConfiguration.m; sourceTree = "<group>"; };
+		42FA30DA18A7743A0061B778 /* table_indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = table_indicator.png; path = Images/table_indicator.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -277,6 +279,7 @@
 		428AA46018840D2E00401165 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				42FA30D918A773E70061B778 /* Images */,
 				428AA46118840D3D00401165 /* CRCoffeeData.xcdatamodeld */,
 				42CCF2D01897C0AC00E87843 /* TwoItemsCell.xib */,
 				42CCF31C189951BD00E87843 /* ConditionCell.xib */,
@@ -379,6 +382,14 @@
 			name = Uitility;
 			sourceTree = "<group>";
 		};
+		42FA30D918A773E70061B778 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				42FA30DA18A7743A0061B778 /* table_indicator.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -470,6 +481,7 @@
 				42CCF33118A2510900E87843 /* RoastItemCell.xib in Resources */,
 				42CCF34318A6015300E87843 /* ResultItemCell.xib in Resources */,
 				42CCF31D189951BD00E87843 /* ConditionCell.xib in Resources */,
+				42FA30DB18A7743A0061B778 /* table_indicator.png in Resources */,
 				428AA43818840D1400401165 /* Main.storyboard in Resources */,
 				42CCF34018A3EC2A00E87843 /* TwoItemResultCell.xib in Resources */,
 				42CCF2D11897C0AC00E87843 /* TwoItemsCell.xib in Resources */,

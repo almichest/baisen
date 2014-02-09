@@ -77,8 +77,6 @@
     CREnvironmentInformation *_environmentInformation;
     NSMutableArray *_heatingInformations;
     
-    
-    UIDatePicker *_datePicker;
     NSUInteger _beanCount;
     NSUInteger _heatCount;
     NSDate *_date;
@@ -128,9 +126,6 @@
     _heatCount = 1;
     _date = [NSDate date];
     _environmentInformation.date = _date.timeIntervalSince1970;
-    
-    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeSoftKeyboard)];
-    [self.view addGestureRecognizer:gestureRecognizer];
     
     _observer = [[NSNotificationCenter defaultCenter] addObserverForName:CRSelectedPhotoViewControllerPhotoSelectNotification object:Nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         UIImage *image = note.userInfo[CRSelectedPhotoViewControllerPhotoSelectNotificationKeyPhoto];
@@ -268,18 +263,7 @@
             cell = [tableView dequeueReusableCellWithIdentifier:kDefaultCellIdentifier forIndexPath:indexPath];
             cell.textLabel.text = dateStringFromNSDate(_date);
             cell.textLabel.font = [UIFont systemFontOfSize:14];
-            UIButton *editButton = [UIButton buttonWithType:UIButtonTypeSystem];
-            editButton.frame = CGRectMake(0, 0, 30, 30);
-            editButton.layer.borderColor = editButton.tintColor.CGColor;
-            editButton.layer.borderWidth = 1.0f;
-            editButton.layer.cornerRadius = 4.5f;
-            [editButton addTarget:self action:@selector(showDatePickerView) forControlEvents:UIControlEventTouchUpInside];
-            [editButton setTitle:@"Edit" forState:UIControlStateNormal];
-            [editButton setTitleColor:editButton.tintColor forState:UIControlStateNormal];
-            [editButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-            editButton.titleLabel.font = [UIFont systemFontOfSize:14];
-            cell.accessoryView = editButton;
-            
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
         }
         case kBeanSection :
@@ -293,13 +277,16 @@
                 
                 CRBeanInformation *information = _beanInformations[indexPath.row];
                 
+                /* First item */
                 itemCell.firstItemField.hidden = NO;
                 itemCell.firstItemField.placeholder = @"Kind";
                 itemCell.firstItemField.text = @"";
                 itemCell.firstItemField.tag = kBeanKindInputBaseTag + indexPath.row;
                 itemCell.firstItemField.delegate = self;
                 itemCell.firstItemField.text = information.area;
+                itemCell.firstItemIndicator.hidden = YES;
                 
+                /* Second item */
                 itemCell.secondItemField.hidden = NO;
                 itemCell.secondItemField.placeholder = @"Quantity";
                 itemCell.secondItemField.keyboardType = UIKeyboardTypeNumberPad;
@@ -307,6 +294,7 @@
                 itemCell.secondItemField.tag = kBeanQuantityInputBaseTag + indexPath.row;
                 itemCell.secondItemField.delegate = self;
                 [itemCell.secondItemFieldButton setTitle:@"g" forState:UIControlStateNormal];
+                itemCell.secondItemIndicator.hidden = YES;
                 
                 NSString *quantityString = information.quantity > 0 ? [NSString stringWithFormat:@"%d", information.quantity] : @"";
                 itemCell.secondItemField.text = quantityString;
@@ -325,7 +313,9 @@
                 itemCell.button.userInteractionEnabled = YES;
                 
                 [itemCell.firstItemFieldButton setTitle:@"" forState:UIControlStateNormal];
+                itemCell.firstItemIndicator.hidden = YES;
                 [itemCell.secondItemFieldButton setTitle:@"" forState:UIControlStateNormal];
+                itemCell.secondItemIndicator.hidden = YES;
             }
             break;
         case kHeatingSection :
@@ -337,15 +327,16 @@
                 [itemCell.button addTarget:self action:@selector(removeHeatingCell:) forControlEvents:UIControlEventTouchUpInside];
                 itemCell.button.userInteractionEnabled = YES;
                 
-                NSString *firstButtonTitle = self.useFahrenheitForHeating ? [NSString stringWithFormat:@"%@ >", kFahrenheit] : [NSString stringWithFormat:@"%@ >", kCelcius];
-                [itemCell.firstItemFieldButton setTitle:firstButtonTitle forState:UIControlStateNormal];
-                [itemCell.firstItemFieldButton addTarget:self action:@selector(showHeationgTempratureUnitSelectionSheet) forControlEvents:UIControlEventTouchUpInside];
-                
-                NSString *secondButtonTitle = self.useMinuteForRoastLength ? @" min. >" : @" sec. >";
-                [itemCell.secondItemFieldButton setTitle:secondButtonTitle forState:UIControlStateNormal];
-                [itemCell.secondItemFieldButton addTarget:self action:@selector(showHeatingLengthUnitSelectionSheet) forControlEvents:UIControlEventTouchUpInside];
-                
                 CRHeatingInformation *information = _heatingInformations[indexPath.row];
+                
+                /* First item*/
+                NSString *firstButtonTitle = self.useFahrenheitForHeating ? kFahrenheit : kCelcius;
+                [itemCell.firstItemFieldButton setTitle:firstButtonTitle forState:UIControlStateNormal];
+                [itemCell.firstItemFieldButton addTarget:self action:@selector(showHeatingTempratureUnitSelectionSheet) forControlEvents:UIControlEventTouchUpInside];
+                UITapGestureRecognizer *firstIndicatorRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showHeatingTempratureUnitSelectionSheet)];
+                itemCell.firstItemRecognizerArea.userInteractionEnabled = YES;
+                [self clearGestureRecognizerInView:itemCell.firstItemRecognizerArea];
+                [itemCell.firstItemRecognizerArea addGestureRecognizer:firstIndicatorRecognizer];
                 
                 itemCell.firstItemField.hidden = NO;
                 itemCell.firstItemField.placeholder = @"Temprature";
@@ -353,7 +344,14 @@
                 itemCell.firstItemField.text = @"";
                 itemCell.firstItemField.tag = kHeatingTempratureBaseTag + indexPath.row;
                 NSString *tempratureString = information.temperature > 0 ? [NSString stringWithFormat:@"%.0f", roastTempratureFromValue(information.temperature)] : @"";
+                itemCell.firstItemIndicator.hidden = NO;
                 itemCell.firstItemField.text = tempratureString;
+                itemCell.firstItemField.delegate = self;
+                
+                /* Second item */
+                NSString *secondButtonTitle = self.useMinuteForRoastLength ? @" min." : @" sec.";
+                [itemCell.secondItemFieldButton setTitle:secondButtonTitle forState:UIControlStateNormal];
+                [itemCell.secondItemFieldButton addTarget:self action:@selector(showHeatingLengthUnitSelectionSheet) forControlEvents:UIControlEventTouchUpInside];
                 
                 itemCell.secondItemField.hidden = NO;
                 itemCell.secondItemField.placeholder = @"Length";
@@ -362,12 +360,16 @@
                 itemCell.secondItemField.tag = kHeatingLengthBaseTag + indexPath.row;
                 NSString *lengthString = information.time > 0 ? [NSString stringWithFormat:@"%d", roastLengthFromValue(information.time)] : @"";
                 itemCell.secondItemField.text = lengthString;
+                itemCell.secondItemField.delegate = self;
+                UITapGestureRecognizer *secondIndicatorRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showHeatingLengthUnitSelectionSheet)];
+                itemCell.secondItemIndicator.hidden = NO;
+                itemCell.secondItemRecognizerArea.userInteractionEnabled = YES;
+                [self clearGestureRecognizerInView:itemCell.secondItemRecognizerArea];
+                [itemCell.secondItemRecognizerArea addGestureRecognizer:secondIndicatorRecognizer];
                 
                 _heatingButtonsArray[indexPath.row] = itemCell.button;
                 itemCell.button.indexPath = indexPath;
                 
-                itemCell.firstItemField.delegate = self;
-                itemCell.secondItemField.delegate = self;
             } else {
                 cell = [tableView dequeueReusableCellWithIdentifier:kTwoItemCellIdentifier];
                 CRTwoItemsCell *itemCell = (CRTwoItemsCell *)cell;
@@ -379,7 +381,9 @@
                 itemCell.button.userInteractionEnabled = YES;
                 
                 [itemCell.firstItemFieldButton setTitle:@"" forState:UIControlStateNormal];
+                itemCell.firstItemIndicator.hidden = YES;
                 [itemCell.secondItemFieldButton setTitle:@"" forState:UIControlStateNormal];
+                itemCell.secondItemIndicator.hidden = YES;
             }
             break;
         case kOtherConditionSection : {
@@ -392,10 +396,14 @@
                 conditionCell.valueTextField.delegate = self;
                 NSString *tempratureString = _environmentInformation.temperature > 0 ? [NSString stringWithFormat:@"%.0lf", roomTempratureFromValue(_environmentInformation.temperature)] : @"";
                 conditionCell.valueTextField.text = tempratureString;
-                [conditionCell.button addTarget:self action:@selector(showRoomTempratureUnitSelectionSheet) forControlEvents:UIControlEventTouchUpInside];
+                UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showRoomTempratureUnitSelectionSheet)];
+                [self clearGestureRecognizerInView:conditionCell.recognizerField];
+                [conditionCell.recognizerField addGestureRecognizer:recognizer];
+                conditionCell.recognizerField.userInteractionEnabled = YES;
                 
-                NSString *buttonTitle = self.useFahrenheitForRoom ? [NSString stringWithFormat:@"%@ >",kFahrenheit] : [NSString stringWithFormat:@"%@ >", kCelcius];
+                NSString *buttonTitle = self.useFahrenheitForRoom ? kFahrenheit : kCelcius;
                 [conditionCell.button setTitle:buttonTitle forState:UIControlStateNormal];
+                conditionCell.indicatorImage.hidden = NO;
             } else if(indexPath.row == 1) {
                 conditionCell.valueTextField.placeholder = @"Humidity";
                 conditionCell.valueTextField.tag = kHumidityFieldTag;
@@ -404,18 +412,22 @@
                 conditionCell.valueTextField.delegate = self;
                 NSString *buttonTitle = @"%";
                 [conditionCell.button setTitle:buttonTitle forState:UIControlStateNormal];
+                conditionCell.indicatorImage.hidden = YES;
             }
             break;
         }
         case kResultSection :
             if(indexPath.row == 0) {
                 cell = [tableView dequeueReusableCellWithIdentifier:kConditionCellIdentifier];
-                ((CRConditionCell *)cell).valueTextField.placeholder = @"Score";
-                ((CRConditionCell *)cell).valueTextField.tag = kScoreFieldTag;
-                ((CRConditionCell *)cell).valueTextField.delegate = self;
+                CRConditionCell *conditionCell = (CRConditionCell *)cell;
+                conditionCell.valueTextField.placeholder = @"Score";
+                conditionCell.valueTextField.tag = kScoreFieldTag;
+                conditionCell.valueTextField.delegate = self;
                 if(_roastInformation.score != NSIntegerMin) {
-                    ((CRConditionCell *)cell).valueTextField.text = [NSString stringWithFormat:@"%d", _roastInformation.score];
+                    conditionCell.valueTextField.text = [NSString stringWithFormat:@"%d", _roastInformation.score];
                 }
+                conditionCell.indicatorImage.hidden = YES;
+                
             } else {
                 cell = [tableView dequeueReusableCellWithIdentifier:kEmptyCellIdentifier forIndexPath:indexPath];
                 CGRect frame = CGRectMake(11, 10, 294, cell.frame.size.height - 20);
@@ -456,15 +468,6 @@
 - (void)showDatePickerView
 {
     [self performSegueWithIdentifier:@"editDate" sender:nil];
-}
-
-- (UIDatePicker *)datePickerForFrame:(CGRect)frame;
-{
-    if(!_datePicker) {
-        _datePicker = [[UIDatePicker alloc] initWithFrame:frame];
-    }
-    
-    return _datePicker;
 }
 
 - (UIButton *)buttonToSetImage
@@ -543,6 +546,16 @@
     [self showImageSelectionSheet];
 }
 
+#pragma mark - UITableViewDelegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.section == kDateSection) {
+        [self showDatePickerView];
+    } else {
+        [self closeSoftKeyboard];
+    }
+}
+
 #pragma mark - Show UIActionSheet
 - (void)showImageSelectionSheet
 {
@@ -557,7 +570,7 @@
 - (void)showRoomTempratureUnitSelectionSheet
 {
     [self closeSoftKeyboard];
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Set Heating Temprature To : " delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:kFahrenheit, kCelcius, nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Set Room Temprature To : " delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:kFahrenheit, kCelcius, nil];
     actionSheet.tag =
     actionSheet.destructiveButtonIndex = 10;
     actionSheet.cancelButtonIndex = 2;
@@ -566,10 +579,10 @@
     [actionSheet showInView:self.view];
 }
 
-- (void)showHeationgTempratureUnitSelectionSheet
+- (void)showHeatingTempratureUnitSelectionSheet
 {
     [self closeSoftKeyboard];
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Set Room Temprature To : " delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:kFahrenheit, kCelcius, nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Set Heating Temprature To : " delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:kFahrenheit, kCelcius, nil];
     actionSheet.destructiveButtonIndex = 10;
     actionSheet.cancelButtonIndex = 2;
     actionSheet.tag = kHeatingTempratureUnitActionSheetTag;
@@ -701,7 +714,7 @@
         viewController.completion = ^(NSDate *date) {
             _date = date;
             _environmentInformation.date = date.timeIntervalSince1970;
-            [self.tableView reloadData];
+            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:kDateSection] withRowAnimation:UITableViewRowAnimationAutomatic];
         };
     }
 }
@@ -759,6 +772,15 @@
     }
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if([textField canResignFirstResponder]) {
+        [textField resignFirstResponder];
+    }
+    
+    return YES;
+}
+
 #pragma mark - UITextViewDelegate
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
@@ -794,6 +816,14 @@
 - (void)setUseMinuteForRoastLength:(BOOL)useMinuteForRoastLength
 {
     [CRConfiguration sharedConfiguration].useMinutesForHeatingLength = useMinuteForRoastLength;
+}
+
+#pragma mark - Utility
+- (void)clearGestureRecognizerInView:(UIView *)view
+{
+    for(UIGestureRecognizer *recognizer in view.gestureRecognizers) {
+        [view removeGestureRecognizer:recognizer];
+    }
 }
 
 @end

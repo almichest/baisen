@@ -11,5 +11,7 @@
 @interface CRConditionCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UITextField *valueTextField;
 @property (weak, nonatomic) IBOutlet UIButton *button;
+@property (weak, nonatomic) IBOutlet UIView *recognizerField;
+@property (weak, nonatomic) IBOutlet UIImageView *indicatorImage;
 
 @end

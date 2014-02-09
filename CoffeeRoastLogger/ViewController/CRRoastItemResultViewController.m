@@ -16,6 +16,7 @@
 #import "CRResultItemHeaderCell.h"
 
 #import "CRUtility.h"
+#import "CRConfiguration.h"
 
 @interface CRRoastItemResultViewController ()
 
@@ -165,7 +166,7 @@
                    cell = [tableView dequeueReusableCellWithIdentifier:kResultItemHeaderCellIdentifier];
                    CRResultItemHeaderCell *headerCell = (CRResultItemHeaderCell *)cell;
                    headerCell.firstNameLabel.text = @"Kind";
-                   headerCell.secondNameLabel.text = @"Quantity";
+                   headerCell.secondNameLabel.text = @"Quantity [g]";
                } else {
                    cell = [tableView dequeueReusableCellWithIdentifier:kResultItemCellIdentifier];
                    CRResultItemCell *itemCell = (CRResultItemCell *)cell;
@@ -180,15 +181,17 @@
                if(indexPath.row == 0) {
                    cell = [tableView dequeueReusableCellWithIdentifier:kResultItemHeaderCellIdentifier];
                    CRResultItemHeaderCell *headerCell = (CRResultItemHeaderCell *)cell;
-                   headerCell.firstNameLabel.text = @"Temp.";
-                   headerCell.secondNameLabel.text = @"Length";
+                   NSString *tempUnit = [CRConfiguration sharedConfiguration].useFahrenheitForRoast ? @"°F" : @"°C";
+                   headerCell.firstNameLabel.text = [NSString stringWithFormat:@"Temp. [%@]", tempUnit];
+                   NSString *lengthUnit = [CRConfiguration sharedConfiguration].useMinutesForHeatingLength ? @"min." : @"sec.";
+                   headerCell.secondNameLabel.text = [NSString stringWithFormat:@"Length [%@]", lengthUnit];
                } else {
                    cell = [tableView dequeueReusableCellWithIdentifier:kResultItemCellIdentifier];
                    CRResultItemCell *itemCell = (CRResultItemCell *)cell;
                    itemCell.separetorView.hidden = NO;
-                   CRHeating *heating = [self.roast.heating allObjects][indexPath.row - 1];
-                   itemCell.nameLabel.text = [NSString stringWithFormat:@"%.0f", heating.temperature];
-                   itemCell.valueLabel.text = [NSString stringWithFormat:@"%.0f", heating.time];
+                   CRHeating *heating = [self.roast heatingAtIndex:indexPath.row - 1];
+                   itemCell.nameLabel.text = [NSString stringWithFormat:@"%.0f", roastTempratureFromValue(heating.temperature)];
+                   itemCell.valueLabel.text = [NSString stringWithFormat:@"%.0f", roastLengthFromValue(heating.time)];
                }
                break;
            }
@@ -197,10 +200,11 @@
                CRResultItemCell *itemCell = (CRResultItemCell *)cell;
                itemCell.separetorView.hidden = NO;
                if(indexPath.row == 0) {
-                   itemCell.nameLabel.text = @"Temp.";
+                   NSString *tempUnit = [CRConfiguration sharedConfiguration].useFahrenheitForRoom ? @"°F" : @"°C";
+                   itemCell.nameLabel.text = [NSString stringWithFormat:@"Temp. [%@]", tempUnit];
                    itemCell.valueLabel.text = [NSString stringWithFormat:@"%.1f", self.roast.environment.temperature];
                } else if(indexPath.row == 1) {
-                   itemCell.nameLabel.text = @"Humitidy";
+                   itemCell.nameLabel.text = @"Humidity [%]";
                    itemCell.valueLabel.text = [NSString stringWithFormat:@"%.1f", self.roast.environment.humidity];
                }
                break;

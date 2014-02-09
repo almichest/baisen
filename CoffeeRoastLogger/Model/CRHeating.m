@@ -2,7 +2,7 @@
 //  CRHeating.m
 //  CoffeeRoastLogger
 //
-//  Created by Hiraku Ohno on 2014/01/15.
+//  Created by Hiraku Ohno on 2014/02/10.
 //  Copyright (c) 2014年 Hiraku Ohno. All rights reserved.
 //
 
@@ -12,8 +12,9 @@
 
 @implementation CRHeating
 
-@dynamic time;
 @dynamic temperature;
+@dynamic time;
+@dynamic index;
 @dynamic roast;
 
 @end

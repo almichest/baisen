@@ -180,6 +180,10 @@
 
 - (void)save
 {
+    for(NSUInteger index = 0; index < _heatingInformations.count; index++) {
+        CRHeatingInformation *information = _heatingInformations[index];
+        information.index = index;
+    }
     _roastInformation.beans = _beanInformations;
     _roastInformation.environment = _environmentInformation;
     _roastInformation.heatingInformations = _heatingInformations;
@@ -360,7 +364,7 @@
                 itemCell.secondItemField.inputAccessoryView = [self separatorViewInKeyboard];
                 itemCell.secondItemField.text = @"";
                 itemCell.secondItemField.tag = kHeatingLengthBaseTag + indexPath.row;
-                NSString *lengthString = information.time > 0 ? [NSString stringWithFormat:@"%d", roastLengthFromValue(information.time)] : @"";
+                NSString *lengthString = information.time > 0 ? [NSString stringWithFormat:@"%.1f", roastLengthFromValue(information.time)] : @"";
                 itemCell.secondItemField.text = lengthString;
                 itemCell.secondItemField.delegate = self;
                 UITapGestureRecognizer *secondIndicatorRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showHeatingLengthUnitSelectionSheet)];
@@ -398,14 +402,15 @@
                 conditionCell.valueTextField.delegate = self;
                 NSString *tempratureString = _environmentInformation.temperature > 0 ? [NSString stringWithFormat:@"%.0lf", roomTempratureFromValue(_environmentInformation.temperature)] : @"";
                 conditionCell.valueTextField.text = tempratureString;
-                UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showRoomTempratureUnitSelectionSheet)];
-                [self clearGestureRecognizerInView:conditionCell.recognizerField];
-                [conditionCell.recognizerField addGestureRecognizer:recognizer];
-                conditionCell.recognizerField.userInteractionEnabled = YES;
-                
                 NSString *buttonTitle = self.useFahrenheitForRoom ? kFahrenheit : kCelcius;
                 [conditionCell.button setTitle:buttonTitle forState:UIControlStateNormal];
                 conditionCell.indicatorImage.hidden = NO;
+                
+                UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showRoomTempratureUnitSelectionSheet)];
+                [self clearGestureRecognizerInView:conditionCell.recognizerField];
+                conditionCell.recognizerField.userInteractionEnabled = YES;
+                [conditionCell.recognizerField addGestureRecognizer:recognizer];
+                
             } else if(indexPath.row == 1) {
                 conditionCell.valueTextField.placeholder = @"Humidity";
                 conditionCell.valueTextField.tag = kHumidityFieldTag;
@@ -415,6 +420,8 @@
                 NSString *buttonTitle = @"%";
                 [conditionCell.button setTitle:buttonTitle forState:UIControlStateNormal];
                 conditionCell.indicatorImage.hidden = YES;
+                
+                conditionCell.recognizerField.userInteractionEnabled = NO;
             }
             break;
         }
@@ -782,7 +789,7 @@
         ((CRHeatingInformation *)(_heatingInformations[index])).temperature = saveValue;
     } else if(textField.tag >= kHeatingLengthBaseTag && textField.tag < kTempratureFieldTag) {
         NSUInteger index = textField.tag % 100;
-        NSTimeInterval saveValue = secondRoastLengthFromValue(textField.text.integerValue);
+        NSTimeInterval saveValue = secondRoastLengthFromValue(textField.text.floatValue);
         ((CRHeatingInformation *)(_heatingInformations[index])).time = saveValue;
     }
 }

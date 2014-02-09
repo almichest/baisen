@@ -18,7 +18,7 @@ float roastTempratureFromValue(float celsius);
 float celsiusRoomTempratureFromValue(float value);
 float celsiusRoastTempratureFromValue(float value);
 
-NSInteger roastLengthFromValue(NSTimeInterval seconds);
-NSTimeInterval secondRoastLengthFromValue(NSTimeInterval value);
+float roastLengthFromValue(NSTimeInterval seconds);
+NSTimeInterval secondRoastLengthFromValue(float value);
 
 @end

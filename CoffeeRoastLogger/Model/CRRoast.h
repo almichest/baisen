@@ -19,6 +19,9 @@
 @property (nonatomic, retain) NSSet *beans;
 @property (nonatomic, retain) CREnvironment *environment;
 @property (nonatomic, retain) NSSet *heating;
+
+- (CRHeating *)heatingAtIndex:(NSUInteger)index;
+
 @end
 
 @interface CRRoast (CoreDataGeneratedAccessors)

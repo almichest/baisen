@@ -13,6 +13,7 @@
         <relationship name="roast" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Roast" inverseName="environment" inverseEntity="Roast" syncable="YES"/>
     </entity>
     <entity name="Heating" representedClassName="CRHeating" syncable="YES">
+        <attribute name="index" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="temperature" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="time" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="roast" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Roast" inverseName="heating" inverseEntity="Roast" syncable="YES"/>

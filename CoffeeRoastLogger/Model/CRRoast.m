@@ -21,4 +21,18 @@
 @dynamic environment;
 @dynamic heating;
 
+- (CRHeating *)heatingAtIndex:(NSUInteger)index
+{
+    if(index > self.heating.count) {
+        return nil;
+    }
+    for(CRHeating *heating in self.heating) {
+        if(heating.index == index) {
+            return heating;
+        }
+    }
+    
+    return nil;
+}
+
 @end

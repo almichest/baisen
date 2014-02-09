@@ -121,6 +121,7 @@
         CRHeating *heating = [NSEntityDescription insertNewObjectForEntityForName:@"Heating" inManagedObjectContext:self.managedObjectContext];
         heating.time = information.time;
         heating.temperature = information.temperature;
+        heating.index = information.index;
         [set addObject:heating];
     }
     
@@ -150,7 +151,6 @@
 - (void)save
 {
     NSError *error = nil;
-    
     if(![self.managedObjectContext save:&error]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:CRRoastDataSourceDidFailSavingNotification object:self userInfo:@{CRRoastDataSourceDidFailSavingErrorKey : error}];
     }

@@ -25,6 +25,11 @@
 
 #import "CRRoastManager.h"
 
+#import "CRRoast.h"
+#import "CREnvironment.h"
+#import "CRHeating.h"
+#import "CRBean.h"
+
 #define kDefaultCellIdentifier      @"Cell"
 #define kTwoItemCellIdentifier      @"TwoItemCell"
 #define kConditionCellIdentifier    @"ConditionCell"
@@ -109,18 +114,6 @@
         _environmentInformation = [[CREnvironmentInformation alloc] init];
         _heatingInformations = @[[[CRHeatingInformation alloc] init]].mutableCopy;
         
-        UIBarButtonItem const *cancelItem = self.cancelButton;
-        cancelItem.target = self;
-        cancelItem.action = @selector(didPushDismissButton:);
-        
-        UIBarButtonItem const *completeItem = self.completeButton;
-        completeItem.target = self;
-        completeItem.action = @selector(didPushCompleteButton:);
-        
-        [self.tableView registerNib:[UINib nibWithNibName:@"TwoItemsCell" bundle:nil] forCellReuseIdentifier:kTwoItemCellIdentifier];
-        [self.tableView registerNib:[UINib nibWithNibName:@"ConditionCell" bundle:nil] forCellReuseIdentifier:kConditionCellIdentifier];
-        [self.tableView registerNib:[UINib nibWithNibName:@"EmptyCell" bundle:nil] forCellReuseIdentifier:kEmptyCellIdentifier];
-        
         _beanButtonsArray = [[NSMutableArray alloc] initWithCapacity:0];
         _heatingButtonsArray = [[NSMutableArray alloc] initWithCapacity:0];
         
@@ -129,9 +122,52 @@
         _date = [NSDate date];
         _environmentInformation.date = _date.timeIntervalSince1970;
     } else {
-#warning アイテム更新の場合未実装
+        _roastInformation = [[CRRoastInformation alloc] init];
+        _roastInformation.score = _roastItem.score;
+        
+        _beanInformations = [[NSMutableArray alloc] initWithCapacity:_roastItem.beans.count];
+        for(CRBean *bean in _roastItem.beans) {
+            CRBeanInformation *information = [[CRBeanInformation alloc] init];
+            information.area = bean.area;
+            information.quantity = bean.quantity;
+            [_beanInformations addObject:information];
+        }
+        
+        _environmentInformation = [[CREnvironmentInformation alloc] init];
+        _environmentInformation.date = _roastItem.environment.date;
+        _environmentInformation.temperature = _roastItem.environment.temperature;
+        _environmentInformation.humidity = _roastItem.environment.humidity;
+        
+        _heatingInformations = [[NSMutableArray alloc] initWithCapacity:_roastItem.heating.count];
+        for(CRHeating *heating in _roastItem.heating) {
+            CRHeatingInformation *information = [[CRHeatingInformation alloc] init];
+            information.temperature = heating.temperature;
+            information.time = heating.time;
+            [_heatingInformations addObject:information];
+        }
+        
+        _beanButtonsArray = [[NSMutableArray alloc] initWithCapacity:_beanInformations.count - 1];
+        _heatingButtonsArray = [[NSMutableArray alloc] initWithCapacity:_heatingInformations.count - 1];
+        
+        _beanCount = _beanInformations.count;
+        _heatCount = _heatingInformations.count;
+        _date = [NSDate dateWithTimeIntervalSince1970:_roastItem.environment.date];
+        
+        _image = [UIImage imageWithData:_roastItem.imageData];
         
     }
+    
+    UIBarButtonItem const *cancelItem = self.cancelButton;
+    cancelItem.target = self;
+    cancelItem.action = @selector(didPushDismissButton:);
+    
+    UIBarButtonItem const *completeItem = self.completeButton;
+    completeItem.target = self;
+    completeItem.action = @selector(didPushCompleteButton:);
+    
+    [self.tableView registerNib:[UINib nibWithNibName:@"TwoItemsCell" bundle:nil] forCellReuseIdentifier:kTwoItemCellIdentifier];
+    [self.tableView registerNib:[UINib nibWithNibName:@"ConditionCell" bundle:nil] forCellReuseIdentifier:kConditionCellIdentifier];
+    [self.tableView registerNib:[UINib nibWithNibName:@"EmptyCell" bundle:nil] forCellReuseIdentifier:kEmptyCellIdentifier];
     
     _observer = [[NSNotificationCenter defaultCenter] addObserverForName:CRSelectedPhotoViewControllerPhotoSelectNotification object:Nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         UIImage *image = note.userInfo[CRSelectedPhotoViewControllerPhotoSelectNotificationKeyPhoto];
@@ -185,15 +221,15 @@
 
 - (void)save
 {
+    _roastInformation.beans = _beanInformations;
+    _roastInformation.environment = _environmentInformation;
+    _roastInformation.heatingInformations = _heatingInformations;
+    _roastInformation.image = _image;
+    
     if(_roastItem == nil) {
-        _roastInformation.beans = _beanInformations;
-        _roastInformation.environment = _environmentInformation;
-        _roastInformation.heatingInformations = _heatingInformations;
-        _roastInformation.image = _image;
-        
         [[CRRoastManager sharedManager] addNewRoastInformation:_roastInformation];
     } else {
-#warning 更新の場合未実装
+        [[CRRoastManager sharedManager] updateRoastItem:self.roastItem withRoastInformation:_roastInformation];
     }
 }
 
@@ -266,8 +302,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell;
-    
     switch (indexPath.section) {
         case kDateSection :
             return [self dateSectionCell];
@@ -284,8 +318,6 @@
         default :
             return [self defaultCell];
     }
-    
-    return cell;
 }
 
 #pragma mark - Cell factory
@@ -298,6 +330,19 @@
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
+}
+
+- (UITableViewCell *)dateSectionCellWithRoastItem
+{
+    UITableViewCell *cell;
+    cell = [self.tableView dequeueReusableCellWithIdentifier:kDefaultCellIdentifier];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:self.roastItem.environment.date];
+    cell.textLabel.text = dateStringFromNSDate(date);
+    cell.textLabel.font = [UIFont systemFontOfSize:14];
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+    return cell;
+    
 }
 
 - (UITableViewCell *)beanSectionCellAtIndexPath:(NSIndexPath *)indexPath
@@ -356,6 +401,11 @@
     
     return cell;
     
+}
+
+- (UITableViewCell *)beanSectionCellWithRoastItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return nil;
 }
 
 - (UITableViewCell *)heatingSectionCellAtIndexPath:(NSIndexPath *)indexPath
@@ -432,6 +482,11 @@
     return cell;
 }
 
+- (UITableViewCell *)heatingSectionCellWithRoastItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return nil;
+}
+
 - (UITableViewCell *)otherConditionSectionCellAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kConditionCellIdentifier];
@@ -467,6 +522,11 @@
     return cell;
 }
 
+- (UITableViewCell *)otherConditionSectionCellWithRoastItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return nil;
+}
+
 - (UITableViewCell *)resultSectionCellAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell;
@@ -500,6 +560,11 @@
     return cell;
 }
 
+- (UITableViewCell *)resultSectionCellWithRoastItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return nil;
+}
+
 - (UITableViewCell *)imageSectionCell
 {
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kEmptyCellIdentifier];
@@ -515,6 +580,11 @@
     }
     
     return cell;
+}
+
+- (UITableViewCell *)imageSectionCellWithRoastItem
+{
+    return nil;
 }
 
 - (UITableViewCell *)defaultCell

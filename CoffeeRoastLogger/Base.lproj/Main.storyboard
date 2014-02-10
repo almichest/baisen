@@ -29,7 +29,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="2pz-XF-uhl" style="IBUITableViewCellStyleDefault" id="m0d-ak-lc9" customClass="CRRoastItemCell">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="m0d-ak-lc9" id="WoA-V9-s46">
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -78,7 +78,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DefaultCell" id="3V2-2K-7QN">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3V2-2K-7QN" id="tdL-kh-NRg">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -91,7 +91,13 @@
                             <outlet property="delegate" destination="Kdq-3Q-agF" id="y9i-cp-PWD"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="r9y-14-sx2"/>
+                    <navigationItem key="navigationItem" id="r9y-14-sx2">
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="Px7-HT-TqQ">
+                            <connections>
+                                <segue destination="Ur6-EN-CrB" kind="modal" identifier="EditItem" id="dhu-b4-fhE"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cGk-fX-gwX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -107,7 +113,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="elo-QX-gZP">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="elo-QX-gZP" id="5pf-sm-a6j">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -204,6 +210,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                             <constraint firstItem="i5i-17-rQA" firstAttribute="top" secondItem="ye9-eG-fpH" secondAttribute="bottom" id="vlr-2i-ETh"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="tmg-58-Kfv"/>
                     <connections>
                         <outlet property="datePicker" destination="i5i-17-rQA" id="qmn-Rg-5yP"/>
                         <outlet property="okButton" destination="7Gf-u5-hDJ" id="qHL-t6-r3g"/>
@@ -265,7 +272,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photoCell" id="QUq-55-VLH">
-                                <rect key="frame" x="5" y="5" width="70" height="70"/>
+                                <rect key="frame" x="5" y="69" width="70" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
@@ -350,4 +357,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="dhu-b4-fhE"/>
+    </inferredMetricsTieBreakers>
 </document>

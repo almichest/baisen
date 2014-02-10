@@ -40,6 +40,11 @@ static CRRoastManager *_sharedManager;
     return [_dataSource addRoastInformation:information];
 }
 
+- (CRRoast *)updateRoastItem:(CRRoast *)roast withRoastInformation:(CRRoastInformation *)information
+{
+    return [_dataSource updateRoastItem:roast withRoastInformation:information];
+}
+
 - (void)removeRoastInformationAtIndex:(NSUInteger)index;
 {
     [_dataSource removeRoastInformationAtIndex:index];

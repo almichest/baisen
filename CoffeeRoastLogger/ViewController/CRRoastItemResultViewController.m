@@ -12,6 +12,8 @@
 #import "CRBean.h"
 #import "CRHeating.h"
 
+#import "CRRoastItemEditingViewController.h"
+
 #import "CRResultItemCell.h"
 #import "CRResultItemHeaderCell.h"
 #import "CRResultMemoCell.h"
@@ -58,6 +60,12 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"ResultItemHeaderCell" bundle:nil] forCellReuseIdentifier:kResultItemHeaderCellIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"ResultMemoCell" bundle:nil] forCellReuseIdentifier:kResultMemoCellIdentifier];
     
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -239,6 +247,7 @@
            break;
        }
     
+    cell.userInteractionEnabled = NO;
     return cell;
 }
 
@@ -254,6 +263,16 @@
 - (UIImage *)image
 {
     return [UIImage imageWithData:self.roast.imageData];
+}
+
+#pragma mark - Segue
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([segue.identifier isEqualToString:@"EditItem"]) {
+        UINavigationController *navigationController = segue.destinationViewController;
+        CRRoastItemEditingViewController *viewController = navigationController.viewControllers[0];
+        viewController.roastItem = self.roast;
+    }
 }
 
 @end

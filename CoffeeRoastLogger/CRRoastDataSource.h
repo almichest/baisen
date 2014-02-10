@@ -24,6 +24,7 @@ typedef NS_ENUM(NSUInteger, CRRoastDataSourceChangeType)
 @property(nonatomic, weak) id<CRRoastDataSourceDelegate> delegate;
 
 - (CRRoast *)addRoastInformation:(CRRoastInformation *)information;
+- (CRRoast *)updateRoastItem:(CRRoast *)roast withRoastInformation:(CRRoastInformation *)information;
 - (void)removeRoastInformationAtIndex:(NSUInteger)index;
 
 - (NSUInteger)countOfRoastInformation;

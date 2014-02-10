@@ -72,8 +72,24 @@
     roast.result = information.result;
     if(information.image) {
         roast.imageData = [self dataFromImage:information.image];
-        NSLog(@"image size = %d", roast.imageData.length);
     }
+    [self save];
+    
+    return roast;
+}
+
+- (CRRoast *)updateRoastItem:(CRRoast *)roast withRoastInformation:(CRRoastInformation *)information
+{
+    roast.environment = [self environmentWithEnvironmentInformation:information.environment];
+    roast.beans = [self beansWithBeansInformations:information.beans];
+    roast.heating = [self heatingsWithHeatingInformations:information.heatingInformations];
+    
+    roast.score = information.score;
+    roast.result = information.result;
+    if(information.image) {
+        roast.imageData = [self dataFromImage:information.image];
+    }
+    
     [self save];
     
     return roast;

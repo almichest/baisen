@@ -20,6 +20,7 @@
 + (CRRoastManager *)sharedManager;
 
 - (CRRoast *)addNewRoastInformation:(CRRoastInformation *)information;
+- (CRRoast *)updateRoastItem:(CRRoast *)roast withRoastInformation:(CRRoastInformation *)information;
 - (void)removeRoastInformationAtIndex:(NSUInteger)index;
 
 @end

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class CRRoast;
-@interface CRNewItemViewController : UITableViewController
+@interface CRRoastItemEditingViewController : UITableViewController
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *completeButton;
 

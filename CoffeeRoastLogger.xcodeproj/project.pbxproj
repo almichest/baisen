@@ -32,7 +32,7 @@
 		428AA4AF1886CE6B00401165 /* CRBean.m in Sources */ = {isa = PBXBuildFile; fileRef = 428AA4AE1886CE6B00401165 /* CRBean.m */; };
 		428AA4B51886CE6B00401165 /* CREnvironment.m in Sources */ = {isa = PBXBuildFile; fileRef = 428AA4B41886CE6B00401165 /* CREnvironment.m */; };
 		428AA4BB1886DB7100401165 /* CRRoastDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 428AA4BA1886DB7100401165 /* CRRoastDataSource.m */; };
-		42B5DB401894E93200F0710E /* CRNewItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B5DB3F1894E93200F0710E /* CRNewItemViewController.m */; };
+		42B5DB401894E93200F0710E /* CRRoastItemEditingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B5DB3F1894E93200F0710E /* CRRoastItemEditingViewController.m */; };
 		42CCF2D11897C0AC00E87843 /* TwoItemsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42CCF2D01897C0AC00E87843 /* TwoItemsCell.xib */; };
 		42CCF2D51897C16200E87843 /* CRTwoItemsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 42CCF2D41897C16200E87843 /* CRTwoItemsCell.m */; };
 		42CCF31B1897E80900E87843 /* CRDateEditingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42CCF31A1897E80900E87843 /* CRDateEditingViewController.m */; };
@@ -114,8 +114,8 @@
 		428AA4B41886CE6B00401165 /* CREnvironment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CREnvironment.m; sourceTree = "<group>"; };
 		428AA4B91886DB7100401165 /* CRRoastDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRRoastDataSource.h; sourceTree = "<group>"; };
 		428AA4BA1886DB7100401165 /* CRRoastDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRRoastDataSource.m; sourceTree = "<group>"; };
-		42B5DB3E1894E93200F0710E /* CRNewItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRNewItemViewController.h; path = ViewController/CRNewItemViewController.h; sourceTree = "<group>"; };
-		42B5DB3F1894E93200F0710E /* CRNewItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRNewItemViewController.m; path = ViewController/CRNewItemViewController.m; sourceTree = "<group>"; };
+		42B5DB3E1894E93200F0710E /* CRRoastItemEditingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRRoastItemEditingViewController.h; path = ViewController/CRRoastItemEditingViewController.h; sourceTree = "<group>"; };
+		42B5DB3F1894E93200F0710E /* CRRoastItemEditingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRRoastItemEditingViewController.m; path = ViewController/CRRoastItemEditingViewController.m; sourceTree = "<group>"; };
 		42CCF2D01897C0AC00E87843 /* TwoItemsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TwoItemsCell.xib; sourceTree = "<group>"; };
 		42CCF2D31897C16200E87843 /* CRTwoItemsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRTwoItemsCell.h; path = View/CRTwoItemsCell.h; sourceTree = "<group>"; };
 		42CCF2D41897C16200E87843 /* CRTwoItemsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRTwoItemsCell.m; path = View/CRTwoItemsCell.m; sourceTree = "<group>"; };
@@ -334,8 +334,8 @@
 			children = (
 				428AA43C18840D1400401165 /* CRMasterViewController.h */,
 				428AA43D18840D1400401165 /* CRMasterViewController.m */,
-				42B5DB3E1894E93200F0710E /* CRNewItemViewController.h */,
-				42B5DB3F1894E93200F0710E /* CRNewItemViewController.m */,
+				42B5DB3E1894E93200F0710E /* CRRoastItemEditingViewController.h */,
+				42B5DB3F1894E93200F0710E /* CRRoastItemEditingViewController.m */,
 				42CCF3191897E80900E87843 /* CRDateEditingViewController.h */,
 				42CCF31A1897E80900E87843 /* CRDateEditingViewController.m */,
 				42D0A5F5189E28A700CCE450 /* CRImagePickerRootViewController.h */,
@@ -546,7 +546,7 @@
 				42FA30E418A7E8790061B778 /* CRRoast.m in Sources */,
 				428AA43E18840D1400401165 /* CRMasterViewController.m in Sources */,
 				428AA4BB1886DB7100401165 /* CRRoastDataSource.m in Sources */,
-				42B5DB401894E93200F0710E /* CRNewItemViewController.m in Sources */,
+				42B5DB401894E93200F0710E /* CRRoastItemEditingViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

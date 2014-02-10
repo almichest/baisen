@@ -102,31 +102,36 @@
 {
     [super viewDidLoad];
     
-    _roastInformation = [[CRRoastInformation alloc] init];
-    _roastInformation.score = NSIntegerMin;
-    _beanInformations = @[[[CRBeanInformation alloc] init]].mutableCopy;
-    _environmentInformation = [[CREnvironmentInformation alloc] init];
-    _heatingInformations = @[[[CRHeatingInformation alloc] init]].mutableCopy;
-    
-    UIBarButtonItem const *cancelItem = self.cancelButton;
-    cancelItem.target = self;
-    cancelItem.action = @selector(didPushDismissButton:);
-    
-    UIBarButtonItem const *completeItem = self.completeButton;
-    completeItem.target = self;
-    completeItem.action = @selector(didPushCompleteButton:);
-    
-    [self.tableView registerNib:[UINib nibWithNibName:@"TwoItemsCell" bundle:nil] forCellReuseIdentifier:kTwoItemCellIdentifier];
-    [self.tableView registerNib:[UINib nibWithNibName:@"ConditionCell" bundle:nil] forCellReuseIdentifier:kConditionCellIdentifier];
-    [self.tableView registerNib:[UINib nibWithNibName:@"EmptyCell" bundle:nil] forCellReuseIdentifier:kEmptyCellIdentifier];
-    
-    _beanButtonsArray = [[NSMutableArray alloc] initWithCapacity:0];
-    _heatingButtonsArray = [[NSMutableArray alloc] initWithCapacity:0];
-    
-    _beanCount = 1;
-    _heatCount = 1;
-    _date = [NSDate date];
-    _environmentInformation.date = _date.timeIntervalSince1970;
+    if(_roastItem == nil) {
+        _roastInformation = [[CRRoastInformation alloc] init];
+        _roastInformation.score = NSIntegerMin;
+        _beanInformations = @[[[CRBeanInformation alloc] init]].mutableCopy;
+        _environmentInformation = [[CREnvironmentInformation alloc] init];
+        _heatingInformations = @[[[CRHeatingInformation alloc] init]].mutableCopy;
+        
+        UIBarButtonItem const *cancelItem = self.cancelButton;
+        cancelItem.target = self;
+        cancelItem.action = @selector(didPushDismissButton:);
+        
+        UIBarButtonItem const *completeItem = self.completeButton;
+        completeItem.target = self;
+        completeItem.action = @selector(didPushCompleteButton:);
+        
+        [self.tableView registerNib:[UINib nibWithNibName:@"TwoItemsCell" bundle:nil] forCellReuseIdentifier:kTwoItemCellIdentifier];
+        [self.tableView registerNib:[UINib nibWithNibName:@"ConditionCell" bundle:nil] forCellReuseIdentifier:kConditionCellIdentifier];
+        [self.tableView registerNib:[UINib nibWithNibName:@"EmptyCell" bundle:nil] forCellReuseIdentifier:kEmptyCellIdentifier];
+        
+        _beanButtonsArray = [[NSMutableArray alloc] initWithCapacity:0];
+        _heatingButtonsArray = [[NSMutableArray alloc] initWithCapacity:0];
+        
+        _beanCount = 1;
+        _heatCount = 1;
+        _date = [NSDate date];
+        _environmentInformation.date = _date.timeIntervalSince1970;
+    } else {
+#warning アイテム更新の場合未実装
+        
+    }
     
     _observer = [[NSNotificationCenter defaultCenter] addObserverForName:CRSelectedPhotoViewControllerPhotoSelectNotification object:Nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         UIImage *image = note.userInfo[CRSelectedPhotoViewControllerPhotoSelectNotificationKeyPhoto];
@@ -180,16 +185,16 @@
 
 - (void)save
 {
-    for(NSUInteger index = 0; index < _heatingInformations.count; index++) {
-        CRHeatingInformation *information = _heatingInformations[index];
-        information.index = index;
+    if(_roastItem == nil) {
+        _roastInformation.beans = _beanInformations;
+        _roastInformation.environment = _environmentInformation;
+        _roastInformation.heatingInformations = _heatingInformations;
+        _roastInformation.image = _image;
+        
+        [[CRRoastManager sharedManager] addNewRoastInformation:_roastInformation];
+    } else {
+#warning 更新の場合未実装
     }
-    _roastInformation.beans = _beanInformations;
-    _roastInformation.environment = _environmentInformation;
-    _roastInformation.heatingInformations = _heatingInformations;
-    _roastInformation.image = _image;
-    
-    [[CRRoastManager sharedManager] addNewRoastInformation:_roastInformation];
 }
 
 #pragma mark - Table view data source

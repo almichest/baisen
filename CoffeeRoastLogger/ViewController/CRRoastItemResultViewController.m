@@ -14,6 +14,7 @@
 
 #import "CRResultItemCell.h"
 #import "CRResultItemHeaderCell.h"
+#import "CRResultMemoCell.h"
 
 #import "CRUtility.h"
 #import "CRConfiguration.h"
@@ -30,11 +31,16 @@
 #define kHeatingSection         3
 #define kOtherConditionSection  4
 #define kResultSection          5
+#define kMemoSection            6
 
 #define kResultItemCellIdentifier           @"ResultItemCell"
 #define kResultItemHeaderCellIdentifier     @"ResultItemHeaderCell"
+#define kResultMemoCellIdentifier           @"ResultMemoCell"
 
 @implementation CRRoastItemResultViewController
+{
+    CGRect _memoFrame;
+}
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -50,12 +56,8 @@
     [super viewDidLoad];
     [self.tableView registerNib:[UINib nibWithNibName:@"ResultItemCell" bundle:nil] forCellReuseIdentifier:kResultItemCellIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"ResultItemHeaderCell" bundle:nil] forCellReuseIdentifier:kResultItemHeaderCellIdentifier];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [self.tableView registerNib:[UINib nibWithNibName:@"ResultMemoCell" bundle:nil] forCellReuseIdentifier:kResultMemoCellIdentifier];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -68,7 +70,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 6;
+    return 7;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -85,7 +87,9 @@
         case kOtherConditionSection :
             return 2;
         case kResultSection :
-            return 2;
+            return 1;
+        case kMemoSection :
+            return 1;
         default :
             return 0;
     }
@@ -113,11 +117,9 @@
         case kOtherConditionSection :
             return 44;
         case kResultSection :
-            if(indexPath.row == 0) {
-                return 44;
-            } else {
-                return 100;
-            }
+            return 44;
+        case kMemoSection :
+            return [self memoLabelFrame].size.height + 30;
         default :
             return 0;
     }
@@ -125,7 +127,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-       switch (section) {
+    switch (section) {
         case kDateSection :
             return @"Date";
         case kImageSection :
@@ -137,10 +139,12 @@
         case kOtherConditionSection :
             return @"Other Conditions";
         case kResultSection :
-           return @"Result";
+            return @"Result";
+        case kMemoSection :
+            return @"Memo";
         default :
             return @"";
-       }
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -189,7 +193,8 @@
                    cell = [tableView dequeueReusableCellWithIdentifier:kResultItemCellIdentifier];
                    CRResultItemCell *itemCell = (CRResultItemCell *)cell;
                    itemCell.separetorView.hidden = NO;
-                   CRHeating *heating = [self.roast heatingAtIndex:indexPath.row - 1];
+                   NSOrderedSet *heatings = self.roast.heating;
+                   CRHeating *heating = [heatings objectAtIndex:indexPath.row - 1];
                    itemCell.nameLabel.text = [NSString stringWithFormat:@"%.0f", roastTempratureFromValue(heating.temperature)];
                    itemCell.valueLabel.text = [NSString stringWithFormat:@"%.0f", roastLengthFromValue(heating.time)];
                }
@@ -222,11 +227,27 @@
                }
                break;
            }
+           case kMemoSection : {
+               cell = [tableView dequeueReusableCellWithIdentifier:kResultMemoCellIdentifier];
+               CRResultMemoCell *memoCell = (CRResultMemoCell *)cell;
+               memoCell.memoLabel.text = self.roast.result;
+               memoCell.memoLabel.frame = CGRectMake(0, 0, [self memoLabelFrame].size.width, [self memoLabelFrame].size.height);
+               break;
+           }
+               
         default :
            break;
        }
     
     return cell;
+}
+
+#pragma mark - Private
+- (CGRect)memoLabelFrame
+{
+    MyLog(@"result = %@", self.roast.result);
+    NSDictionary *attributes = @{NSFontAttributeName : [UIFont systemFontOfSize:14.0f]};
+    return [self.roast.result boundingRectWithSize:CGSizeMake(300, 1000) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil];
 }
 
 #pragma mark - getter

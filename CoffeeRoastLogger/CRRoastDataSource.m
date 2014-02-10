@@ -114,18 +114,19 @@
     return set;
 }
 
-- (NSSet *)heatingsWithHeatingInformations:(NSArray *)informations
+- (NSOrderedSet *)heatingsWithHeatingInformations:(NSArray *)informations
 {
-    NSMutableSet *set = [[NSMutableSet alloc] initWithCapacity:informations.count];
+    NSMutableArray *mutableHeatings = [[NSMutableArray alloc] initWithCapacity:informations.count];
     for(CRHeatingInformation *information in informations) {
         CRHeating *heating = [NSEntityDescription insertNewObjectForEntityForName:@"Heating" inManagedObjectContext:self.managedObjectContext];
         heating.time = information.time;
         heating.temperature = information.temperature;
-        heating.index = information.index;
-        [set addObject:heating];
+        [mutableHeatings addObject:heating];
     }
     
-    return set;
+    NSOrderedSet *orderedSet = [[NSOrderedSet alloc] initWithArray:mutableHeatings];
+    
+    return orderedSet;
 }
 
 - (NSData *)dataFromImage:(UIImage *)image

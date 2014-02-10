@@ -15,7 +15,6 @@
 
 @property (nonatomic) float temperature;
 @property (nonatomic) NSTimeInterval time;
-@property (nonatomic) int16_t index;
 @property (nonatomic, retain) CRRoast *roast;
 
 @end

@@ -14,7 +14,6 @@
 
 @dynamic temperature;
 @dynamic time;
-@dynamic index;
 @dynamic roast;
 
 @end

@@ -58,10 +58,12 @@
 		42D0A5F9189E304A00CCE450 /* ImageRootCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42D0A5F8189E304A00CCE450 /* ImageRootCell.xib */; };
 		42D0A5FC189E30DD00CCE450 /* CRImageRootViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 42D0A5FB189E30DD00CCE450 /* CRImageRootViewCell.m */; };
 		42D0A5FF189E338200CCE450 /* CRAlbumContentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42D0A5FE189E338200CCE450 /* CRAlbumContentsViewController.m */; };
-		42D0A605189E3A2000CCE450 /* CRRoast.m in Sources */ = {isa = PBXBuildFile; fileRef = 42D0A604189E3A2000CCE450 /* CRRoast.m */; };
 		42FA30D818A6969F0061B778 /* CRConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 42FA30D718A6969F0061B778 /* CRConfiguration.m */; };
 		42FA30DB18A7743A0061B778 /* table_indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 42FA30DA18A7743A0061B778 /* table_indicator.png */; };
-		42FA30E118A7D6FE0061B778 /* CRHeating.m in Sources */ = {isa = PBXBuildFile; fileRef = 42FA30E018A7D6FE0061B778 /* CRHeating.m */; };
+		42FA30E418A7E8790061B778 /* CRRoast.m in Sources */ = {isa = PBXBuildFile; fileRef = 42FA30E318A7E8790061B778 /* CRRoast.m */; };
+		42FA30E718A7EA930061B778 /* CRHeating.m in Sources */ = {isa = PBXBuildFile; fileRef = 42FA30E618A7EA930061B778 /* CRHeating.m */; };
+		42FA30E918A903580061B778 /* ResultMemoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42FA30E818A903580061B778 /* ResultMemoCell.xib */; };
+		42FA30EC18A9047C0061B778 /* CRResultMemoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 42FA30EB18A9047C0061B778 /* CRResultMemoCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -156,13 +158,16 @@
 		42D0A5FB189E30DD00CCE450 /* CRImageRootViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRImageRootViewCell.m; path = View/CRImageRootViewCell.m; sourceTree = "<group>"; };
 		42D0A5FD189E338200CCE450 /* CRAlbumContentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRAlbumContentsViewController.h; path = ViewController/CRAlbumContentsViewController.h; sourceTree = "<group>"; };
 		42D0A5FE189E338200CCE450 /* CRAlbumContentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRAlbumContentsViewController.m; path = ViewController/CRAlbumContentsViewController.m; sourceTree = "<group>"; };
-		42D0A603189E3A2000CCE450 /* CRRoast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRRoast.h; path = CoffeeRoastLogger/Model/CRRoast.h; sourceTree = SOURCE_ROOT; };
-		42D0A604189E3A2000CCE450 /* CRRoast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRRoast.m; path = CoffeeRoastLogger/Model/CRRoast.m; sourceTree = SOURCE_ROOT; };
 		42FA30D618A6969F0061B778 /* CRConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRConfiguration.h; path = Utility/CRConfiguration.h; sourceTree = "<group>"; };
 		42FA30D718A6969F0061B778 /* CRConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRConfiguration.m; path = Utility/CRConfiguration.m; sourceTree = "<group>"; };
 		42FA30DA18A7743A0061B778 /* table_indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = table_indicator.png; path = Images/table_indicator.png; sourceTree = "<group>"; };
-		42FA30DF18A7D6FE0061B778 /* CRHeating.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRHeating.h; path = CoffeeRoastLogger/Model/CRHeating.h; sourceTree = SOURCE_ROOT; };
-		42FA30E018A7D6FE0061B778 /* CRHeating.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRHeating.m; path = CoffeeRoastLogger/Model/CRHeating.m; sourceTree = SOURCE_ROOT; };
+		42FA30E218A7E8790061B778 /* CRRoast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRRoast.h; path = CoffeeRoastLogger/Model/CRRoast.h; sourceTree = SOURCE_ROOT; };
+		42FA30E318A7E8790061B778 /* CRRoast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRRoast.m; path = CoffeeRoastLogger/Model/CRRoast.m; sourceTree = SOURCE_ROOT; };
+		42FA30E518A7EA930061B778 /* CRHeating.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRHeating.h; sourceTree = "<group>"; };
+		42FA30E618A7EA930061B778 /* CRHeating.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRHeating.m; sourceTree = "<group>"; };
+		42FA30E818A903580061B778 /* ResultMemoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResultMemoCell.xib; sourceTree = "<group>"; };
+		42FA30EA18A9047C0061B778 /* CRResultMemoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRResultMemoCell.h; path = View/CRResultMemoCell.h; sourceTree = "<group>"; };
+		42FA30EB18A9047C0061B778 /* CRResultMemoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRResultMemoCell.m; path = View/CRResultMemoCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -289,6 +294,7 @@
 				42CCF33F18A3EC2A00E87843 /* TwoItemResultCell.xib */,
 				42CCF34218A6015300E87843 /* ResultItemCell.xib */,
 				42CCF34718A60D4200E87843 /* ResultItemHeaderCell.xib */,
+				42FA30E818A903580061B778 /* ResultMemoCell.xib */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -296,14 +302,14 @@
 		428AA47E1884269400401165 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				42D0A603189E3A2000CCE450 /* CRRoast.h */,
-				42D0A604189E3A2000CCE450 /* CRRoast.m */,
 				428AA4B31886CE6B00401165 /* CREnvironment.h */,
 				428AA4B41886CE6B00401165 /* CREnvironment.m */,
 				428AA4AD1886CE6B00401165 /* CRBean.h */,
 				428AA4AE1886CE6B00401165 /* CRBean.m */,
-				42FA30DF18A7D6FE0061B778 /* CRHeating.h */,
-				42FA30E018A7D6FE0061B778 /* CRHeating.m */,
+				42FA30E518A7EA930061B778 /* CRHeating.h */,
+				42FA30E618A7EA930061B778 /* CRHeating.m */,
+				42FA30E218A7E8790061B778 /* CRRoast.h */,
+				42FA30E318A7E8790061B778 /* CRRoast.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -367,6 +373,8 @@
 				42CCF34518A601E700E87843 /* CRResultItemCell.m */,
 				42CCF34918A613DD00E87843 /* CRResultItemHeaderCell.h */,
 				42CCF34A18A613DD00E87843 /* CRResultItemHeaderCell.m */,
+				42FA30EA18A9047C0061B778 /* CRResultMemoCell.h */,
+				42FA30EB18A9047C0061B778 /* CRResultMemoCell.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -475,6 +483,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42FA30E918A903580061B778 /* ResultMemoCell.xib in Resources */,
 				428AA44318840D1400401165 /* Images.xcassets in Resources */,
 				42CCF34818A60D4200E87843 /* ResultItemHeaderCell.xib in Resources */,
 				428AA42F18840D1400401165 /* InfoPlist.strings in Resources */,
@@ -508,9 +517,9 @@
 				428AA49718842DD200401165 /* CRHeatingInformation.m in Sources */,
 				42CCF2D51897C16200E87843 /* CRTwoItemsCell.m in Sources */,
 				42CCF33718A2577100E87843 /* CRRoastItemResultViewController.m in Sources */,
-				42D0A605189E3A2000CCE450 /* CRRoast.m in Sources */,
 				42D0A5F2189D086C00CCE450 /* CRUtility.m in Sources */,
 				428AA49A18842DEB00401165 /* CREnvironmentInformation.m in Sources */,
+				42FA30EC18A9047C0061B778 /* CRResultMemoCell.m in Sources */,
 				42D0A5FF189E338200CCE450 /* CRAlbumContentsViewController.m in Sources */,
 				42CCF31B1897E80900E87843 /* CRDateEditingViewController.m in Sources */,
 				428AA46318840D3D00401165 /* CRCoffeeData.xcdatamodeld in Sources */,
@@ -532,8 +541,9 @@
 				42FA30D818A6969F0061B778 /* CRConfiguration.m in Sources */,
 				42CCF33A18A295FB00E87843 /* CRTwoItemsCellButton.m in Sources */,
 				428AA4B51886CE6B00401165 /* CREnvironment.m in Sources */,
-				42FA30E118A7D6FE0061B778 /* CRHeating.m in Sources */,
 				42CCF3201899527500E87843 /* CRConditionCell.m in Sources */,
+				42FA30E718A7EA930061B778 /* CRHeating.m in Sources */,
+				42FA30E418A7E8790061B778 /* CRRoast.m in Sources */,
 				428AA43E18840D1400401165 /* CRMasterViewController.m in Sources */,
 				428AA4BB1886DB7100401165 /* CRRoastDataSource.m in Sources */,
 				42B5DB401894E93200F0710E /* CRNewItemViewController.m in Sources */,

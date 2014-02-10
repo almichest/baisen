@@ -2,7 +2,7 @@
 //  CRRoast.m
 //  CoffeeRoastLogger
 //
-//  Created by OhnoHiraku on 2014/02/02.
+//  Created by Hiraku Ohno on 2014/02/10.
 //  Copyright (c) 2014年 Hiraku Ohno. All rights reserved.
 //
 
@@ -14,25 +14,11 @@
 
 @implementation CRRoast
 
+@dynamic imageData;
 @dynamic result;
 @dynamic score;
-@dynamic imageData;
 @dynamic beans;
 @dynamic environment;
 @dynamic heating;
-
-- (CRHeating *)heatingAtIndex:(NSUInteger)index
-{
-    if(index > self.heating.count) {
-        return nil;
-    }
-    for(CRHeating *heating in self.heating) {
-        if(heating.index == index) {
-            return heating;
-        }
-    }
-    
-    return nil;
-}
 
 @end

@@ -1,0 +1,30 @@
+
+/* Class = "IBUIViewController"; title = "Date"; ObjectID = "0PT-6i-V0L"; */
+"0PT-6i-V0L.title" = "Date";
+
+/* Class = "IBUILabel"; text = "Title"; ObjectID = "2pz-XF-uhl"; */
+"2pz-XF-uhl.text" = "Title";
+
+/* Class = "IBUINavigationItem"; title = "List"; ObjectID = "6au-7i-5w4"; */
+"6au-7i-5w4.title" = "List";
+
+/* Class = "IBUIButton"; normalTitle = "OK"; ObjectID = "7Gf-u5-hDJ"; */
+"7Gf-u5-hDJ.normalTitle" = "OK";
+
+/* Class = "IBUINavigationItem"; title = "New Item"; ObjectID = "BZz-nV-GfS"; */
+"BZz-nV-GfS.title" = "New Item";
+
+/* Class = "IBUIBarButtonItem"; title = "Done"; ObjectID = "EbT-1v-J5p"; */
+"EbT-1v-J5p.title" = "Done";
+
+/* Class = "IBUIBarButtonItem"; title = "Cancel"; ObjectID = "L6b-WP-YHA"; */
+"L6b-WP-YHA.title" = "Cancel";
+
+/* Class = "IBUIBarButtonItem"; title = "Edit"; ObjectID = "Px7-HT-TqQ"; */
+"Px7-HT-TqQ.title" = "Edit";
+
+/* Class = "IBUIBarButtonItem"; title = "New"; ObjectID = "bdY-z6-gpg"; */
+"bdY-z6-gpg.title" = "New";
+
+/* Class = "IBUITableViewController"; title = "Master"; ObjectID = "pGg-6v-bdr"; */
+"pGg-6v-bdr.title" = "Master";

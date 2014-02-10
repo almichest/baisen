@@ -11,7 +11,6 @@
 		428AA42518840D1400401165 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 428AA42418840D1400401165 /* CoreGraphics.framework */; };
 		428AA42718840D1400401165 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 428AA42618840D1400401165 /* UIKit.framework */; };
 		428AA42918840D1400401165 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 428AA42818840D1400401165 /* CoreData.framework */; };
-		428AA42F18840D1400401165 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 428AA42D18840D1400401165 /* InfoPlist.strings */; };
 		428AA43118840D1400401165 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 428AA43018840D1400401165 /* main.m */; };
 		428AA43518840D1400401165 /* CRAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 428AA43418840D1400401165 /* CRAppDelegate.m */; };
 		428AA43818840D1400401165 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 428AA43618840D1400401165 /* Main.storyboard */; };
@@ -21,7 +20,6 @@
 		428AA44B18840D1400401165 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 428AA42218840D1400401165 /* Foundation.framework */; };
 		428AA44C18840D1400401165 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 428AA42618840D1400401165 /* UIKit.framework */; };
 		428AA44D18840D1400401165 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 428AA42818840D1400401165 /* CoreData.framework */; };
-		428AA45518840D1400401165 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 428AA45318840D1400401165 /* InfoPlist.strings */; };
 		428AA45718840D1400401165 /* CoffeeRoastLoggerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 428AA45618840D1400401165 /* CoffeeRoastLoggerTests.m */; };
 		428AA46318840D3D00401165 /* CRCoffeeData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 428AA46118840D3D00401165 /* CRCoffeeData.xcdatamodeld */; };
 		428AA49018842B9800401165 /* CRRoastManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 428AA48F18842B9800401165 /* CRRoastManager.m */; };
@@ -64,6 +62,8 @@
 		42FA30E718A7EA930061B778 /* CRHeating.m in Sources */ = {isa = PBXBuildFile; fileRef = 42FA30E618A7EA930061B778 /* CRHeating.m */; };
 		42FA30E918A903580061B778 /* ResultMemoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42FA30E818A903580061B778 /* ResultMemoCell.xib */; };
 		42FA30EC18A9047C0061B778 /* CRResultMemoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 42FA30EB18A9047C0061B778 /* CRResultMemoCell.m */; };
+		42FA30F118A937C60061B778 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 42FA30EF18A937C60061B778 /* Localizable.strings */; };
+		42FA30F618A937F20061B778 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 42FA30F418A937F20061B778 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,7 +83,6 @@
 		428AA42618840D1400401165 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		428AA42818840D1400401165 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		428AA42C18840D1400401165 /* CoffeeRoastLogger-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CoffeeRoastLogger-Info.plist"; sourceTree = "<group>"; };
-		428AA42E18840D1400401165 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		428AA43018840D1400401165 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		428AA43218840D1400401165 /* CoffeeRoastLogger-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CoffeeRoastLogger-Prefix.pch"; sourceTree = "<group>"; };
 		428AA43318840D1400401165 /* CRAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CRAppDelegate.h; sourceTree = "<group>"; };
@@ -95,7 +94,6 @@
 		428AA44818840D1400401165 /* CoffeeRoastLoggerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoffeeRoastLoggerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		428AA44918840D1400401165 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		428AA45218840D1400401165 /* CoffeeRoastLoggerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CoffeeRoastLoggerTests-Info.plist"; sourceTree = "<group>"; };
-		428AA45418840D1400401165 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		428AA45618840D1400401165 /* CoffeeRoastLoggerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoffeeRoastLoggerTests.m; sourceTree = "<group>"; };
 		428AA46218840D3D00401165 /* CRCoffeeData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CRCoffeeData.xcdatamodel; sourceTree = "<group>"; };
 		428AA48E18842B9800401165 /* CRRoastManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRRoastManager.h; sourceTree = "<group>"; };
@@ -168,6 +166,10 @@
 		42FA30E818A903580061B778 /* ResultMemoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResultMemoCell.xib; sourceTree = "<group>"; };
 		42FA30EA18A9047C0061B778 /* CRResultMemoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRResultMemoCell.h; path = View/CRResultMemoCell.h; sourceTree = "<group>"; };
 		42FA30EB18A9047C0061B778 /* CRResultMemoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRResultMemoCell.m; path = View/CRResultMemoCell.m; sourceTree = "<group>"; };
+		42FA30ED18A936D50061B778 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
+		42FA30EE18A936DB0061B778 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		42FA30F018A937C60061B778 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		42FA30F518A937F20061B778 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -255,8 +257,9 @@
 		428AA42B18840D1400401165 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				42FA30F318A937DA0061B778 /* ja.lproj */,
+				42FA30F218A937CB0061B778 /* en.lproj */,
 				428AA42C18840D1400401165 /* CoffeeRoastLogger-Info.plist */,
-				428AA42D18840D1400401165 /* InfoPlist.strings */,
 				428AA43018840D1400401165 /* main.m */,
 				428AA43218840D1400401165 /* CoffeeRoastLogger-Prefix.pch */,
 			);
@@ -276,7 +279,6 @@
 			isa = PBXGroup;
 			children = (
 				428AA45218840D1400401165 /* CoffeeRoastLoggerTests-Info.plist */,
-				428AA45318840D1400401165 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -398,6 +400,22 @@
 			name = Images;
 			sourceTree = "<group>";
 		};
+		42FA30F218A937CB0061B778 /* en.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				42FA30EF18A937C60061B778 /* Localizable.strings */,
+			);
+			name = en.lproj;
+			sourceTree = "<group>";
+		};
+		42FA30F318A937DA0061B778 /* ja.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				42FA30F418A937F20061B778 /* Localizable.strings */,
+			);
+			name = ja.lproj;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -466,6 +484,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ja,
 			);
 			mainGroup = 428AA41618840D1400401165;
 			productRefGroup = 428AA42018840D1400401165 /* Products */;
@@ -486,13 +505,14 @@
 				42FA30E918A903580061B778 /* ResultMemoCell.xib in Resources */,
 				428AA44318840D1400401165 /* Images.xcassets in Resources */,
 				42CCF34818A60D4200E87843 /* ResultItemHeaderCell.xib in Resources */,
-				428AA42F18840D1400401165 /* InfoPlist.strings in Resources */,
+				42FA30F618A937F20061B778 /* Localizable.strings in Resources */,
 				42CCF33118A2510900E87843 /* RoastItemCell.xib in Resources */,
 				42CCF34318A6015300E87843 /* ResultItemCell.xib in Resources */,
 				42CCF31D189951BD00E87843 /* ConditionCell.xib in Resources */,
 				42FA30DB18A7743A0061B778 /* table_indicator.png in Resources */,
 				428AA43818840D1400401165 /* Main.storyboard in Resources */,
 				42CCF34018A3EC2A00E87843 /* TwoItemResultCell.xib in Resources */,
+				42FA30F118A937C60061B778 /* Localizable.strings in Resources */,
 				42CCF2D11897C0AC00E87843 /* TwoItemsCell.xib in Resources */,
 				42D0A5F9189E304A00CCE450 /* ImageRootCell.xib in Resources */,
 				42CCF322189D56EC00E87843 /* EmptyCell.xib in Resources */,
@@ -503,7 +523,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				428AA45518840D1400401165 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -569,28 +588,30 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		428AA42D18840D1400401165 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				428AA42E18840D1400401165 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
 		428AA43618840D1400401165 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				428AA43718840D1400401165 /* Base */,
+				42FA30ED18A936D50061B778 /* ja */,
+				42FA30EE18A936DB0061B778 /* en */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		428AA45318840D1400401165 /* InfoPlist.strings */ = {
+		42FA30EF18A937C60061B778 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				428AA45418840D1400401165 /* en */,
+				42FA30F018A937C60061B778 /* en */,
 			);
-			name = InfoPlist.strings;
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		42FA30F418A937F20061B778 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				42FA30F518A937F20061B778 /* ja */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

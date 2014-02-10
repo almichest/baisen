@@ -36,9 +36,9 @@
 {
     [super viewDidLoad];
     
-    self.title = @"Select Image";
+    self.title = NSLocalizedString(@"SelectPhotoMessage", nil);
     
-    UIBarButtonItem *cancelButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(didPushCancelButton:)];
+    UIBarButtonItem *cancelButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"CancelLabel", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(didPushCancelButton:)];
     self.navigationItem.leftBarButtonItem = cancelButtonItem;
     
     [self.tableView registerNib:[UINib nibWithNibName:@"ImageRootCell" bundle:nil] forCellReuseIdentifier:kImageRootViewCellIdentifier];

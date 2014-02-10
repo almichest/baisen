@@ -137,19 +137,19 @@
 {
     switch (section) {
         case kDateSection :
-            return @"Date";
+            return NSLocalizedString(@"DateLabel", nil);
         case kImageSection :
-            return @"Photo";
+            return NSLocalizedString(@"PhotoLabel", nil);
         case kBeanSection :
-            return @"Beans";
+            return NSLocalizedString(@"BeansLabel", nil);
         case kHeatingSection :
-            return @"Heatings";
+            return NSLocalizedString(@"HeatingsLabel", nil);
         case kOtherConditionSection :
-            return @"Other Conditions";
+            return NSLocalizedString(@"OtherConditionLabel", nil);
         case kResultSection :
-            return @"Result";
+            return NSLocalizedString(@"ResultLabel", nil);
         case kMemoSection :
-            return @"Memo";
+            return NSLocalizedString(@"MemoLabel", nil);
         default :
             return @"";
     }
@@ -177,8 +177,8 @@
                if(indexPath.row == 0) {
                    cell = [tableView dequeueReusableCellWithIdentifier:kResultItemHeaderCellIdentifier];
                    CRResultItemHeaderCell *headerCell = (CRResultItemHeaderCell *)cell;
-                   headerCell.firstNameLabel.text = @"Kind";
-                   headerCell.secondNameLabel.text = @"Quantity [g]";
+                   headerCell.firstNameLabel.text = NSLocalizedString(@"BeanKindLabel", nil);
+                   headerCell.secondNameLabel.text = [NSString stringWithFormat:@"%@ [g]", NSLocalizedString(@"BeanQuantityLabel", nil)];
                } else {
                    cell = [tableView dequeueReusableCellWithIdentifier:kResultItemCellIdentifier];
                    CRResultItemCell *itemCell = (CRResultItemCell *)cell;
@@ -194,9 +194,9 @@
                    cell = [tableView dequeueReusableCellWithIdentifier:kResultItemHeaderCellIdentifier];
                    CRResultItemHeaderCell *headerCell = (CRResultItemHeaderCell *)cell;
                    NSString *tempUnit = [CRConfiguration sharedConfiguration].useFahrenheitForRoast ? @"°F" : @"°C";
-                   headerCell.firstNameLabel.text = [NSString stringWithFormat:@"Temp. [%@]", tempUnit];
+                   headerCell.firstNameLabel.text = [NSString stringWithFormat:@"%@ [%@]",NSLocalizedString(@"TemperatureLabel", nil), tempUnit];
                    NSString *lengthUnit = [CRConfiguration sharedConfiguration].useMinutesForHeatingLength ? @"min." : @"sec.";
-                   headerCell.secondNameLabel.text = [NSString stringWithFormat:@"Length [%@]", lengthUnit];
+                   headerCell.secondNameLabel.text = [NSString stringWithFormat:@"%@ [%@]",NSLocalizedString(@"HeatingLengthLabel", nil), lengthUnit];
                } else {
                    cell = [tableView dequeueReusableCellWithIdentifier:kResultItemCellIdentifier];
                    CRResultItemCell *itemCell = (CRResultItemCell *)cell;
@@ -214,10 +214,10 @@
                itemCell.separetorView.hidden = NO;
                if(indexPath.row == 0) {
                    NSString *tempUnit = [CRConfiguration sharedConfiguration].useFahrenheitForRoom ? @"°F" : @"°C";
-                   itemCell.nameLabel.text = [NSString stringWithFormat:@"Temp. [%@]", tempUnit];
+                   itemCell.nameLabel.text = [NSString stringWithFormat:@"%@ [%@]",NSLocalizedString(@"TemperatureLabel", nil), tempUnit];
                    itemCell.valueLabel.text = [NSString stringWithFormat:@"%.1f", self.roast.environment.temperature];
                } else if(indexPath.row == 1) {
-                   itemCell.nameLabel.text = @"Humidity [%]";
+                   itemCell.nameLabel.text = [NSString stringWithFormat:@"%@ [%%]",NSLocalizedString(@"HumidityLabel", nil)]; ;
                    itemCell.valueLabel.text = [NSString stringWithFormat:@"%.1f", self.roast.environment.humidity];
                }
                break;
@@ -227,10 +227,10 @@
                CRResultItemCell *itemCell = (CRResultItemCell *)cell;
                itemCell.separetorView.hidden = NO;
                if(indexPath.row == 0) {
-                   itemCell.nameLabel.text = @"Score";
+                   itemCell.nameLabel.text = NSLocalizedString(@"ScoreLabel", nil);
                    itemCell.valueLabel.text = [NSString stringWithFormat:@"%d", self.roast.score];
                } else {
-                   itemCell.nameLabel.text = @"Memo";
+                   itemCell.nameLabel.text = NSLocalizedString(@"MemoLabel", nil);
                    itemCell.valueLabel.text = self.roast.result;
                }
                break;

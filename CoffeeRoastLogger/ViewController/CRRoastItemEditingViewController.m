@@ -51,6 +51,8 @@
 #define kScoreFieldTag              700
 #define kMemoViewTag                800
 
+#define kImageViewTag               900
+
 #define kImageSelectionActionSheetTag           0
 #define kRoomTempratureUnitActionSheetTag       1
 #define kHeatingTempratureUnitActionSheetTag    2
@@ -284,17 +286,17 @@
 {
     switch (section) {
         case kDateSection :
-            return @"Date";
+            return NSLocalizedString(@"DateLabel", nil);
         case kBeanSection :
-            return @"Beans";
+            return NSLocalizedString(@"BeansLabel", nil);
         case kHeatingSection :
-            return @"Heating";
+            return NSLocalizedString(@"HeatingsLabel", nil);
         case kOtherConditionSection :
-            return @"Other Condition";
+            return NSLocalizedString(@"OtherConditionLabel", nil);
         case kResultSection :
-            return @"Result";
+            return NSLocalizedString(@"ResultLabel", nil);
         case kImageSection :
-            return @"Add Image";
+            return NSLocalizedString(@"AddImageLabel", nil);
         default :
             return 0;
     }
@@ -332,19 +334,6 @@
     return cell;
 }
 
-- (UITableViewCell *)dateSectionCellWithRoastItem
-{
-    UITableViewCell *cell;
-    cell = [self.tableView dequeueReusableCellWithIdentifier:kDefaultCellIdentifier];
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:self.roastItem.environment.date];
-    cell.textLabel.text = dateStringFromNSDate(date);
-    cell.textLabel.font = [UIFont systemFontOfSize:14];
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    
-    return cell;
-    
-}
-
 - (UITableViewCell *)beanSectionCellAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell;
@@ -360,16 +349,17 @@
         
         /* First item */
         itemCell.firstItemField.hidden = NO;
-        itemCell.firstItemField.placeholder = @"Kind";
+        itemCell.firstItemField.placeholder = NSLocalizedString(@"BeanKindLabel", nil);
         itemCell.firstItemField.text = @"";
         itemCell.firstItemField.tag = kBeanKindInputBaseTag + indexPath.row;
         itemCell.firstItemField.delegate = self;
         itemCell.firstItemField.text = information.area;
         itemCell.firstItemIndicator.hidden = YES;
+        itemCell.firstItemFieldButton.hidden = YES;
         
         /* Second item */
         itemCell.secondItemField.hidden = NO;
-        itemCell.secondItemField.placeholder = @"Quantity";
+        itemCell.secondItemField.placeholder = NSLocalizedString(@"BeanQuantityLabel", nil);
         itemCell.secondItemField.keyboardType = UIKeyboardTypeNumberPad;
         itemCell.secondItemField.text = @"";
         itemCell.secondItemField.tag = kBeanQuantityInputBaseTag + indexPath.row;
@@ -403,11 +393,6 @@
     
 }
 
-- (UITableViewCell *)beanSectionCellWithRoastItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    return nil;
-}
-
 - (UITableViewCell *)heatingSectionCellAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell;
@@ -431,7 +416,7 @@
         [itemCell.firstItemRecognizerArea addGestureRecognizer:firstIndicatorRecognizer];
         
         itemCell.firstItemField.hidden = NO;
-        itemCell.firstItemField.placeholder = @"Temprature";
+        itemCell.firstItemField.placeholder = NSLocalizedString(@"HeatingTemperatureLabel", nil);
         itemCell.firstItemField.keyboardType = UIKeyboardTypeNumberPad;
         itemCell.firstItemField.text = @"";
         itemCell.firstItemField.tag = kHeatingTempratureBaseTag + indexPath.row;
@@ -439,14 +424,15 @@
         itemCell.firstItemIndicator.hidden = NO;
         itemCell.firstItemField.text = tempratureString;
         itemCell.firstItemField.delegate = self;
+        itemCell.firstItemFieldButton.hidden = NO;
         
         /* Second item */
-        NSString *secondButtonTitle = self.useMinuteForRoastLength ? @" min." : @" sec.";
+        NSString *secondButtonTitle = self.useMinuteForRoastLength ? NSLocalizedString(@"MinuteLabel", nil) : NSLocalizedString(@"SecondLabel", nil);
         [itemCell.secondItemFieldButton setTitle:secondButtonTitle forState:UIControlStateNormal];
         [itemCell.secondItemFieldButton addTarget:self action:@selector(showHeatingLengthUnitSelectionSheet) forControlEvents:UIControlEventTouchUpInside];
         
         itemCell.secondItemField.hidden = NO;
-        itemCell.secondItemField.placeholder = @"Length";
+        itemCell.secondItemField.placeholder = NSLocalizedString(@"HeatingLengthLabel", nil);
         itemCell.secondItemField.keyboardType = UIKeyboardTypeNumberPad;
         itemCell.secondItemField.inputAccessoryView = [self separatorViewInKeyboard];
         itemCell.secondItemField.text = @"";
@@ -459,6 +445,7 @@
         itemCell.secondItemRecognizerArea.userInteractionEnabled = YES;
         [self clearGestureRecognizerInView:itemCell.secondItemRecognizerArea];
         [itemCell.secondItemRecognizerArea addGestureRecognizer:secondIndicatorRecognizer];
+        itemCell.secondItemFieldButton.hidden = NO;
         
         _heatingButtonsArray[indexPath.row] = itemCell.button;
         itemCell.button.indexPath = indexPath;
@@ -482,17 +469,12 @@
     return cell;
 }
 
-- (UITableViewCell *)heatingSectionCellWithRoastItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    return nil;
-}
-
 - (UITableViewCell *)otherConditionSectionCellAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kConditionCellIdentifier];
     CRConditionCell *conditionCell = (CRConditionCell *)cell;
     if(indexPath.row == 0) {
-        conditionCell.valueTextField.placeholder = @"Temprature";
+        conditionCell.valueTextField.placeholder = NSLocalizedString(@"RoomTemperatureLabel", nil);
         conditionCell.valueTextField.tag = kTempratureFieldTag;
         conditionCell.valueTextField.delegate = self;
         NSString *tempratureString = _environmentInformation.temperature > 0 ? [NSString stringWithFormat:@"%.0lf", roomTempratureFromValue(_environmentInformation.temperature)] : @"";
@@ -507,7 +489,7 @@
         [conditionCell.recognizerField addGestureRecognizer:recognizer];
         
     } else if(indexPath.row == 1) {
-        conditionCell.valueTextField.placeholder = @"Humidity";
+        conditionCell.valueTextField.placeholder = NSLocalizedString(@"HumidityLabel", nil);
         conditionCell.valueTextField.tag = kHumidityFieldTag;
         NSString *humidityString = _environmentInformation.humidity > 0 ? [NSString stringWithFormat:@"%.0lf", _environmentInformation.humidity] : @"";
         conditionCell.valueTextField.text = humidityString;
@@ -522,18 +504,13 @@
     return cell;
 }
 
-- (UITableViewCell *)otherConditionSectionCellWithRoastItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    return nil;
-}
-
 - (UITableViewCell *)resultSectionCellAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell;
     if(indexPath.row == 0) {
         cell = [self.tableView dequeueReusableCellWithIdentifier:kConditionCellIdentifier];
         CRConditionCell *conditionCell = (CRConditionCell *)cell;
-        conditionCell.valueTextField.placeholder = @"Score";
+        conditionCell.valueTextField.placeholder = NSLocalizedString(@"ScoreLabel", nil);
         conditionCell.valueTextField.tag = kScoreFieldTag;
         conditionCell.valueTextField.delegate = self;
         if(_roastInformation.score != NSIntegerMin) {
@@ -543,13 +520,15 @@
         
     } else {
         cell = [self.tableView dequeueReusableCellWithIdentifier:kEmptyCellIdentifier forIndexPath:indexPath];
+        UIView *imageView = [cell viewWithTag:kImageViewTag];
+        [imageView removeFromSuperview];
         CGRect frame = CGRectMake(11, 10, 294, cell.frame.size.height - 20);
         CRMemoTextView *memoTextView = [[CRMemoTextView alloc] initWithFrame:frame];
         memoTextView.layer.borderWidth = 1.0f;    //ボーダーの幅
         memoTextView.layer.cornerRadius = 4.0f;    //ボーダーの角の丸み
         memoTextView.layer.borderColor = [UIColor colorWithRed:0.85 green:0.85 blue:0.85 alpha:1].CGColor;
         memoTextView.font = [UIFont systemFontOfSize:14];
-        memoTextView.placeHolder = @"Memo";
+        memoTextView.placeHolder = NSLocalizedString(@"MemoLabel", nil);
         memoTextView.placeHolderColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1];
         [cell addSubview:memoTextView];
         memoTextView.tag = kMemoViewTag;
@@ -560,14 +539,11 @@
     return cell;
 }
 
-- (UITableViewCell *)resultSectionCellWithRoastItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    return nil;
-}
-
 - (UITableViewCell *)imageSectionCell
 {
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kEmptyCellIdentifier];
+    UIView *textView = [cell viewWithTag:kMemoViewTag];
+    [textView removeFromSuperview];
     if(_image == nil) {
         [cell addSubview:[self buttonToSetImage]];
     } else {
@@ -577,14 +553,10 @@
         [cell addSubview:imageView];
         UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(setImage)];
         [imageView addGestureRecognizer:gestureRecognizer];
+        imageView.tag = kImageViewTag;
     }
     
     return cell;
-}
-
-- (UITableViewCell *)imageSectionCellWithRoastItem
-{
-    return nil;
 }
 
 - (UITableViewCell *)defaultCell
@@ -609,7 +581,7 @@
 - (void)addNewCellForBean
 {
     if(_beanCount >= kMaxBeanCount) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Sorry" message:@"Only 10 beans can be input." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SorryMessageLabel", nil) message:NSLocalizedString(@"BeanItemLimitMessage", nil) delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alertView show];
         return;
     }
@@ -641,7 +613,7 @@
 - (void)addNewCellForHeating
 {
     if(_heatCount >= kMaxHeatingCount) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Sorry" message:@"Only 50 heating procedure can be input." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SorryMessageLabel", nil) message:NSLocalizedString(@"HeatingItemLimitMessage", nil) delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alertView show];
         return;
     }
@@ -686,7 +658,7 @@
 #pragma mark - Show UIActionSheet
 - (void)showImageSelectionSheet
 {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Select Photo" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Select From Library", @"New Photo", nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"SelectPhotoLabel", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"CancelLabel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"SelectPhotoFromLibraryLabel", nil), NSLocalizedString(@"NewPhotoLabel", nil), nil];
     actionSheet.destructiveButtonIndex = 10;
     actionSheet.cancelButtonIndex = 2;
     actionSheet.tag = kImageSelectionActionSheetTag;
@@ -697,7 +669,7 @@
 - (void)showRoomTempratureUnitSelectionSheet
 {
     [self closeSoftKeyboard];
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Set Room Temprature To : " delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:kFahrenheit, kCelcius, nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"SetRoomTemperatureUnitLabel", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"CancelLabel", nil) destructiveButtonTitle:nil otherButtonTitles:kFahrenheit, kCelcius, nil];
     actionSheet.tag =
     actionSheet.destructiveButtonIndex = 10;
     actionSheet.cancelButtonIndex = 2;
@@ -709,7 +681,7 @@
 - (void)showHeatingTempratureUnitSelectionSheet
 {
     [self closeSoftKeyboard];
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Set Heating Temprature To : " delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:kFahrenheit, kCelcius, nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"SetHeatingTemperatureUnitLabel", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"CancelLabel", nil) destructiveButtonTitle:nil otherButtonTitles:kFahrenheit, kCelcius, nil];
     actionSheet.destructiveButtonIndex = 10;
     actionSheet.cancelButtonIndex = 2;
     actionSheet.tag = kHeatingTempratureUnitActionSheetTag;
@@ -720,7 +692,7 @@
 - (void)showHeatingLengthUnitSelectionSheet
 {
     [self closeSoftKeyboard];
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Set Heating Length To : " delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Minute", @"Second", nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"SetHeatingLengthUnitLabel", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"CancelLabel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"MinuteLabel", nil), NSLocalizedString(@"SecondLabel", nil), nil];
     actionSheet.destructiveButtonIndex = 10;
     actionSheet.cancelButtonIndex = 2;
     actionSheet.tag = kHeatingLengthUnitActionSheetTag;
@@ -884,7 +856,7 @@
     if(textField.tag == kScoreFieldTag) {
         NSInteger score = textField.text.integerValue;
         if(score < -100 || score > 100) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Sorry" message:@"Score can be input from -100 to 100" delegate:Nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SorryMessageLabel", nil) message:NSLocalizedString(@"ScoreLimitMessage", nil) delegate:Nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alertView show];
             textField.text = @"";
         } else {

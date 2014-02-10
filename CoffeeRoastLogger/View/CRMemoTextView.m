@@ -23,6 +23,11 @@
     return self;
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)drawRect:(CGRect)rect
 {
     [self addSubview:_placeHolderLabel];

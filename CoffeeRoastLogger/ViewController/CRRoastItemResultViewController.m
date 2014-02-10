@@ -194,8 +194,8 @@
                    cell = [tableView dequeueReusableCellWithIdentifier:kResultItemHeaderCellIdentifier];
                    CRResultItemHeaderCell *headerCell = (CRResultItemHeaderCell *)cell;
                    NSString *tempUnit = [CRConfiguration sharedConfiguration].useFahrenheitForRoast ? @"°F" : @"°C";
-                   headerCell.firstNameLabel.text = [NSString stringWithFormat:@"%@ [%@]",NSLocalizedString(@"TemperatureLabel", nil), tempUnit];
-                   NSString *lengthUnit = [CRConfiguration sharedConfiguration].useMinutesForHeatingLength ? @"min." : @"sec.";
+                   headerCell.firstNameLabel.text = [NSString stringWithFormat:@"%@ [%@]",NSLocalizedString(@"HeatingTemperatureLabel", nil), tempUnit];
+                   NSString *lengthUnit = [CRConfiguration sharedConfiguration].useMinutesForHeatingLength ? NSLocalizedString(@"MinuteLabel", nil) : NSLocalizedString(@"SecondLabel", nil);
                    headerCell.secondNameLabel.text = [NSString stringWithFormat:@"%@ [%@]",NSLocalizedString(@"HeatingLengthLabel", nil), lengthUnit];
                } else {
                    cell = [tableView dequeueReusableCellWithIdentifier:kResultItemCellIdentifier];
@@ -214,7 +214,7 @@
                itemCell.separetorView.hidden = NO;
                if(indexPath.row == 0) {
                    NSString *tempUnit = [CRConfiguration sharedConfiguration].useFahrenheitForRoom ? @"°F" : @"°C";
-                   itemCell.nameLabel.text = [NSString stringWithFormat:@"%@ [%@]",NSLocalizedString(@"TemperatureLabel", nil), tempUnit];
+                   itemCell.nameLabel.text = [NSString stringWithFormat:@"%@ [%@]",NSLocalizedString(@"RoomTemperatureLabel", nil), tempUnit];
                    itemCell.valueLabel.text = [NSString stringWithFormat:@"%.1f", self.roast.environment.temperature];
                } else if(indexPath.row == 1) {
                    itemCell.nameLabel.text = [NSString stringWithFormat:@"%@ [%%]",NSLocalizedString(@"HumidityLabel", nil)]; ;

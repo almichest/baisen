@@ -82,6 +82,8 @@
         cell.photoImageView.layer.masksToBounds = YES;
         cell.photoImageView.layer.cornerRadius = 5.0f;
         
+    } else {
+        cell.photoImageView.image = nil;
     }
     return cell;
 }

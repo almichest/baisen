@@ -126,6 +126,7 @@
     } else {
         _roastInformation = [[CRRoastInformation alloc] init];
         _roastInformation.score = _roastItem.score;
+        _roastInformation.result = _roastItem.result;
         
         _beanInformations = [[NSMutableArray alloc] initWithCapacity:_roastItem.beans.count];
         for(CRBean *bean in _roastItem.beans) {
@@ -533,6 +534,7 @@
         [cell addSubview:memoTextView];
         memoTextView.tag = kMemoViewTag;
         memoTextView.text = _roastInformation.result;
+        [[NSNotificationCenter defaultCenter] postNotificationName:UITextViewTextDidChangeNotification object:nil];
         memoTextView.delegate = self;
     }
     

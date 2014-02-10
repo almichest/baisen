@@ -1,30 +1,30 @@
 
 /* Class = "IBUIViewController"; title = "Date"; ObjectID = "0PT-6i-V0L"; */
-"0PT-6i-V0L.title" = "Date";
+"0PT-6i-V0L.title" = "日付";
 
 /* Class = "IBUILabel"; text = "Title"; ObjectID = "2pz-XF-uhl"; */
-"2pz-XF-uhl.text" = "Title";
+"2pz-XF-uhl.text" = "タイトル";
 
 /* Class = "IBUINavigationItem"; title = "List"; ObjectID = "6au-7i-5w4"; */
-"6au-7i-5w4.title" = "List";
+"6au-7i-5w4.title" = "焙煎一覧";
 
 /* Class = "IBUIButton"; normalTitle = "OK"; ObjectID = "7Gf-u5-hDJ"; */
 "7Gf-u5-hDJ.normalTitle" = "OK";
 
 /* Class = "IBUINavigationItem"; title = "New Item"; ObjectID = "BZz-nV-GfS"; */
-"BZz-nV-GfS.title" = "New Item";
+"BZz-nV-GfS.title" = "追加";
 
 /* Class = "IBUIBarButtonItem"; title = "Done"; ObjectID = "EbT-1v-J5p"; */
-"EbT-1v-J5p.title" = "Done";
+"EbT-1v-J5p.title" = "完了";
 
 /* Class = "IBUIBarButtonItem"; title = "Cancel"; ObjectID = "L6b-WP-YHA"; */
-"L6b-WP-YHA.title" = "Cancel";
+"L6b-WP-YHA.title" = "キャンセル";
 
 /* Class = "IBUIBarButtonItem"; title = "Edit"; ObjectID = "Px7-HT-TqQ"; */
-"Px7-HT-TqQ.title" = "Edit";
+"Px7-HT-TqQ.title" = "修正";
 
 /* Class = "IBUIBarButtonItem"; title = "New"; ObjectID = "bdY-z6-gpg"; */
-"bdY-z6-gpg.title" = "New";
+"bdY-z6-gpg.title" = "追加";
 
 /* Class = "IBUITableViewController"; title = "Master"; ObjectID = "pGg-6v-bdr"; */
-"pGg-6v-bdr.title" = "Master";
+"pGg-6v-bdr.title" = "マスター";

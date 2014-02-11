@@ -2,25 +2,25 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3401" systemVersion="13B42" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Bean" representedClassName="CRBean" syncable="YES">
         <attribute name="area" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="quantity" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="quantity" optional="YES" attributeType="Integer 16" minValueString="0" syncable="YES"/>
         <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="roast" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Roast" inverseName="beans" inverseEntity="Roast" syncable="YES"/>
     </entity>
     <entity name="Environment" representedClassName="CREnvironment" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="humidity" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="temperature" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="humidity" optional="YES" attributeType="Float" minValueString="0" syncable="YES"/>
+        <attribute name="temperature" optional="YES" attributeType="Float" syncable="YES"/>
         <relationship name="roast" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Roast" inverseName="environment" inverseEntity="Roast" syncable="YES"/>
     </entity>
     <entity name="Heating" representedClassName="CRHeating" syncable="YES">
-        <attribute name="temperature" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="time" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="temperature" optional="YES" attributeType="Float" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="Integer 16" minValueString="0" syncable="YES"/>
         <relationship name="roast" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Roast" inverseName="heating" inverseEntity="Roast" syncable="YES"/>
     </entity>
     <entity name="Roast" representedClassName="CRRoast" syncable="YES">
         <attribute name="imageData" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="result" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="score" optional="YES" attributeType="Integer 16" minValueString="0" maxValueString="100" defaultValueString="0" syncable="YES"/>
+        <attribute name="score" optional="YES" attributeType="Integer 16" minValueString="-100" maxValueString="100" syncable="YES"/>
         <relationship name="beans" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Bean" inverseName="roast" inverseEntity="Bean" syncable="YES"/>
         <relationship name="environment" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Environment" inverseName="roast" inverseEntity="Environment" syncable="YES"/>
         <relationship name="heating" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Heating" inverseName="roast" inverseEntity="Heating" syncable="YES"/>

@@ -2,7 +2,7 @@
 //  CRHeating.h
 //  CoffeeRoastLogger
 //
-//  Created by Hiraku Ohno on 2014/02/10.
+//  Created by Hiraku Ohno on 2014/02/11.
 //  Copyright (c) 2014年 Hiraku Ohno. All rights reserved.
 //
 
@@ -14,7 +14,7 @@
 @interface CRHeating : NSManagedObject
 
 @property (nonatomic) float temperature;
-@property (nonatomic) NSTimeInterval time;
+@property (nonatomic) int16_t time;
 @property (nonatomic, retain) CRRoast *roast;
 
 @end

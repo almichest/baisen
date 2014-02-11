@@ -2,7 +2,7 @@
 //  CRBean.h
 //  CoffeeRoastLogger
 //
-//  Created by Hiraku Ohno on 2014/01/15.
+//  Created by Hiraku Ohno on 2014/02/11.
 //  Copyright (c) 2014年 Hiraku Ohno. All rights reserved.
 //
 

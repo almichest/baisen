@@ -583,8 +583,7 @@
 - (void)addNewCellForBean
 {
     if(_beanCount >= kMaxBeanCount) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SorryMessageLabel", nil) message:NSLocalizedString(@"BeanItemLimitMessage", nil) delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alertView show];
+        [self showErrorAlertViewWithMessage:NSLocalizedString(@"BeanItemLimitMessage", nil) alertViewDelegate:nil];
         return;
     }
     [_beanInformations addObject:[[CRBeanInformation alloc] init]];
@@ -615,8 +614,7 @@
 - (void)addNewCellForHeating
 {
     if(_heatCount >= kMaxHeatingCount) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SorryMessageLabel", nil) message:NSLocalizedString(@"HeatingItemLimitMessage", nil) delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alertView show];
+        [self showErrorAlertViewWithMessage:NSLocalizedString(@"HeatingItemLimitMessage", nil) alertViewDelegate:nil];
         return;
     }
     [_heatingInformations addObject:[[CRHeatingInformation alloc] init]];
@@ -858,8 +856,7 @@
     if(textField.tag == kScoreFieldTag) {
         NSInteger score = textField.text.integerValue;
         if(score < -100 || score > 100) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SorryMessageLabel", nil) message:NSLocalizedString(@"ScoreLimitMessage", nil) delegate:Nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [alertView show];
+            [self showErrorAlertViewWithMessage:@"ScoreLimitMessage" alertViewDelegate:nil];
             textField.text = @"";
         } else {
             _roastInformation.score = score;
@@ -868,12 +865,22 @@
         float saveValue = celsiusRoomTempratureFromValue(textField.text.floatValue);
         _environmentInformation.temperature = saveValue;
     } else if(textField.tag == kHumidityFieldTag) {
+        if(textField.text.integerValue <= 0) {
+            [self showErrorAlertViewWithMessage:@"Humidity must be larger than 0" alertViewDelegate:nil];
+            textField.text = @"";
+            return;
+        }
         _environmentInformation.humidity = textField.text.integerValue;
     } else if(textField.tag >= kBeanKindInputBaseTag && textField.tag < kBeanQuantityInputBaseTag) {
         NSUInteger index = textField.tag % 100;
         ((CRBeanInformation *)(_beanInformations[index])).area = textField.text;
     } else if(textField.tag >= kBeanQuantityInputBaseTag && textField.tag < kHeatingTempratureBaseTag) {
         NSUInteger index = textField.tag % 100;
+        if(textField.text.integerValue <= 0) {
+            [self showErrorAlertViewWithMessage:@"Quantity must be larger than 0" alertViewDelegate:nil];
+            textField.text = @"";
+            return;
+        }
         ((CRBeanInformation *)(_beanInformations[index])).quantity = textField.text.integerValue;
     } else if(textField.tag >= kHeatingTempratureBaseTag && textField.tag < kHeatingLengthBaseTag) {
         NSUInteger index = textField.tag % 100;
@@ -881,9 +888,20 @@
         ((CRHeatingInformation *)(_heatingInformations[index])).temperature = saveValue;
     } else if(textField.tag >= kHeatingLengthBaseTag && textField.tag < kTempratureFieldTag) {
         NSUInteger index = textField.tag % 100;
-        NSTimeInterval saveValue = secondRoastLengthFromValue(textField.text.floatValue);
+        int16_t saveValue = secondRoastLengthFromValue(textField.text.floatValue);
+        if(saveValue <= 0) {
+            [self showErrorAlertViewWithMessage:@"Heating length must be larger than 0" alertViewDelegate:nil];
+            textField.text = @"";
+            return;
+        }
         ((CRHeatingInformation *)(_heatingInformations[index])).time = saveValue;
     }
+}
+
+- (void)showErrorAlertViewWithMessage:(NSString *)message alertViewDelegate:(id)delegate
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SorryMessageLabel", nil) message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alertView show];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField

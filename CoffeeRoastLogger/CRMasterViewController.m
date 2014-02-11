@@ -77,14 +77,12 @@
     cell.numberLabel.text = [NSString stringWithFormat:@"%u", (unsigned int)(indexPath.row + 1)];
     cell.dateLabel.text = dateStringFromNSDate(date);
     if(roast.imageData) {
-        UIImage *image = [UIImage imageWithData:roast.imageData];
-        cell.photoImageView.image = image;
-        cell.photoImageView.layer.masksToBounds = YES;
-        cell.photoImageView.layer.cornerRadius = 5.0f;
-        
+        cell.photoImageView.image = [UIImage imageWithData:roast.imageData];
     } else {
-        cell.photoImageView.image = nil;
+        cell.photoImageView.image = [UIImage imageNamed:@"icon@2x"];
     }
+    cell.photoImageView.layer.masksToBounds = YES;
+    cell.photoImageView.layer.cornerRadius = 5.0f;
     return cell;
 }
 

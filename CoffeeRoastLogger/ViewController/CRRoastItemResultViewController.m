@@ -169,6 +169,7 @@
                cell = [[UITableViewCell alloc] init];
                cell.frame = CGRectMake(0, 0, 320, self.image.size.height);
                UIImageView *imageView = [[UIImageView alloc] initWithFrame:cell.frame];
+               imageView.contentMode = UIViewContentModeScaleAspectFit;
                imageView.image = self.image;
                [cell addSubview:imageView];
                break;

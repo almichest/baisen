@@ -10,7 +10,7 @@
 
 @interface CRHeatingInformation : NSObject
 
-@property (nonatomic) NSTimeInterval time;
+@property (nonatomic) int16_t time;
 @property (nonatomic) NSUInteger index;
 @property (nonatomic) float temperature;
 

@@ -2,7 +2,7 @@
 //  CREnvironment.h
 //  CoffeeRoastLogger
 //
-//  Created by Hiraku Ohno on 2014/01/15.
+//  Created by Hiraku Ohno on 2014/02/11.
 //  Copyright (c) 2014年 Hiraku Ohno. All rights reserved.
 //
 
@@ -13,9 +13,9 @@
 
 @interface CREnvironment : NSManagedObject
 
+@property (nonatomic) NSTimeInterval date;
 @property (nonatomic) float humidity;
 @property (nonatomic) float temperature;
-@property (nonatomic) NSTimeInterval date;
 @property (nonatomic, retain) CRRoast *roast;
 
 @end

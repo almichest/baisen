@@ -257,6 +257,7 @@
 		428AA42B18840D1400401165 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				42FA30F718A943240061B778 /* Base.lproj */,
 				42FA30F318A937DA0061B778 /* ja.lproj */,
 				42FA30F218A937CB0061B778 /* en.lproj */,
 				428AA42C18840D1400401165 /* CoffeeRoastLogger-Info.plist */,
@@ -414,6 +415,13 @@
 				42FA30F418A937F20061B778 /* Localizable.strings */,
 			);
 			name = ja.lproj;
+			sourceTree = "<group>";
+		};
+		42FA30F718A943240061B778 /* Base.lproj */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Base.lproj;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -111,7 +111,7 @@
     
     if(_roastItem == nil) {
         _roastInformation = [[CRRoastInformation alloc] init];
-        _roastInformation.score = NSIntegerMin;
+        _roastInformation.score = INT16_MIN;
         _beanInformations = @[[[CRBeanInformation alloc] init]].mutableCopy;
         _environmentInformation = [[CREnvironmentInformation alloc] init];
         _heatingInformations = @[[[CRHeatingInformation alloc] init]].mutableCopy;
@@ -856,7 +856,7 @@
     if(textField.tag == kScoreFieldTag) {
         NSInteger score = textField.text.integerValue;
         if(score < -100 || score > 100) {
-            [self showErrorAlertViewWithMessage:@"ScoreLimitMessage" alertViewDelegate:nil];
+            [self showErrorAlertViewWithMessage:NSLocalizedString(@"ScoreLimitMessage", nil) alertViewDelegate:nil];
             textField.text = @"";
         } else {
             _roastInformation.score = score;
@@ -866,7 +866,7 @@
         _environmentInformation.temperature = saveValue;
     } else if(textField.tag == kHumidityFieldTag) {
         if(textField.text.integerValue <= 0) {
-            [self showErrorAlertViewWithMessage:@"Humidity must be larger than 0" alertViewDelegate:nil];
+            [self showErrorAlertViewWithMessage:NSLocalizedString(@"HumidityValueErrorMessage", nil) alertViewDelegate:nil];
             textField.text = @"";
             return;
         }
@@ -877,7 +877,7 @@
     } else if(textField.tag >= kBeanQuantityInputBaseTag && textField.tag < kHeatingTempratureBaseTag) {
         NSUInteger index = textField.tag % 100;
         if(textField.text.integerValue <= 0) {
-            [self showErrorAlertViewWithMessage:@"Quantity must be larger than 0" alertViewDelegate:nil];
+            [self showErrorAlertViewWithMessage:NSLocalizedString(@"QuantityValueErrorMessage", nil) alertViewDelegate:nil];
             textField.text = @"";
             return;
         }
@@ -890,7 +890,7 @@
         NSUInteger index = textField.tag % 100;
         int16_t saveValue = secondRoastLengthFromValue(textField.text.floatValue);
         if(saveValue <= 0) {
-            [self showErrorAlertViewWithMessage:@"Heating length must be larger than 0" alertViewDelegate:nil];
+            [self showErrorAlertViewWithMessage:NSLocalizedString(@"HeatingLengthValueErrorMessage", nil) alertViewDelegate:nil];
             textField.text = @"";
             return;
         }

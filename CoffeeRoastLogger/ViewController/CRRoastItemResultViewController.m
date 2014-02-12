@@ -204,8 +204,14 @@
                    itemCell.separetorView.hidden = NO;
                    NSOrderedSet *heatings = self.roast.heating;
                    CRHeating *heating = [heatings objectAtIndex:indexPath.row - 1];
+                   MyLog(@"temp = %@", @(heating.temperature));
+                   MyLog(@"time = %@", @(heating.time));
                    itemCell.nameLabel.text = [NSString stringWithFormat:@"%.0f", roastTempratureFromValue(heating.temperature)];
-                   itemCell.valueLabel.text = [NSString stringWithFormat:@"%.0f", roastLengthFromValue(heating.time)];
+                   if([CRConfiguration sharedConfiguration].useMinutesForHeatingLength) {
+                       itemCell.valueLabel.text = [NSString stringWithFormat:@"%.1f", roastLengthFromValue(heating.time)];
+                   } else {
+                       itemCell.valueLabel.text = [NSString stringWithFormat:@"%.0f", roastLengthFromValue(heating.time)];
+                   }
                }
                break;
            }
@@ -229,7 +235,8 @@
                itemCell.separetorView.hidden = NO;
                if(indexPath.row == 0) {
                    itemCell.nameLabel.text = NSLocalizedString(@"ScoreLabel", nil);
-                   itemCell.valueLabel.text = [NSString stringWithFormat:@"%d", self.roast.score];
+                   NSString *scoreLabelText = self.roast.score == INT16_MIN ? @"" : [NSString stringWithFormat:@"%d", self.roast.score];
+                   itemCell.valueLabel.text = scoreLabelText;
                } else {
                    itemCell.nameLabel.text = NSLocalizedString(@"MemoLabel", nil);
                    itemCell.valueLabel.text = self.roast.result;

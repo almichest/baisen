@@ -8,12 +8,23 @@
 
 #import "CRHeating.h"
 #import "CRRoast.h"
-
+#import "CRUtility.h"
+#import "CRTypes.h"
 
 @implementation CRHeating
 
 @dynamic temperature;
 @dynamic time;
 @dynamic roast;
+
+- (NSString *)temperatureDescription
+{
+    MyLog(@"temp - %f", self.temperature);
+    if(self.temperature == kHeatingTemperatureDefaultValue) {
+        return NSLocalizedString(@"NotInput", nil);
+    } else {
+        return [NSString stringWithFormat:@"%.0f", roastTempratureFromValue(self.temperature)];
+    }
+}
 
 @end

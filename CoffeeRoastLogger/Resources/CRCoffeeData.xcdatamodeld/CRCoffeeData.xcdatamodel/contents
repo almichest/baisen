@@ -8,7 +8,7 @@
     </entity>
     <entity name="Environment" representedClassName="CREnvironment" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="humidity" optional="YES" attributeType="Float" minValueString="0" syncable="YES"/>
+        <attribute name="humidity" optional="YES" attributeType="Float" syncable="YES"/>
         <attribute name="temperature" optional="YES" attributeType="Float" syncable="YES"/>
         <relationship name="roast" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Roast" inverseName="environment" inverseEntity="Roast" syncable="YES"/>
     </entity>

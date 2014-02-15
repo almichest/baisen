@@ -19,9 +19,12 @@ typedef NS_ENUM(NSUInteger, CRRoastDataSourceChangeType)
 @class CRRoastInformation;
 @class CRRoast;
 @protocol CRRoastDataSourceDelegate;
+@protocol CRRoastDataSourceInitialLoadingDelegate;
 @interface CRRoastDataSource : NSObject
 
 @property(nonatomic, weak) id<CRRoastDataSourceDelegate> delegate;
+@property(nonatomic, weak) id<CRRoastDataSourceInitialLoadingDelegate> initialLoadingDelegate;
+@property(nonatomic) BOOL iCloudAvailable;
 
 - (CRRoast *)addRoastInformation:(CRRoastInformation *)information;
 - (CRRoast *)updateRoastItem:(CRRoast *)roast withRoastInformation:(CRRoastInformation *)information;
@@ -29,7 +32,6 @@ typedef NS_ENUM(NSUInteger, CRRoastDataSourceChangeType)
 
 - (NSUInteger)countOfRoastInformation;
 - (CRRoast *)roastInformationAtIndexPath:(NSIndexPath *)indexPath;
-- (NSArray *)beanAreas;
 
 - (void)save;
 
@@ -40,9 +42,12 @@ typedef NS_ENUM(NSUInteger, CRRoastDataSourceChangeType)
 - (void)dataSource:(CRRoastDataSource *)dataSource didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(CRRoastDataSourceChangeType)type newIndexPath:(NSIndexPath *)newIndexPath;
 
 - (void)dataSourceWillChangeContent:(CRRoastDataSource *)dataSource;
-
 - (void)dataSourceDidChangeContent:(CRRoastDataSource *)dataSource;
 
+@end
+
+@protocol CRRoastDataSourceInitialLoadingDelegate <NSObject>
+- (void)dataSourceHasBeenReady:(CRRoastDataSource *)dataSource;
 @end
 
 extern NSString *const CRRoastDataSourceDidFailSavingNotification;

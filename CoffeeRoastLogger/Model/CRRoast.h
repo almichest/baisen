@@ -19,6 +19,8 @@
 @property (nonatomic, retain) NSSet *beans;
 @property (nonatomic, retain) CREnvironment *environment;
 @property (nonatomic, retain) NSOrderedSet *heating;
+
+@property (nonatomic, readonly) NSString *scoreDescription;
 @end
 
 @interface CRRoast (CoreDataGeneratedAccessors)

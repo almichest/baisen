@@ -6,7 +6,7 @@
 //  Copyright (c) 2014年 Hiraku Ohno. All rights reserved.
 //
 
-#import "CRMasterViewController.h"
+#import "CRRoastContentsViewController.h"
 #import "CRRoastItemResultViewController.h"
 #import "CRRoastManager.h"
 #import "CRRoastDataSource.h"
@@ -19,16 +19,13 @@
 
 #define kRoastItemCellIdentifier    @"RoastItemCell"
 #define kShowItemSegueIdentifier    @"showItem"
-@interface CRMasterViewController ()<CRRoastDataSourceDelegate>
+@interface CRRoastContentsViewController ()<CRRoastDataSourceDelegate>
 
 @property(nonatomic, readonly) CRRoastManager *manager;
 @property(nonatomic, readonly) CRRoastDataSource *dataSource;
 @end
 
-@implementation CRMasterViewController
-{
-    NSUInteger _order;
-}
+@implementation CRRoastContentsViewController
 
 - (void)awakeFromNib
 {
@@ -39,8 +36,7 @@
 {
     [super viewDidLoad];
     self.dataSource.delegate = self;
-//    NSUbiquitousKeyValueStore *store = [NSUbiquitousKeyValueStore defaultStore];
-//    MyLog(@"%lld", [store longLongForKey:@"hoge"]);
+    self.navigationItem.hidesBackButton = YES;
     [self.tableView registerNib:[UINib nibWithNibName:@"RoastItemCell" bundle:nil] forCellReuseIdentifier:kRoastItemCellIdentifier];
 }
 
@@ -54,7 +50,6 @@
 {
     [super viewWillAppear:animated];
     [self.tableView reloadData];
-    _order = log10(self.dataSource.countOfRoastInformation) + 1;
 }
 
 #pragma mark - UITableViewDataSource
@@ -120,6 +115,9 @@
     } else if(type == CRRoastDataSourceChangeDelete) {
         NSArray *indexPaths = @[indexPath];
         [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+    } else if(type == CRRoastDataSourceChangeUpdate) {
+        NSArray *indexPaths = @[indexPath];
+        [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
     }
 }
 

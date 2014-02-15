@@ -7,7 +7,18 @@
 //
 
 #import "CRHeatingInformation.h"
+#import "CRTypes.h"
 
 @implementation CRHeatingInformation
+
+- (instancetype)init
+{
+    self = [super init];
+    if(self) {
+        _temperature = kHeatingTemperatureDefaultValue;
+    }
+    
+    return self;
+}
 
 @end

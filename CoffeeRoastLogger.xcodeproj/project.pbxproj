@@ -14,7 +14,7 @@
 		428AA43118840D1400401165 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 428AA43018840D1400401165 /* main.m */; };
 		428AA43518840D1400401165 /* CRAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 428AA43418840D1400401165 /* CRAppDelegate.m */; };
 		428AA43818840D1400401165 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 428AA43618840D1400401165 /* Main.storyboard */; };
-		428AA43E18840D1400401165 /* CRMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 428AA43D18840D1400401165 /* CRMasterViewController.m */; };
+		428AA43E18840D1400401165 /* CRRoastContentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 428AA43D18840D1400401165 /* CRRoastContentsViewController.m */; };
 		428AA44318840D1400401165 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 428AA44218840D1400401165 /* Images.xcassets */; };
 		428AA44A18840D1400401165 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 428AA44918840D1400401165 /* XCTest.framework */; };
 		428AA44B18840D1400401165 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 428AA42218840D1400401165 /* Foundation.framework */; };
@@ -29,11 +29,29 @@
 		428AA49D18842DFB00401165 /* CRBeanInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 428AA49C18842DFB00401165 /* CRBeanInformation.m */; };
 		428AA4BB1886DB7100401165 /* CRRoastDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 428AA4BA1886DB7100401165 /* CRRoastDataSource.m */; };
 		42B5DB401894E93200F0710E /* CRRoastItemEditingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B5DB3F1894E93200F0710E /* CRRoastItemEditingViewController.m */; };
-		42C8B4DB18AA6488006DBA4A /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C8B4DA18AA6488006DBA4A /* icon@2x.png */; };
 		42C8B4DE18AA6814006DBA4A /* CRBean.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C8B4DD18AA6814006DBA4A /* CRBean.m */; };
 		42C8B4E118AA6815006DBA4A /* CREnvironment.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C8B4E018AA6815006DBA4A /* CREnvironment.m */; };
 		42C8B4E418AA6815006DBA4A /* CRRoast.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C8B4E318AA6815006DBA4A /* CRRoast.m */; };
 		42C8B4E718AA6815006DBA4A /* CRHeating.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C8B4E618AA6815006DBA4A /* CRHeating.m */; };
+		42C8B4ED18ABAFA9006DBA4A /* NSError+UbiquityStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C8B4EA18ABAFA9006DBA4A /* NSError+UbiquityStoreManager.m */; };
+		42C8B4EE18ABAFA9006DBA4A /* UbiquityStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C8B4EC18ABAFA9006DBA4A /* UbiquityStoreManager.m */; };
+		42C8B4F218ABB81F006DBA4A /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C8B4F118ABB81F006DBA4A /* JRSwizzle.m */; };
+		42C8B4FA18AD140C006DBA4A /* CRMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C8B4F918AD140C006DBA4A /* CRMainViewController.m */; };
+		42C8B4FD18AE8B29006DBA4A /* CRTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C8B4FC18AE8B29006DBA4A /* CRTypes.m */; };
+		42C8B50C18AE921A006DBA4A /* appicon-60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C8B4FE18AE921A006DBA4A /* appicon-60@2x.png */; };
+		42C8B50D18AE921A006DBA4A /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C8B4FF18AE921A006DBA4A /* Icon-72.png */; };
+		42C8B50E18AE921A006DBA4A /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C8B50018AE921A006DBA4A /* Icon-72@2x.png */; };
+		42C8B50F18AE921A006DBA4A /* Icon-76.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C8B50118AE921A006DBA4A /* Icon-76.png */; };
+		42C8B51018AE921A006DBA4A /* Icon-76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C8B50218AE921A006DBA4A /* Icon-76@2x.png */; };
+		42C8B51118AE921A006DBA4A /* Icon-Small-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C8B50318AE921A006DBA4A /* Icon-Small-40.png */; };
+		42C8B51218AE921A006DBA4A /* Icon-Small-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C8B50418AE921A006DBA4A /* Icon-Small-40@2x.png */; };
+		42C8B51318AE921A006DBA4A /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C8B50518AE921A006DBA4A /* Icon-Small-50.png */; };
+		42C8B51418AE921A006DBA4A /* Icon-Small-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C8B50618AE921A006DBA4A /* Icon-Small-50@2x.png */; };
+		42C8B51518AE921A006DBA4A /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C8B50718AE921A006DBA4A /* Icon-Small.png */; };
+		42C8B51618AE921A006DBA4A /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C8B50818AE921A006DBA4A /* Icon-Small@2x.png */; };
+		42C8B51718AE921A006DBA4A /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C8B50918AE921A006DBA4A /* Icon.png */; };
+		42C8B51818AE921A006DBA4A /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C8B50A18AE921A006DBA4A /* Icon@2x.png */; };
+		42C8B51918AE921A006DBA4A /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C8B50B18AE921A006DBA4A /* default.png */; };
 		42CCF2D11897C0AC00E87843 /* TwoItemsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42CCF2D01897C0AC00E87843 /* TwoItemsCell.xib */; };
 		42CCF2D51897C16200E87843 /* CRTwoItemsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 42CCF2D41897C16200E87843 /* CRTwoItemsCell.m */; };
 		42CCF31B1897E80900E87843 /* CRDateEditingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42CCF31A1897E80900E87843 /* CRDateEditingViewController.m */; };
@@ -89,8 +107,8 @@
 		428AA43318840D1400401165 /* CRAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CRAppDelegate.h; sourceTree = "<group>"; };
 		428AA43418840D1400401165 /* CRAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CRAppDelegate.m; sourceTree = "<group>"; };
 		428AA43718840D1400401165 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		428AA43C18840D1400401165 /* CRMasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CRMasterViewController.h; sourceTree = "<group>"; };
-		428AA43D18840D1400401165 /* CRMasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CRMasterViewController.m; sourceTree = "<group>"; };
+		428AA43C18840D1400401165 /* CRRoastContentsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CRRoastContentsViewController.h; sourceTree = "<group>"; };
+		428AA43D18840D1400401165 /* CRRoastContentsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CRRoastContentsViewController.m; sourceTree = "<group>"; };
 		428AA44218840D1400401165 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		428AA44818840D1400401165 /* CoffeeRoastLoggerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoffeeRoastLoggerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		428AA44918840D1400401165 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -111,7 +129,6 @@
 		428AA4BA1886DB7100401165 /* CRRoastDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRRoastDataSource.m; sourceTree = "<group>"; };
 		42B5DB3E1894E93200F0710E /* CRRoastItemEditingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRRoastItemEditingViewController.h; path = ViewController/CRRoastItemEditingViewController.h; sourceTree = "<group>"; };
 		42B5DB3F1894E93200F0710E /* CRRoastItemEditingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRRoastItemEditingViewController.m; path = ViewController/CRRoastItemEditingViewController.m; sourceTree = "<group>"; };
-		42C8B4DA18AA6488006DBA4A /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
 		42C8B4DC18AA6814006DBA4A /* CRBean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRBean.h; sourceTree = "<group>"; };
 		42C8B4DD18AA6814006DBA4A /* CRBean.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRBean.m; sourceTree = "<group>"; };
 		42C8B4DF18AA6815006DBA4A /* CREnvironment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CREnvironment.h; sourceTree = "<group>"; };
@@ -120,6 +137,30 @@
 		42C8B4E318AA6815006DBA4A /* CRRoast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRRoast.m; sourceTree = "<group>"; };
 		42C8B4E518AA6815006DBA4A /* CRHeating.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRHeating.h; sourceTree = "<group>"; };
 		42C8B4E618AA6815006DBA4A /* CRHeating.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRHeating.m; sourceTree = "<group>"; };
+		42C8B4E918ABAFA9006DBA4A /* NSError+UbiquityStoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+UbiquityStoreManager.h"; sourceTree = "<group>"; };
+		42C8B4EA18ABAFA9006DBA4A /* NSError+UbiquityStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+UbiquityStoreManager.m"; sourceTree = "<group>"; };
+		42C8B4EB18ABAFA9006DBA4A /* UbiquityStoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UbiquityStoreManager.h; sourceTree = "<group>"; };
+		42C8B4EC18ABAFA9006DBA4A /* UbiquityStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UbiquityStoreManager.m; sourceTree = "<group>"; };
+		42C8B4F018ABB81F006DBA4A /* JRSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRSwizzle.h; sourceTree = "<group>"; };
+		42C8B4F118ABB81F006DBA4A /* JRSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRSwizzle.m; sourceTree = "<group>"; };
+		42C8B4F818AD140C006DBA4A /* CRMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRMainViewController.h; path = ViewController/CRMainViewController.h; sourceTree = "<group>"; };
+		42C8B4F918AD140C006DBA4A /* CRMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRMainViewController.m; path = ViewController/CRMainViewController.m; sourceTree = "<group>"; };
+		42C8B4FB18AE8B29006DBA4A /* CRTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRTypes.h; sourceTree = "<group>"; };
+		42C8B4FC18AE8B29006DBA4A /* CRTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRTypes.m; sourceTree = "<group>"; };
+		42C8B4FE18AE921A006DBA4A /* appicon-60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "appicon-60@2x.png"; path = "Images/appicon-60@2x.png"; sourceTree = "<group>"; };
+		42C8B4FF18AE921A006DBA4A /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "Images/Icon-72.png"; sourceTree = "<group>"; };
+		42C8B50018AE921A006DBA4A /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72@2x.png"; path = "Images/Icon-72@2x.png"; sourceTree = "<group>"; };
+		42C8B50118AE921A006DBA4A /* Icon-76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-76.png"; path = "Images/Icon-76.png"; sourceTree = "<group>"; };
+		42C8B50218AE921A006DBA4A /* Icon-76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-76@2x.png"; path = "Images/Icon-76@2x.png"; sourceTree = "<group>"; };
+		42C8B50318AE921A006DBA4A /* Icon-Small-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small-40.png"; path = "Images/Icon-Small-40.png"; sourceTree = "<group>"; };
+		42C8B50418AE921A006DBA4A /* Icon-Small-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small-40@2x.png"; path = "Images/Icon-Small-40@2x.png"; sourceTree = "<group>"; };
+		42C8B50518AE921A006DBA4A /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small-50.png"; path = "Images/Icon-Small-50.png"; sourceTree = "<group>"; };
+		42C8B50618AE921A006DBA4A /* Icon-Small-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small-50@2x.png"; path = "Images/Icon-Small-50@2x.png"; sourceTree = "<group>"; };
+		42C8B50718AE921A006DBA4A /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small.png"; path = "Images/Icon-Small.png"; sourceTree = "<group>"; };
+		42C8B50818AE921A006DBA4A /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small@2x.png"; path = "Images/Icon-Small@2x.png"; sourceTree = "<group>"; };
+		42C8B50918AE921A006DBA4A /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = Images/Icon.png; sourceTree = "<group>"; };
+		42C8B50A18AE921A006DBA4A /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "Images/Icon@2x.png"; sourceTree = "<group>"; };
+		42C8B50B18AE921A006DBA4A /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = default.png; path = Images/default.png; sourceTree = "<group>"; };
 		42CCF2D01897C0AC00E87843 /* TwoItemsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TwoItemsCell.xib; sourceTree = "<group>"; };
 		42CCF2D31897C16200E87843 /* CRTwoItemsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRTwoItemsCell.h; path = View/CRTwoItemsCell.h; sourceTree = "<group>"; };
 		42CCF2D41897C16200E87843 /* CRTwoItemsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRTwoItemsCell.m; path = View/CRTwoItemsCell.m; sourceTree = "<group>"; };
@@ -204,6 +245,7 @@
 		428AA41618840D1400401165 = {
 			isa = PBXGroup;
 			children = (
+				42C8B4E818ABAF87006DBA4A /* UbiquityStoreManager */,
 				428AA42A18840D1400401165 /* CoffeeRoastLogger */,
 				428AA45018840D1400401165 /* CoffeeRoastLoggerTests */,
 				428AA42118840D1400401165 /* Frameworks */,
@@ -252,6 +294,8 @@
 				428AA48F18842B9800401165 /* CRRoastManager.m */,
 				428AA4B91886DB7100401165 /* CRRoastDataSource.h */,
 				428AA4BA1886DB7100401165 /* CRRoastDataSource.m */,
+				42C8B4FB18AE8B29006DBA4A /* CRTypes.h */,
+				42C8B4FC18AE8B29006DBA4A /* CRTypes.m */,
 			);
 			path = CoffeeRoastLogger;
 			sourceTree = "<group>";
@@ -337,8 +381,8 @@
 		42B5DB3D1894E3B200F0710E /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				428AA43C18840D1400401165 /* CRMasterViewController.h */,
-				428AA43D18840D1400401165 /* CRMasterViewController.m */,
+				428AA43C18840D1400401165 /* CRRoastContentsViewController.h */,
+				428AA43D18840D1400401165 /* CRRoastContentsViewController.m */,
 				42B5DB3E1894E93200F0710E /* CRRoastItemEditingViewController.h */,
 				42B5DB3F1894E93200F0710E /* CRRoastItemEditingViewController.m */,
 				42CCF3191897E80900E87843 /* CRDateEditingViewController.h */,
@@ -351,8 +395,23 @@
 				42CCF327189FC93A00E87843 /* CRSelectedPhotoViewController.m */,
 				42CCF33518A2577100E87843 /* CRRoastItemResultViewController.h */,
 				42CCF33618A2577100E87843 /* CRRoastItemResultViewController.m */,
+				42C8B4F818AD140C006DBA4A /* CRMainViewController.h */,
+				42C8B4F918AD140C006DBA4A /* CRMainViewController.m */,
 			);
 			name = ViewController;
+			sourceTree = "<group>";
+		};
+		42C8B4E818ABAF87006DBA4A /* UbiquityStoreManager */ = {
+			isa = PBXGroup;
+			children = (
+				42C8B4F018ABB81F006DBA4A /* JRSwizzle.h */,
+				42C8B4F118ABB81F006DBA4A /* JRSwizzle.m */,
+				42C8B4E918ABAFA9006DBA4A /* NSError+UbiquityStoreManager.h */,
+				42C8B4EA18ABAFA9006DBA4A /* NSError+UbiquityStoreManager.m */,
+				42C8B4EB18ABAFA9006DBA4A /* UbiquityStoreManager.h */,
+				42C8B4EC18ABAFA9006DBA4A /* UbiquityStoreManager.m */,
+			);
+			name = UbiquityStoreManager;
 			sourceTree = "<group>";
 		};
 		42CCF2D21897C14300E87843 /* View */ = {
@@ -398,7 +457,20 @@
 		42FA30D918A773E70061B778 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				42C8B4DA18AA6488006DBA4A /* icon@2x.png */,
+				42C8B4FE18AE921A006DBA4A /* appicon-60@2x.png */,
+				42C8B4FF18AE921A006DBA4A /* Icon-72.png */,
+				42C8B50018AE921A006DBA4A /* Icon-72@2x.png */,
+				42C8B50118AE921A006DBA4A /* Icon-76.png */,
+				42C8B50218AE921A006DBA4A /* Icon-76@2x.png */,
+				42C8B50318AE921A006DBA4A /* Icon-Small-40.png */,
+				42C8B50418AE921A006DBA4A /* Icon-Small-40@2x.png */,
+				42C8B50518AE921A006DBA4A /* Icon-Small-50.png */,
+				42C8B50618AE921A006DBA4A /* Icon-Small-50@2x.png */,
+				42C8B50718AE921A006DBA4A /* Icon-Small.png */,
+				42C8B50818AE921A006DBA4A /* Icon-Small@2x.png */,
+				42C8B50918AE921A006DBA4A /* Icon.png */,
+				42C8B50A18AE921A006DBA4A /* Icon@2x.png */,
+				42C8B50B18AE921A006DBA4A /* default.png */,
 				42FA30DA18A7743A0061B778 /* table_indicator.png */,
 			);
 			name = Images;
@@ -514,20 +586,33 @@
 			buildActionMask = 2147483647;
 			files = (
 				42FA30E918A903580061B778 /* ResultMemoCell.xib in Resources */,
+				42C8B51418AE921A006DBA4A /* Icon-Small-50@2x.png in Resources */,
+				42C8B50D18AE921A006DBA4A /* Icon-72.png in Resources */,
 				428AA44318840D1400401165 /* Images.xcassets in Resources */,
+				42C8B51818AE921A006DBA4A /* Icon@2x.png in Resources */,
+				42C8B51518AE921A006DBA4A /* Icon-Small.png in Resources */,
+				42C8B50F18AE921A006DBA4A /* Icon-76.png in Resources */,
 				42CCF34818A60D4200E87843 /* ResultItemHeaderCell.xib in Resources */,
 				42FA30F618A937F20061B778 /* Localizable.strings in Resources */,
+				42C8B51618AE921A006DBA4A /* Icon-Small@2x.png in Resources */,
 				42CCF33118A2510900E87843 /* RoastItemCell.xib in Resources */,
 				42CCF34318A6015300E87843 /* ResultItemCell.xib in Resources */,
+				42C8B51118AE921A006DBA4A /* Icon-Small-40.png in Resources */,
+				42C8B50E18AE921A006DBA4A /* Icon-72@2x.png in Resources */,
+				42C8B50C18AE921A006DBA4A /* appicon-60@2x.png in Resources */,
+				42C8B51718AE921A006DBA4A /* Icon.png in Resources */,
 				42CCF31D189951BD00E87843 /* ConditionCell.xib in Resources */,
 				42FA30DB18A7743A0061B778 /* table_indicator.png in Resources */,
 				428AA43818840D1400401165 /* Main.storyboard in Resources */,
 				42CCF34018A3EC2A00E87843 /* TwoItemResultCell.xib in Resources */,
+				42C8B51218AE921A006DBA4A /* Icon-Small-40@2x.png in Resources */,
+				42C8B51018AE921A006DBA4A /* Icon-76@2x.png in Resources */,
 				42FA30F118A937C60061B778 /* Localizable.strings in Resources */,
+				42C8B51918AE921A006DBA4A /* default.png in Resources */,
 				42CCF2D11897C0AC00E87843 /* TwoItemsCell.xib in Resources */,
 				42D0A5F9189E304A00CCE450 /* ImageRootCell.xib in Resources */,
 				42CCF322189D56EC00E87843 /* EmptyCell.xib in Resources */,
-				42C8B4DB18AA6488006DBA4A /* icon@2x.png in Resources */,
+				42C8B51318AE921A006DBA4A /* Icon-Small-50.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -561,9 +646,12 @@
 				42CCF34B18A613DD00E87843 /* CRResultItemHeaderCell.m in Sources */,
 				42CCF33418A2519D00E87843 /* CRRoastItemCell.m in Sources */,
 				42CCF328189FC93A00E87843 /* CRSelectedPhotoViewController.m in Sources */,
+				42C8B4FD18AE8B29006DBA4A /* CRTypes.m in Sources */,
 				42D0A5F7189E28A700CCE450 /* CRImagePickerRootViewController.m in Sources */,
 				42CCF325189D570400E87843 /* CREmptyCell.m in Sources */,
+				42C8B4FA18AD140C006DBA4A /* CRMainViewController.m in Sources */,
 				428AA49D18842DFB00401165 /* CRBeanInformation.m in Sources */,
+				42C8B4EE18ABAFA9006DBA4A /* UbiquityStoreManager.m in Sources */,
 				42D0A5FC189E30DD00CCE450 /* CRImageRootViewCell.m in Sources */,
 				428AA43118840D1400401165 /* main.m in Sources */,
 				428AA49018842B9800401165 /* CRRoastManager.m in Sources */,
@@ -573,10 +661,12 @@
 				42FA30D818A6969F0061B778 /* CRConfiguration.m in Sources */,
 				42CCF33A18A295FB00E87843 /* CRTwoItemsCellButton.m in Sources */,
 				42CCF3201899527500E87843 /* CRConditionCell.m in Sources */,
-				428AA43E18840D1400401165 /* CRMasterViewController.m in Sources */,
+				428AA43E18840D1400401165 /* CRRoastContentsViewController.m in Sources */,
 				428AA4BB1886DB7100401165 /* CRRoastDataSource.m in Sources */,
 				42C8B4DE18AA6814006DBA4A /* CRBean.m in Sources */,
+				42C8B4ED18ABAFA9006DBA4A /* NSError+UbiquityStoreManager.m in Sources */,
 				42C8B4E118AA6815006DBA4A /* CREnvironment.m in Sources */,
+				42C8B4F218ABB81F006DBA4A /* JRSwizzle.m in Sources */,
 				42B5DB401894E93200F0710E /* CRRoastItemEditingViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

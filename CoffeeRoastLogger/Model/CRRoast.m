@@ -21,4 +21,13 @@
 @dynamic environment;
 @dynamic heating;
 
+- (NSString *)scoreDescription
+{
+    if(self.score == INT16_MIN) {
+        return NSLocalizedString(@"NotInput", nil);
+    } else {
+        return [NSString stringWithFormat:@"%d", self.score];
+    }
+}
+
 @end

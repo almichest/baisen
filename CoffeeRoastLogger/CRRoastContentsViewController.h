@@ -10,6 +10,6 @@
 
 #import <CoreData/CoreData.h>
 
-@interface CRMasterViewController : UITableViewController
+@interface CRRoastContentsViewController : UITableViewController
 
 @end

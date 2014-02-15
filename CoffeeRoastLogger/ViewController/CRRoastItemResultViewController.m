@@ -206,7 +206,7 @@
                    CRHeating *heating = [heatings objectAtIndex:indexPath.row - 1];
                    MyLog(@"temp = %@", @(heating.temperature));
                    MyLog(@"time = %@", @(heating.time));
-                   itemCell.nameLabel.text = [NSString stringWithFormat:@"%.0f", roastTempratureFromValue(heating.temperature)];
+                   itemCell.nameLabel.text = heating.temperatureDescription;
                    if([CRConfiguration sharedConfiguration].useMinutesForHeatingLength) {
                        itemCell.valueLabel.text = [NSString stringWithFormat:@"%.1f", roastLengthFromValue(heating.time)];
                    } else {
@@ -222,10 +222,10 @@
                if(indexPath.row == 0) {
                    NSString *tempUnit = [CRConfiguration sharedConfiguration].useFahrenheitForRoom ? @"°F" : @"°C";
                    itemCell.nameLabel.text = [NSString stringWithFormat:@"%@ [%@]",NSLocalizedString(@"RoomTemperatureLabel", nil), tempUnit];
-                   itemCell.valueLabel.text = [NSString stringWithFormat:@"%.1f", self.roast.environment.temperature];
+                   itemCell.valueLabel.text = self.roast.environment.temperatureDescription;
                } else if(indexPath.row == 1) {
                    itemCell.nameLabel.text = [NSString stringWithFormat:@"%@ [%%]",NSLocalizedString(@"HumidityLabel", nil)]; ;
-                   itemCell.valueLabel.text = [NSString stringWithFormat:@"%.1f", self.roast.environment.humidity];
+                   itemCell.valueLabel.text = self.roast.environment.humidityDescription;
                }
                break;
            }
@@ -235,7 +235,7 @@
                itemCell.separetorView.hidden = NO;
                if(indexPath.row == 0) {
                    itemCell.nameLabel.text = NSLocalizedString(@"ScoreLabel", nil);
-                   NSString *scoreLabelText = self.roast.score == INT16_MIN ? @"" : [NSString stringWithFormat:@"%d", self.roast.score];
+                   NSString *scoreLabelText = self.roast.scoreDescription;
                    itemCell.valueLabel.text = scoreLabelText;
                } else {
                    itemCell.nameLabel.text = NSLocalizedString(@"MemoLabel", nil);
@@ -246,8 +246,9 @@
            case kMemoSection : {
                cell = [tableView dequeueReusableCellWithIdentifier:kResultMemoCellIdentifier];
                CRResultMemoCell *memoCell = (CRResultMemoCell *)cell;
-               memoCell.memoLabel.text = self.roast.result;
-               memoCell.memoLabel.frame = CGRectMake(0, 0, [self memoLabelFrame].size.width, [self memoLabelFrame].size.height);
+               memoCell.memoLabel.text = [self.roast.result stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+               CGRect cellFrame = CGRectMake(0, 0, [self memoLabelFrame].size.width, [self memoLabelFrame].size.height);
+               memoCell.memoLabel.frame = cellFrame;
                break;
            }
                

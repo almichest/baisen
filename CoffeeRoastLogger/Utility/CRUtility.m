@@ -7,9 +7,10 @@
 //
 
 #import "CRUtility.h"
+#import "CRTypes.h"
 #import "CRConfiguration.h"
-
-@implementation CRUtility
+#import "CRHeatingInformation.h"
+#import "CRBeanInformation.h"
 
 NSString *dateStringFromNSDate(NSDate *date)
 {
@@ -73,4 +74,36 @@ NSTimeInterval secondRoastLengthFromValue(float value)
     }
 }
 
-@end
+NSArray *validBeanInformationsFromRawInformations(NSArray *informations)
+{
+    NSMutableArray *mutableInformations = [[NSMutableArray alloc] initWithCapacity:informations.count];
+    for(CRBeanInformation *information in informations) {
+        if(information.area.length > 0) {
+            [mutableInformations addObject:information];
+        }
+    }
+    if(mutableInformations.count == 0) {
+        CRBeanInformation *information = [[CRBeanInformation alloc] init];
+        information.area = NSLocalizedString(@"NotInput", nil);
+        information.quantity = 0;
+        [mutableInformations addObject:information];
+    }
+    return mutableInformations.copy;
+}
+
+NSArray *validHeatingInformationsFromRawInformations(NSArray *informations)
+{
+    NSMutableArray *mutableInformations = [[NSMutableArray alloc] initWithCapacity:informations.count];
+    for(CRHeatingInformation *information in informations) {
+        if(information.temperature > 0) {
+            [mutableInformations addObject:information];
+        }
+    }
+    if(mutableInformations.count == 0) {
+        CRHeatingInformation *information = [[CRHeatingInformation alloc] init];
+        information.temperature = kHeatingTemperatureDefaultValue;
+        information.time = 0;
+        [mutableInformations addObject:information];
+    }
+    return mutableInformations.copy;
+}

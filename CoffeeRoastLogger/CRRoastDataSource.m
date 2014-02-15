@@ -7,6 +7,7 @@
 //
 
 #import "CRRoastDataSource.h"
+#import "UbiquityStoreManager.h"
 
 #import "CRRoast.h"
 #import "CREnvironment.h"
@@ -18,7 +19,7 @@
 #import "CRBeanInformation.h"
 #import "CRHeatingInformation.h"
 
-@interface CRRoastDataSource() <NSFetchedResultsControllerDelegate>
+@interface CRRoastDataSource() <NSFetchedResultsControllerDelegate, UbiquityStoreManagerDelegate>
 
 @property (nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic) NSManagedObjectModel *managedObjectModel;
@@ -28,15 +29,40 @@
 @end
 
 @implementation CRRoastDataSource
+{
+    UbiquityStoreManager *_storeManager;
+}
 
 - (instancetype)init
 {
     self = super.init;
     if(self) {
-        self.fetchedResultsController.delegate = self;
+        NSURL *storeURL = [[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject] URLByAppendingPathComponent:@"CRCoffeeData.sqlite"];
+        _storeManager = [[UbiquityStoreManager alloc] initStoreNamed:nil withManagedObjectModel:self.managedObjectModel localStoreURL:storeURL containerIdentifier:nil storeConfiguration:nil storeOptions:nil delegate:self];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(iCloudContentsWillChange:)
+                                                     name:USMStoreWillChangeNotification
+                                                   object:_storeManager];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(iCloudContentsDidChange:)
+                                                     name:USMStoreDidChangeNotification
+                                                   object:_storeManager];
     }
     
     return self;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)iCloudContentsWillChange:(NSNotification *)notification
+{
+    MyLog(@"iCloudContentsWillChange");
+}
+
+- (void)iCloudContentsDidChange:(NSNotification *)notification
+{
+    MyLog(@"iCloudContentsDidChange");
 }
 
 #pragma mark - get
@@ -45,20 +71,6 @@
     return [self.fetchedResultsController objectAtIndexPath:indexPath];
 }
 
-- (NSArray *)beanAreas
-{
-    
-    NSMutableArray *areas = [[NSMutableArray alloc] initWithCapacity:0];
-    NSArray *roasts = [self.fetchedResultsController fetchedObjects];
-    for(CRRoast *roast in roasts) {
-        for(CRBean *bean in roast.beans) {
-            if(![areas containsObject:bean.area]) {
-                [areas addObject:bean.area];
-            }
-        }
-    }
-    return areas;
-}
 
 #pragma mark - add
 - (CRRoast *)addRoastInformation:(CRRoastInformation *)information
@@ -167,10 +179,12 @@
 #pragma mark - save
 - (void)save
 {
-    NSError *error = nil;
-    if(![self.managedObjectContext save:&error]) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:CRRoastDataSourceDidFailSavingNotification object:self userInfo:@{CRRoastDataSourceDidFailSavingErrorKey : error}];
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSError *error = nil;
+        if([self.managedObjectContext hasChanges] && ![self.managedObjectContext save:&error]) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:CRRoastDataSourceDidFailSavingNotification object:self userInfo:@{CRRoastDataSourceDidFailSavingErrorKey : error}];
+        }
+    });
 }
 
 #pragma mark - CoreData objects
@@ -200,15 +214,6 @@
 
 - (NSManagedObjectContext *)managedObjectContext
 {
-    if (_managedObjectContext != nil) {
-        return _managedObjectContext;
-    }
-    
-    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
-    if (coordinator != nil) {
-        _managedObjectContext = [[NSManagedObjectContext alloc] init];
-        [_managedObjectContext setPersistentStoreCoordinator:coordinator];
-    }
     return _managedObjectContext;
 }
 
@@ -255,6 +260,67 @@
     [self.delegate dataSourceDidChangeContent:self];
 }
 
+#pragma mark - UbiquityStoreManagerDelegate
+- (NSManagedObjectContext *)ubiquityStoreManager:(UbiquityStoreManager *)manager managedObjectContextForUbiquityChanges:(NSNotification *)note
+{
+    return self.managedObjectContext;
+}
+
+- (void)ubiquityStoreManager:(UbiquityStoreManager *)manager willLoadStoreIsCloud:(BOOL)isCloudStore
+{
+    
+    [self.managedObjectContext performBlockAndWait:^{
+        
+        NSError *error = nil;
+        if([self.managedObjectContext hasChanges] && ![self.managedObjectContext save:&error]) {
+#warning abort
+            abort();
+        }
+        
+        [self.managedObjectContext reset];
+    }];
+    
+    _managedObjectContext = nil;
+}
+
+- (void)ubiquityStoreManager:(UbiquityStoreManager *)manager didLoadStoreForCoordinator:(NSPersistentStoreCoordinator *)coordinator isCloud:(BOOL)isCloudStore
+{
+    MyLog(@"didLoadStore1 : isCloud ? %d", isCloudStore);
+    NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+    context.persistentStoreCoordinator = coordinator;
+    context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy;
+    _managedObjectContext = context;
+    
+    if(!_storeManager.cloudAvailable && !isCloudStore) {
+        MyLog(@"didLoadStore2 : isCloud ? %d", isCloudStore);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            MyLog(@"didLoadStore3 : isCloud ? %d", isCloudStore);
+            [self.initialLoadingDelegate dataSourceHasBeenReady:self];
+        });
+    } else if(!isCloudStore && _storeManager.cloudAvailable) {
+        MyLog(@"didLoadStore4 : isCloud ? %d", isCloudStore);
+        _storeManager.cloudEnabled = YES;
+    } else if(isCloudStore) {
+        MyLog(@"didLoadStore5 : isCloud ? %d", isCloudStore);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            MyLog(@"didLoadStore6 : isCloud ? %d", isCloudStore);
+            [self.initialLoadingDelegate dataSourceHasBeenReady:self];
+        });
+    }
+}
+
+#pragma mark - iCloudAvailable
+- (void)setICloudAvailable:(BOOL)iCloudAvailable
+{
+    if(_storeManager.cloudAvailable) {
+        [_storeManager setCloudEnabled:iCloudAvailable];
+    }
+}
+
+- (BOOL)iCloudAvailable
+{
+    return [_storeManager cloudEnabled];
+}
 
 @end
 

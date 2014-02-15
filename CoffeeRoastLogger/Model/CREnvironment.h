@@ -13,9 +13,12 @@
 
 @interface CREnvironment : NSManagedObject
 
-@property (nonatomic) NSTimeInterval date;
 @property (nonatomic) float humidity;
 @property (nonatomic) float temperature;
+@property (nonatomic) NSTimeInterval date;
 @property (nonatomic, retain) CRRoast *roast;
+
+@property (nonatomic, readonly) NSString *humidityDescription;
+@property (nonatomic, readonly) NSString *temperatureDescription;
 
 @end

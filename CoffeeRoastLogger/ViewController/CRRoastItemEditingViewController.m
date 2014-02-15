@@ -95,6 +95,8 @@
     id _observer;
     
     UITextField *_currentTextField;
+    
+    BOOL _shouldShowError;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -131,7 +133,11 @@
         _beanInformations = [[NSMutableArray alloc] initWithCapacity:_roastItem.beans.count];
         for(CRBean *bean in _roastItem.beans) {
             CRBeanInformation *information = [[CRBeanInformation alloc] init];
-            information.area = bean.area;
+            if([bean.area isEqualToString:NSLocalizedString(@"NotInput", nil)]) {
+                information.area = @"";
+            } else {
+                information.area = bean.area;
+            }
             information.quantity = bean.quantity;
             [_beanInformations addObject:information];
         }
@@ -159,6 +165,8 @@
         _image = [UIImage imageWithData:_roastItem.imageData];
         
     }
+    
+    _shouldShowError = YES;
     
     UIBarButtonItem const *cancelItem = self.cancelButton;
     cancelItem.target = self;
@@ -217,6 +225,7 @@
 
 - (void)didPushCompleteButton:(UIBarButtonItem *)item
 {
+    _shouldShowError = NO;
     [self closeSoftKeyboard];
     [self save];
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -224,16 +233,18 @@
 
 - (void)save
 {
-    _roastInformation.beans = _beanInformations;
-    _roastInformation.environment = _environmentInformation;
-    _roastInformation.heatingInformations = _heatingInformations;
-    _roastInformation.image = _image;
-    
-    if(_roastItem == nil) {
-        [[CRRoastManager sharedManager] addNewRoastInformation:_roastInformation];
-    } else {
-        [[CRRoastManager sharedManager] updateRoastItem:self.roastItem withRoastInformation:_roastInformation];
-    }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        _roastInformation.beans = validBeanInformationsFromRawInformations(_beanInformations);
+        _roastInformation.environment = _environmentInformation;
+        _roastInformation.heatingInformations = validHeatingInformationsFromRawInformations(_heatingInformations);
+        _roastInformation.image = _image;
+        
+        if(_roastItem == nil) {
+            [[CRRoastManager sharedManager] addNewRoastInformation:_roastInformation];
+        } else {
+            [[CRRoastManager sharedManager] updateRoastItem:self.roastItem withRoastInformation:_roastInformation];
+        }
+    });
 }
 
 #pragma mark - Table view data source
@@ -514,7 +525,7 @@
         conditionCell.valueTextField.placeholder = NSLocalizedString(@"ScoreLabel", nil);
         conditionCell.valueTextField.tag = kScoreFieldTag;
         conditionCell.valueTextField.delegate = self;
-        if(_roastInformation.score != NSIntegerMin) {
+        if(_roastInformation.score != INT16_MIN) {
             conditionCell.valueTextField.text = [NSString stringWithFormat:@"%d", _roastInformation.score];
         }
         conditionCell.indicatorImage.hidden = YES;
@@ -900,8 +911,10 @@
 
 - (void)showErrorAlertViewWithMessage:(NSString *)message alertViewDelegate:(id)delegate
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SorryMessageLabel", nil) message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-    [alertView show];
+    if(_shouldShowError) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SorryMessageLabel", nil) message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alertView show];
+    }
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -958,8 +971,13 @@
     }
 }
 
+/* 単位に分を使う時だけ小数点を入力できるようにする */
 - (UIView *)separatorViewInKeyboard
 {
+    if(![CRConfiguration sharedConfiguration].useMinutesForHeatingLength) {
+        return nil;
+    }
+    
     UIView *accessoryView = [[UIView alloc] initWithFrame:CGRectMake(240, 0, 120, 30)];
     accessoryView.backgroundColor = [UIColor whiteColor];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(215, 0, 105, 30)];

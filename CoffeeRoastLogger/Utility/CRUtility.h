@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@interface CRUtility : NSObject
-
 NSString *dateStringFromNSDate(NSDate *date);
 
 float roomTempratureFromValue(float celsius);
@@ -21,4 +19,5 @@ float celsiusRoastTempratureFromValue(float value);
 float roastLengthFromValue(NSTimeInterval seconds);
 NSTimeInterval secondRoastLengthFromValue(float value);
 
-@end
+NSArray *validBeanInformationsFromRawInformations(NSArray *infromations);
+NSArray *validHeatingInformationsFromRawInformations(NSArray *infromations);

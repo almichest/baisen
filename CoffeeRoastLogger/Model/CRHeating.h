@@ -17,4 +17,6 @@
 @property (nonatomic) int16_t time;
 @property (nonatomic, retain) CRRoast *roast;
 
+@property (nonatomic, readonly) NSString *temperatureDescription;
+
 @end

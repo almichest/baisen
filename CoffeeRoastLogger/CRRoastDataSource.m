@@ -300,24 +300,28 @@
 
 - (void)notifyCloudUnavailable
 {
-    
+    [self.initialLoadingDelegate dataSourceCannotUseCloud:self];
 }
 
 #pragma mark - iCloudAvailable
 - (void)setICloudAvailable:(BOOL)iCloudAvailable
 {
-    if(_storeManager.cloudAvailable) {
-        [_storeManager setCloudEnabled:iCloudAvailable];
+    if(iCloudAvailable) {
+        if(_storeManager.cloudAvailable) {
+            [_storeManager setCloudEnabled:YES];
+            [CRConfiguration sharedConfiguration].iCloudAvailable = YES;
+        } else {
+            [CRConfiguration sharedConfiguration].iCloudAvailable = NO;
+            [self notifyCloudUnavailable];
+        }
     } else {
-        [self notifyCloudUnavailable];
+        [CRConfiguration sharedConfiguration].iCloudAvailable = NO;
     }
-    
-    [CRConfiguration sharedConfiguration].iCloudAvailable = iCloudAvailable;
 }
 
 - (BOOL)iCloudAvailable
 {
-    return [_storeManager cloudEnabled];
+    return [CRConfiguration sharedConfiguration].iCloudAvailable;
 }
 
 @end

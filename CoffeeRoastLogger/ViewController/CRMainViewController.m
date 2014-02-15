@@ -11,6 +11,9 @@
 #import "CRRoastDataSource.h"
 #import "CRConfiguration.h"
 
+#define kCloudNotificationAlertViewTag  10 
+#define kCloudUnavailableAlertViewTag   11
+
 @interface CRMainViewController ()<CRRoastDataSourceInitialLoadingDelegate, UIAlertViewDelegate>
 
 @end
@@ -58,31 +61,53 @@
 
 - (void)dataSourceCannotUseCloud:(CRRoastDataSource *)dataSource
 {
-    [self performSegueWithIdentifier:@"loadingComplete" sender:nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"iCloudUnavailable", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
+    alertView.tag = kCloudUnavailableAlertViewTag;
+    [alertView show];
 }
 
 - (void)showiCloudConfirmationAlertView
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"UseiCloud", nil) message:NSLocalizedString(@"UsingiCloudNotification", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"CancelLabel", nil) otherButtonTitles:NSLocalizedString(@"YES", nil), nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"UseiCloud", nil) message:NSLocalizedString(@"UsingiCloudNotification", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"NO", nil) otherButtonTitles:NSLocalizedString(@"YES", nil), nil];
+    alertView.tag = kCloudNotificationAlertViewTag;
     [alertView show];
-    
 }
 
 #pragma mark - UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    [CRConfiguration sharedConfiguration].iCloudConfigured = YES;
+    switch (alertView.tag) {
+        case kCloudNotificationAlertViewTag :
+            [self handleCloudAlertViewSelectionWithButtonIndex:buttonIndex];
+            break;
+        case kCloudUnavailableAlertViewTag :
+            [self handleCloudUnavailableAlertViewDismissed];
+            [self performSegueWithIdentifier:@"loadingComplete" sender:nil];
+            break;
+        default :
+            break;
+    }
+}
+
+- (void)handleCloudAlertViewSelectionWithButtonIndex:(NSInteger)buttonIndex
+{
     switch (buttonIndex) {
         case 0 :
             [CRRoastManager sharedManager].dataSource.iCloudAvailable = NO;
             [self performSegueWithIdentifier:@"loadingComplete" sender:nil];
-            return;
+            break;
         case 1 :
             [CRRoastManager sharedManager].dataSource.iCloudAvailable = YES;
-            return;
+            break;
         default :
-            return;
+            break;
     }
+    [CRConfiguration sharedConfiguration].iCloudConfigured = YES;
+}
+
+- (void)handleCloudUnavailableAlertViewDismissed
+{
+    [self performSegueWithIdentifier:@"loadingComplete" sender:nil];
 }
 
 @end

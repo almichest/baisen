@@ -35,7 +35,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.dataSource.delegate = self;
     self.navigationItem.hidesBackButton = YES;
     [self.tableView registerNib:[UINib nibWithNibName:@"RoastItemCell" bundle:nil] forCellReuseIdentifier:kRoastItemCellIdentifier];
 }
@@ -50,6 +49,13 @@
 {
     [super viewWillAppear:animated];
     [self.tableView reloadData];
+    self.dataSource.delegate = self;
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    self.dataSource.delegate = nil;
+    [super viewDidDisappear:animated];
 }
 
 #pragma mark - UITableViewDataSource
@@ -108,24 +114,11 @@
 
 - (void)dataSource:(CRRoastDataSource *)dataSource didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(CRRoastDataSourceChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
 {
-    if(type == CRRoastDataSourceChangeInsert) {
-//         NSArray *indexPaths = @[newIndexPath];
-//        [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:newIndexPath.section] withRowAnimation:UITableViewRowAnimationAutomatic];
-        
-    } else if(type == CRRoastDataSourceChangeDelete) {
-//        NSArray *indexPaths = @[indexPath];
-//        [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationAutomatic];
-    } else if(type == CRRoastDataSourceChangeUpdate) {
-//        NSArray *indexPaths = @[indexPath];
-//        [self.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationAutomatic];
-    }
 }
 
 - (void)dataSourceDidChangeContent:(CRRoastDataSource *)dataSource
 {
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.tableView endUpdates];
 }
 

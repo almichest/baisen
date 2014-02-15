@@ -204,8 +204,6 @@
                    itemCell.separetorView.hidden = NO;
                    NSOrderedSet *heatings = self.roast.heating;
                    CRHeating *heating = [heatings objectAtIndex:indexPath.row - 1];
-                   MyLog(@"temp = %@", @(heating.temperature));
-                   MyLog(@"time = %@", @(heating.time));
                    itemCell.nameLabel.text = heating.temperatureDescription;
                    if([CRConfiguration sharedConfiguration].useMinutesForHeatingLength) {
                        itemCell.valueLabel.text = [NSString stringWithFormat:@"%.1f", roastLengthFromValue(heating.time)];
@@ -246,9 +244,7 @@
            case kMemoSection : {
                cell = [tableView dequeueReusableCellWithIdentifier:kResultMemoCellIdentifier];
                CRResultMemoCell *memoCell = (CRResultMemoCell *)cell;
-               memoCell.memoLabel.text = [self.roast.result stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-               CGRect cellFrame = CGRectMake(0, 0, [self memoLabelFrame].size.width, [self memoLabelFrame].size.height);
-               memoCell.memoLabel.frame = cellFrame;
+               memoCell.memoLabel.text = self.roast.result;
                break;
            }
                
@@ -263,7 +259,6 @@
 #pragma mark - Private
 - (CGRect)memoLabelFrame
 {
-    MyLog(@"result = %@", self.roast.result);
     NSDictionary *attributes = @{NSFontAttributeName : [UIFont systemFontOfSize:14.0f]};
     return [self.roast.result boundingRectWithSize:CGSizeMake(300, 1000) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil];
 }

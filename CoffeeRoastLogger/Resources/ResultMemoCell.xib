@@ -13,7 +13,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="300" translatesAutoresizingMaskIntoConstraints="NO" id="9Ms-hO-B9J">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="300" translatesAutoresizingMaskIntoConstraints="NO" id="9Ms-hO-B9J">
                         <rect key="frame" x="10" y="0.0" width="300" height="43"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -21,6 +21,12 @@
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="9Ms-hO-B9J" firstAttribute="leading" secondItem="ZqB-wA-MSG" secondAttribute="leading" constant="10" id="4Cl-de-YNN"/>
+                    <constraint firstAttribute="trailing" secondItem="9Ms-hO-B9J" secondAttribute="trailing" constant="10" id="Q8j-hV-hcj"/>
+                    <constraint firstAttribute="bottom" secondItem="9Ms-hO-B9J" secondAttribute="bottom" id="k9T-RI-YiL"/>
+                    <constraint firstItem="9Ms-hO-B9J" firstAttribute="top" secondItem="ZqB-wA-MSG" secondAttribute="top" id="pf7-SB-VZt"/>
+                </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="memoLabel" destination="9Ms-hO-B9J" id="Zk8-2Q-Hgb"/>

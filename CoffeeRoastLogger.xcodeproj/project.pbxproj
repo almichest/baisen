@@ -52,6 +52,7 @@
 		42C8B51718AE921A006DBA4A /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C8B50918AE921A006DBA4A /* Icon.png */; };
 		42C8B51818AE921A006DBA4A /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C8B50A18AE921A006DBA4A /* Icon@2x.png */; };
 		42C8B51918AE921A006DBA4A /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C8B50B18AE921A006DBA4A /* default.png */; };
+		42C8B51C18AF8E0D006DBA4A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 42C8B51A18AF8E0D006DBA4A /* Localizable.strings */; };
 		42CCF2D11897C0AC00E87843 /* TwoItemsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42CCF2D01897C0AC00E87843 /* TwoItemsCell.xib */; };
 		42CCF2D51897C16200E87843 /* CRTwoItemsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 42CCF2D41897C16200E87843 /* CRTwoItemsCell.m */; };
 		42CCF31B1897E80900E87843 /* CRDateEditingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42CCF31A1897E80900E87843 /* CRDateEditingViewController.m */; };
@@ -161,6 +162,7 @@
 		42C8B50918AE921A006DBA4A /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = Images/Icon.png; sourceTree = "<group>"; };
 		42C8B50A18AE921A006DBA4A /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "Images/Icon@2x.png"; sourceTree = "<group>"; };
 		42C8B50B18AE921A006DBA4A /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = default.png; path = Images/default.png; sourceTree = "<group>"; };
+		42C8B51B18AF8E0D006DBA4A /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		42CCF2D01897C0AC00E87843 /* TwoItemsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TwoItemsCell.xib; sourceTree = "<group>"; };
 		42CCF2D31897C16200E87843 /* CRTwoItemsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRTwoItemsCell.h; path = View/CRTwoItemsCell.h; sourceTree = "<group>"; };
 		42CCF2D41897C16200E87843 /* CRTwoItemsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRTwoItemsCell.m; path = View/CRTwoItemsCell.m; sourceTree = "<group>"; };
@@ -495,6 +497,7 @@
 		42FA30F718A943240061B778 /* Base.lproj */ = {
 			isa = PBXGroup;
 			children = (
+				42C8B51A18AF8E0D006DBA4A /* Localizable.strings */,
 			);
 			name = Base.lproj;
 			sourceTree = "<group>";
@@ -607,6 +610,7 @@
 				42CCF34018A3EC2A00E87843 /* TwoItemResultCell.xib in Resources */,
 				42C8B51218AE921A006DBA4A /* Icon-Small-40@2x.png in Resources */,
 				42C8B51018AE921A006DBA4A /* Icon-76@2x.png in Resources */,
+				42C8B51C18AF8E0D006DBA4A /* Localizable.strings in Resources */,
 				42FA30F118A937C60061B778 /* Localizable.strings in Resources */,
 				42C8B51918AE921A006DBA4A /* default.png in Resources */,
 				42CCF2D11897C0AC00E87843 /* TwoItemsCell.xib in Resources */,
@@ -698,6 +702,14 @@
 				42FA30EE18A936DB0061B778 /* en */,
 			);
 			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		42C8B51A18AF8E0D006DBA4A /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				42C8B51B18AF8E0D006DBA4A /* Base */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 		42FA30EF18A937C60061B778 /* Localizable.strings */ = {

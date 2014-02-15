@@ -166,8 +166,6 @@
         
     }
     
-    _shouldShowError = YES;
-    
     UIBarButtonItem const *cancelItem = self.cancelButton;
     cancelItem.target = self;
     cancelItem.action = @selector(didPushDismissButton:);
@@ -190,6 +188,12 @@
     [[CRConfiguration sharedConfiguration] addObserver:self forKeyPath:@"useFahrenheitForRoast" options:NSKeyValueObservingOptionNew context:nil];
     [[CRConfiguration sharedConfiguration] addObserver:self forKeyPath:@"useMinutesForHeatingLength" options:NSKeyValueObservingOptionNew context:nil];
     
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    _shouldShowError = YES;
 }
 
 - (void)dealloc
@@ -238,6 +242,10 @@
         _roastInformation.environment = _environmentInformation;
         _roastInformation.heatingInformations = validHeatingInformationsFromRawInformations(_heatingInformations);
         _roastInformation.image = _image;
+        
+        if(_roastInformation.result == nil) {
+            _roastInformation.result = @"";
+        }
         
         if(_roastItem == nil) {
             [[CRRoastManager sharedManager] addNewRoastInformation:_roastInformation];
@@ -660,6 +668,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.section == kDateSection) {
+        _shouldShowError = NO;
         [self showDatePickerView];
     } else {
         [self closeSoftKeyboard];
@@ -669,16 +678,19 @@
 #pragma mark - Show UIActionSheet
 - (void)showImageSelectionSheet
 {
+    _shouldShowError = NO;
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"SelectPhotoLabel", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"CancelLabel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"SelectPhotoFromLibraryLabel", nil), NSLocalizedString(@"NewPhotoLabel", nil), nil];
     actionSheet.destructiveButtonIndex = 10;
     actionSheet.cancelButtonIndex = 2;
     actionSheet.tag = kImageSelectionActionSheetTag;
     actionSheet.delegate = self;
     [actionSheet showInView:self.view];
+    _shouldShowError = YES;
 }
 
 - (void)showRoomTempratureUnitSelectionSheet
 {
+    _shouldShowError = NO;
     [self closeSoftKeyboard];
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"SetRoomTemperatureUnitLabel", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"CancelLabel", nil) destructiveButtonTitle:nil otherButtonTitles:kFahrenheit, kCelcius, nil];
     actionSheet.tag =
@@ -687,10 +699,12 @@
     actionSheet.tag = kRoomTempratureUnitActionSheetTag;
     actionSheet.delegate = self;
     [actionSheet showInView:self.view];
+    _shouldShowError = YES;
 }
 
 - (void)showHeatingTempratureUnitSelectionSheet
 {
+    _shouldShowError = NO;
     [self closeSoftKeyboard];
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"SetHeatingTemperatureUnitLabel", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"CancelLabel", nil) destructiveButtonTitle:nil otherButtonTitles:kFahrenheit, kCelcius, nil];
     actionSheet.destructiveButtonIndex = 10;
@@ -698,10 +712,12 @@
     actionSheet.tag = kHeatingTempratureUnitActionSheetTag;
     actionSheet.delegate = self;
     [actionSheet showInView:self.view];
+    _shouldShowError = YES;
 }
 
 - (void)showHeatingLengthUnitSelectionSheet
 {
+    _shouldShowError = NO;
     [self closeSoftKeyboard];
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"SetHeatingLengthUnitLabel", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"CancelLabel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"MinuteLabel", nil), NSLocalizedString(@"SecondLabel", nil), nil];
     actionSheet.destructiveButtonIndex = 10;
@@ -709,6 +725,7 @@
     actionSheet.tag = kHeatingLengthUnitActionSheetTag;
     actionSheet.delegate = self;
     [actionSheet showInView:self.view];
+    _shouldShowError = YES;
 }
 
 #pragma mark - UIActionSheetDelegate

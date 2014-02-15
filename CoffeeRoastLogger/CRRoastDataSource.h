@@ -47,7 +47,8 @@ typedef NS_ENUM(NSUInteger, CRRoastDataSourceChangeType)
 @end
 
 @protocol CRRoastDataSourceInitialLoadingDelegate <NSObject>
-- (void)dataSourceHasBeenReady:(CRRoastDataSource *)dataSource;
+- (void)dataSource:(CRRoastDataSource *)dataSource didLoadDataWithCloud:(BOOL)isCloud;
+- (void)dataSourceCannotUseCloud:(CRRoastDataSource *)dataSource;
 @end
 
 extern NSString *const CRRoastDataSourceDidFailSavingNotification;

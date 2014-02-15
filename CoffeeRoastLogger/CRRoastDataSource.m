@@ -14,6 +14,8 @@
 #import "CRBean.h"
 #import "CRHeating.h"
 
+#import "CRConfiguration.h"
+
 #import "CRRoastInformation.h"
 #import "CREnvironmentInformation.h"
 #import "CRBeanInformation.h"
@@ -285,28 +287,20 @@
 
 - (void)ubiquityStoreManager:(UbiquityStoreManager *)manager didLoadStoreForCoordinator:(NSPersistentStoreCoordinator *)coordinator isCloud:(BOOL)isCloudStore
 {
-    MyLog(@"didLoadStore1 : isCloud ? %d", isCloudStore);
-    NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
-    context.persistentStoreCoordinator = coordinator;
-    context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy;
-    _managedObjectContext = context;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSManagedObjectContext *context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+        context.persistentStoreCoordinator = coordinator;
+        context.mergePolicy = NSOverwriteMergePolicy;
+        _managedObjectContext = context;
+        
+        [self.initialLoadingDelegate dataSource:self didLoadDataWithCloud:isCloudStore];
+        
+    });
+}
+
+- (void)notifyCloudUnavailable
+{
     
-    if(!_storeManager.cloudAvailable && !isCloudStore) {
-        MyLog(@"didLoadStore2 : isCloud ? %d", isCloudStore);
-        dispatch_async(dispatch_get_main_queue(), ^{
-            MyLog(@"didLoadStore3 : isCloud ? %d", isCloudStore);
-            [self.initialLoadingDelegate dataSourceHasBeenReady:self];
-        });
-    } else if(!isCloudStore && _storeManager.cloudAvailable) {
-        MyLog(@"didLoadStore4 : isCloud ? %d", isCloudStore);
-        _storeManager.cloudEnabled = YES;
-    } else if(isCloudStore) {
-        MyLog(@"didLoadStore5 : isCloud ? %d", isCloudStore);
-        dispatch_async(dispatch_get_main_queue(), ^{
-            MyLog(@"didLoadStore6 : isCloud ? %d", isCloudStore);
-            [self.initialLoadingDelegate dataSourceHasBeenReady:self];
-        });
-    }
 }
 
 #pragma mark - iCloudAvailable
@@ -314,7 +308,11 @@
 {
     if(_storeManager.cloudAvailable) {
         [_storeManager setCloudEnabled:iCloudAvailable];
+    } else {
+        [self notifyCloudUnavailable];
     }
+    
+    [CRConfiguration sharedConfiguration].iCloudAvailable = iCloudAvailable;
 }
 
 - (BOOL)iCloudAvailable

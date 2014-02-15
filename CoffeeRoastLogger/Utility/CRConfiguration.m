@@ -11,6 +11,8 @@
 #define kRoomFahrenheitKey      @"roomFahrenheit"
 #define kRoastFahrenheitKey     @"roastFahrenheit"
 #define kRoastUnitMinutesKey    @"roastUnitMinutes"
+#define kICloudKey              @"useICloud"
+#define kICloudConfiguredKey    @"iCloudConfigured"
 
 @implementation CRConfiguration
 @dynamic useFahrenheitForRoom;
@@ -67,6 +69,26 @@ static CRConfiguration *_sharedConfiguration;
 - (void)setUseMinutesForHeatingLength:(BOOL)useMinitesForHeatingLength
 {
     [[NSUserDefaults standardUserDefaults] setBool:useMinitesForHeatingLength forKey:kRoastUnitMinutesKey];
+}
+
+- (BOOL)iCloudAvailable
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kICloudKey];
+}
+
+- (void)setICloudAvailable:(BOOL)iCloudAvailable
+{
+    [[NSUserDefaults standardUserDefaults] setBool:iCloudAvailable forKey:kICloudKey];
+}
+
+- (BOOL)iCloudConfigured
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:kICloudConfiguredKey];
+}
+
+- (void)setICloudConfigured:(BOOL)iCloudConfigured
+{
+    [[NSUserDefaults standardUserDefaults] setBool:iCloudConfigured forKey:kICloudConfiguredKey];
 }
 
 @end

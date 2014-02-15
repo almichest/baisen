@@ -17,4 +17,7 @@
 
 @property(nonatomic) BOOL useMinutesForHeatingLength;
 
+@property(nonatomic) BOOL iCloudAvailable;
+@property(nonatomic) BOOL iCloudConfigured;
+
 @end

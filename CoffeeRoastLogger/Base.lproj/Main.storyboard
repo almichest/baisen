@@ -30,7 +30,29 @@
                     <view key="view" contentMode="scaleToFill" id="OhM-xS-tqL">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="G2m-WO-Kf8">
+                                <rect key="frame" x="142" y="200" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="color" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </activityIndicatorView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="372-n8-TE5">
+                                <rect key="frame" x="0.0" y="257" width="320" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="320" id="XS4-8I-ldz"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="372-n8-TE5" secondAttribute="centerX" id="9tp-bE-suA"/>
+                            <constraint firstItem="G2m-WO-Kf8" firstAttribute="top" secondItem="OhM-xS-tqL" secondAttribute="top" constant="200" id="9zP-WJ-iVZ"/>
+                            <constraint firstItem="372-n8-TE5" firstAttribute="top" secondItem="G2m-WO-Kf8" secondAttribute="bottom" constant="20" id="AAo-o6-0BP"/>
+                            <constraint firstAttribute="centerX" secondItem="G2m-WO-Kf8" secondAttribute="centerX" id="Yh3-B3-Itu"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="WSv-aw-1iz"/>
                     <connections>

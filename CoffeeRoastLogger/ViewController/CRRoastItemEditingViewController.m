@@ -374,8 +374,7 @@
         itemCell.firstItemField.tag = kBeanKindInputBaseTag + indexPath.row;
         itemCell.firstItemField.delegate = self;
         itemCell.firstItemField.text = information.area;
-        itemCell.firstItemIndicator.hidden = YES;
-        itemCell.firstItemFieldButton.hidden = YES;
+        itemCell.firstItemRecognizerArea.hidden = YES;
         
         /* Second item */
         itemCell.secondItemField.hidden = NO;
@@ -385,6 +384,7 @@
         itemCell.secondItemField.tag = kBeanQuantityInputBaseTag + indexPath.row;
         itemCell.secondItemField.delegate = self;
         [itemCell.secondItemFieldButton setTitle:@"g" forState:UIControlStateNormal];
+        itemCell.secondItemFieldButton.userInteractionEnabled = NO;
         itemCell.secondItemIndicator.hidden = YES;
         
         NSString *quantityString = information.quantity > 0 ? [NSString stringWithFormat:@"%d", information.quantity] : @"";
@@ -434,6 +434,7 @@
         itemCell.firstItemRecognizerArea.userInteractionEnabled = YES;
         [self clearGestureRecognizerInView:itemCell.firstItemRecognizerArea];
         [itemCell.firstItemRecognizerArea addGestureRecognizer:firstIndicatorRecognizer];
+        itemCell.firstItemRecognizerArea.hidden = NO;
         
         itemCell.firstItemField.hidden = NO;
         itemCell.firstItemField.placeholder = NSLocalizedString(@"HeatingTemperatureLabel", nil);
@@ -461,6 +462,7 @@
         itemCell.secondItemField.text = lengthString;
         itemCell.secondItemField.delegate = self;
         UITapGestureRecognizer *secondIndicatorRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showHeatingLengthUnitSelectionSheet)];
+        itemCell.secondItemRecognizerArea.hidden = NO;
         itemCell.secondItemIndicator.hidden = NO;
         itemCell.secondItemRecognizerArea.userInteractionEnabled = YES;
         [self clearGestureRecognizerInView:itemCell.secondItemRecognizerArea];

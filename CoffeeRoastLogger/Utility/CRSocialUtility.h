@@ -7,9 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+typedef NS_ENUM(NSUInteger, CRSocialUtilitySharingResult)
+{
+    CRSocialUtilitySharingResultSuccess,
+    CRSocialUtilitySharingResultFailure,
+};
 
 @interface CRSocialUtility : NSObject
 
-+ (void)showTwitterPostViewWithMessage:(NSString *)message onViewController:(UIViewController *)viewController;
-+ (void)showFacebookPostViewWithMessage:(NSString *)message onViewController:(UIViewController *)viewController;
+typedef void (^CRSocialUtilityCompletion)(CRSocialUtilitySharingResult result);
+
++ (void)showTwitterPostViewWithMessage:(NSString *)message image:(UIImage *)image onViewController:(UIViewController *)viewController completion:(CRSocialUtilityCompletion)completion;
++ (void)showFacebookPostViewWithMessage:(NSString *)message image:(UIImage *)image onViewController:(UIViewController *)viewController completion:(CRSocialUtilityCompletion)completion;
 @end

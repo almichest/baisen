@@ -324,9 +324,15 @@
 {
     NSString *postMessage = [self postMessage];
     if(postMessage) {
-        [CRSocialUtility showTwitterPostViewWithMessage:postMessage onViewController:self];
+        [CRSocialUtility showTwitterPostViewWithMessage:postMessage image:[UIImage imageWithData:self.roast.imageData] onViewController:self completion:^(CRSocialUtilitySharingResult result) {
+            if(result == CRSocialUtilitySharingResultSuccess) {
+                [self showSharingCompleteView];
+            } else {
+                [self showSharingErrorAlertView];
+            }
+        }];
     } else {
-        [self showSharingErrorAlertView];
+        [self showCannotShareAlertView];
     }
 }
 
@@ -334,10 +340,22 @@
 {
     NSString *postMessage = [self postMessage];
     if(postMessage) {
-        [CRSocialUtility showFacebookPostViewWithMessage:postMessage onViewController:self];
+        [CRSocialUtility showFacebookPostViewWithMessage:postMessage image:[UIImage imageWithData:self.roast.imageData] onViewController:self completion:^(CRSocialUtilitySharingResult result) {
+            if(result == CRSocialUtilitySharingResultSuccess) {
+                [self showSharingCompleteView];
+            } else {
+                [self showSharingErrorAlertView];
+            }
+        }];
     } else {
-        [self showSharingErrorAlertView];
+        [self showCannotShareAlertView];
     }
+}
+
+- (void)showSharingCompleteView
+{
+    UIAlertView *shareErrorAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SharingComplete", nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
+    [shareErrorAlertView show];
 }
 
 - (NSString *)postMessage
@@ -358,7 +376,13 @@
 
 - (void)showSharingErrorAlertView
 {
-    UIAlertView *shareErrorAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"SharingError", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
+    UIAlertView *shareErrorAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"SharingFailure", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
+    [shareErrorAlertView show];
+}
+
+- (void)showCannotShareAlertView
+{
+    UIAlertView *shareErrorAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"CannotShare", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
     [shareErrorAlertView show];
 }
 

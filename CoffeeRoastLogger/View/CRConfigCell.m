@@ -6,9 +6,9 @@
 //  Copyright (c) 2014年 Hiraku Ohno. All rights reserved.
 //
 
-#import "CRiCloudSettingCell.h"
+#import "CRConfigCell.h"
 
-@implementation CRiCloudSettingCell
+@implementation CRConfigCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

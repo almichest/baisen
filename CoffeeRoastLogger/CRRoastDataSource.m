@@ -293,14 +293,14 @@
         context.mergePolicy = NSOverwriteMergePolicy;
         _managedObjectContext = context;
         
-        [self.initialLoadingDelegate dataSource:self didLoadDataWithCloud:isCloudStore];
+        [self.settingDelegate dataSource:self didLoadDataWithCloud:isCloudStore];
         
     });
 }
 
 - (void)notifyCloudUnavailable
 {
-    [self.initialLoadingDelegate dataSourceCannotUseCloud:self];
+    [self.settingDelegate dataSourceCannotUseCloud:self];
 }
 
 #pragma mark - iCloudAvailable
@@ -315,6 +315,7 @@
             [self notifyCloudUnavailable];
         }
     } else {
+        [_storeManager setCloudEnabled:NO];
         [CRConfiguration sharedConfiguration].iCloudAvailable = NO;
     }
 }

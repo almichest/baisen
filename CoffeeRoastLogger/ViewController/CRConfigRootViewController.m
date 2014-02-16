@@ -7,31 +7,34 @@
 //
 
 #import "CRConfigRootViewController.h"
+#import "CRConfigCell.h"
+#import "CRConfiguration.h"
+#import "CRRoastManager.h"
+#import "CRRoastDataSource.h"
 
-@interface CRConfigRootViewController ()
+#define kSettingSwitchTag   10
+#define kLoadintViewTag     20
+@interface CRConfigRootViewController ()<CRRoastDataSourceSettingDelegate>
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *closeButton;
 
 @end
 
-@implementation CRConfigRootViewController
+#define kiCloudSettingSection       0
+#define kAboutSection               1
+#define kLicenceInformationSection  2
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
+#define kConfigCellIdentifier   @"ConfigCell"
+
+@implementation CRConfigRootViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [self.tableView registerNib:[UINib nibWithNibName:@"ConfigCell" bundle:nil] forCellReuseIdentifier:kConfigCellIdentifier];
+    [CRRoastManager sharedManager].dataSource.settingDelegate = self;
+    self.closeButton.target = self;
+    self.closeButton.action = @selector(close:);
 }
 
 - (void)didReceiveMemoryWarning
@@ -40,81 +43,133 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)close:(UIBarButtonItem *)sender
+{
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 60;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    switch (section) {
+        case kiCloudSettingSection :
+            return NSLocalizedString(@"EnableICloudTitle", nil);
+        case kAboutSection :
+            return NSLocalizedString(@"AboutTitle", nil);
+        case kLicenceInformationSection :
+            return NSLocalizedString(@"LicenceTitle", nil);
+        default :
+            return nil;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    CRConfigCell *cell = [tableView dequeueReusableCellWithIdentifier:kConfigCellIdentifier forIndexPath:indexPath];
     
-    // Configure the cell...
+    switch (indexPath.section) {
+        case kiCloudSettingSection :
+            cell.settingSwitch.hidden = NO;
+            cell.settingSwitch.on = [CRConfiguration sharedConfiguration].iCloudAvailable;
+            cell.settingSwitch.tag = kSettingSwitchTag;
+            [cell.settingSwitch addTarget:self action:@selector(iCloudSettingChanged:) forControlEvents:UIControlEventValueChanged];
+            cell.settingLabel.text = NSLocalizedString(@"EnableICloud", nil);
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            break;
+        case kAboutSection :
+            cell.settingSwitch.hidden = YES;
+            cell.settingLabel.text = NSLocalizedString(@"About", nil);
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+            break;
+        case kLicenceInformationSection :
+            cell.settingSwitch.hidden = YES;
+            cell.settingLabel.text = NSLocalizedString(@"Licence", nil);
+            cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            break;
+        default :
+            break;
+    }
     
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a story board-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    MyLog(@"section = %d", indexPath.section);
+    MyLog(@"row = %d", indexPath.row);
+    switch (indexPath.section) {
+        case kAboutSection :
+            [self performSegueWithIdentifier:@"about" sender:nil];
+            break;
+        case kLicenceInformationSection :
+            [self performSegueWithIdentifier:@"licenceInformation" sender:nil];
+            break;
+        default :
+            break;
+    }
 }
 
- */
+- (void)iCloudSettingChanged:(UISwitch *)sender
+{
+    [self willStartICloudSettings];
+    [CRRoastManager sharedManager].dataSource.iCloudAvailable = sender.on;
+}
+
+#pragma mark - CRRoastDataSoruceSettingDelegate
+- (void)dataSource:(CRRoastDataSource *)dataSource didLoadDataWithCloud:(BOOL)isCloud
+{
+    [self didFinishICloudSettings];
+    UISwitch *iCloudSwitch = (UISwitch *)[self.view viewWithTag:kSettingSwitchTag];
+    if(iCloudSwitch.on == isCloud) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SettingComplete", nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
+        [alertView show];
+    }
+}
+
+- (void)dataSourceCannotUseCloud:(CRRoastDataSource *)dataSource
+{
+    [self didFinishICloudSettings];
+    UISwitch *iCloudSwitch = (UISwitch *)[self.view viewWithTag:kSettingSwitchTag];
+    iCloudSwitch.on = NO;
+    
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"iCloudUnavailable", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
+    [alertView show];
+}
+
+- (void)willStartICloudSettings
+{
+    UIView *loadingBackgroundView = [[UIView alloc] initWithFrame:self.view.frame];
+    loadingBackgroundView.backgroundColor = [UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.5];
+    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [indicator startAnimating];
+    indicator.center = CGPointMake(self.view.frame.size.width / 2.0f, self.view.frame.size.height / 2.0f);
+    [loadingBackgroundView addSubview:indicator];
+    loadingBackgroundView.tag = kLoadintViewTag;
+    [self.navigationController.view addSubview:loadingBackgroundView];
+}
+
+- (void)didFinishICloudSettings
+{
+    [[self.navigationController.view viewWithTag:kLoadintViewTag] removeFromSuperview];
+}
 
 @end

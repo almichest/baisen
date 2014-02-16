@@ -14,7 +14,7 @@
 #define kCloudNotificationAlertViewTag  10 
 #define kCloudUnavailableAlertViewTag   11
 
-@interface CRMainViewController ()<CRRoastDataSourceInitialLoadingDelegate, UIAlertViewDelegate>
+@interface CRMainViewController ()<CRRoastDataSourceSettingDelegate, UIAlertViewDelegate>
 
 @end
 
@@ -32,13 +32,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [CRRoastManager sharedManager].dataSource.initialLoadingDelegate = self;
+    [CRRoastManager sharedManager].dataSource.settingDelegate = self;
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    [CRRoastManager sharedManager].dataSource.initialLoadingDelegate = nil;
+    [CRRoastManager sharedManager].dataSource.settingDelegate = nil;
 }
 
 - (void)didReceiveMemoryWarning

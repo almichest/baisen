@@ -78,6 +78,14 @@
 		42E23B8818AFA85F00152E6D /* icon-small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42E23B7A18AFA85F00152E6D /* icon-small@2x.png */; };
 		42E23B8918AFA85F00152E6D /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 42E23B7B18AFA85F00152E6D /* icon.png */; };
 		42E23B8A18AFA85F00152E6D /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42E23B7C18AFA85F00152E6D /* icon@2x.png */; };
+		42E23B8D18AFBFE400152E6D /* CRConfigRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42E23B8C18AFBFE400152E6D /* CRConfigRootViewController.m */; };
+		42E23B8F18AFC15F00152E6D /* ConfigCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42E23B8E18AFC15F00152E6D /* ConfigCell.xib */; };
+		42E23B9218AFC19D00152E6D /* CRConfigCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 42E23B9118AFC19D00152E6D /* CRConfigCell.m */; };
+		42E23B9418AFD62800152E6D /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 42E23B9318AFD62800152E6D /* LICENSE */; };
+		42E23B9718AFD75B00152E6D /* CRLicenceInformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42E23B9618AFD75B00152E6D /* CRLicenceInformationViewController.m */; };
+		42E23B9A18AFE34E00152E6D /* CRAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42E23B9918AFE34E00152E6D /* CRAboutViewController.m */; };
+		42E23B9C18AFF03300152E6D /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42E23B9B18AFF03300152E6D /* Social.framework */; };
+		42E23BA218AFF9A100152E6D /* share_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 42E23BA118AFF9A100152E6D /* share_button.png */; };
 		42FA30D818A6969F0061B778 /* CRConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 42FA30D718A6969F0061B778 /* CRConfiguration.m */; };
 		42FA30DB18A7743A0061B778 /* table_indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 42FA30DA18A7743A0061B778 /* table_indicator.png */; };
 		42FA30E918A903580061B778 /* ResultMemoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42FA30E818A903580061B778 /* ResultMemoCell.xib */; };
@@ -205,6 +213,18 @@
 		42E23B7A18AFA85F00152E6D /* icon-small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-small@2x.png"; path = "Images/icon-small@2x.png"; sourceTree = "<group>"; };
 		42E23B7B18AFA85F00152E6D /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = Images/icon.png; sourceTree = "<group>"; };
 		42E23B7C18AFA85F00152E6D /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "Images/icon@2x.png"; sourceTree = "<group>"; };
+		42E23B8B18AFBFE400152E6D /* CRConfigRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRConfigRootViewController.h; path = ViewController/CRConfigRootViewController.h; sourceTree = "<group>"; };
+		42E23B8C18AFBFE400152E6D /* CRConfigRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRConfigRootViewController.m; path = ViewController/CRConfigRootViewController.m; sourceTree = "<group>"; };
+		42E23B8E18AFC15F00152E6D /* ConfigCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfigCell.xib; sourceTree = "<group>"; };
+		42E23B9018AFC19D00152E6D /* CRConfigCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRConfigCell.h; path = View/CRConfigCell.h; sourceTree = "<group>"; };
+		42E23B9118AFC19D00152E6D /* CRConfigCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRConfigCell.m; path = View/CRConfigCell.m; sourceTree = "<group>"; };
+		42E23B9318AFD62800152E6D /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		42E23B9518AFD75B00152E6D /* CRLicenceInformationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRLicenceInformationViewController.h; path = ViewController/CRLicenceInformationViewController.h; sourceTree = "<group>"; };
+		42E23B9618AFD75B00152E6D /* CRLicenceInformationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRLicenceInformationViewController.m; path = ViewController/CRLicenceInformationViewController.m; sourceTree = "<group>"; };
+		42E23B9818AFE34E00152E6D /* CRAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRAboutViewController.h; path = ViewController/CRAboutViewController.h; sourceTree = "<group>"; };
+		42E23B9918AFE34E00152E6D /* CRAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRAboutViewController.m; path = ViewController/CRAboutViewController.m; sourceTree = "<group>"; };
+		42E23B9B18AFF03300152E6D /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		42E23BA118AFF9A100152E6D /* share_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share_button.png; sourceTree = "<group>"; };
 		42FA30D618A6969F0061B778 /* CRConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRConfiguration.h; path = Utility/CRConfiguration.h; sourceTree = "<group>"; };
 		42FA30D718A6969F0061B778 /* CRConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRConfiguration.m; path = Utility/CRConfiguration.m; sourceTree = "<group>"; };
 		42FA30DA18A7743A0061B778 /* table_indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = table_indicator.png; path = Images/table_indicator.png; sourceTree = "<group>"; };
@@ -222,6 +242,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42E23B9C18AFF03300152E6D /* Social.framework in Frameworks */,
 				42D0A5F4189E281200CCE450 /* AssetsLibrary.framework in Frameworks */,
 				428AA42518840D1400401165 /* CoreGraphics.framework in Frameworks */,
 				428AA42918840D1400401165 /* CoreData.framework in Frameworks */,
@@ -267,6 +288,7 @@
 		428AA42118840D1400401165 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				42E23B9B18AFF03300152E6D /* Social.framework */,
 				42D0A5F3189E281200CCE450 /* AssetsLibrary.framework */,
 				428AA42218840D1400401165 /* Foundation.framework */,
 				428AA42418840D1400401165 /* CoreGraphics.framework */,
@@ -335,6 +357,7 @@
 		428AA46018840D2E00401165 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				42E23B9318AFD62800152E6D /* LICENSE */,
 				42FA30D918A773E70061B778 /* Images */,
 				428AA46118840D3D00401165 /* CRCoffeeData.xcdatamodeld */,
 				42CCF2D01897C0AC00E87843 /* TwoItemsCell.xib */,
@@ -346,6 +369,7 @@
 				42CCF34218A6015300E87843 /* ResultItemCell.xib */,
 				42CCF34718A60D4200E87843 /* ResultItemHeaderCell.xib */,
 				42FA30E818A903580061B778 /* ResultMemoCell.xib */,
+				42E23B8E18AFC15F00152E6D /* ConfigCell.xib */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -399,6 +423,12 @@
 				42CCF33618A2577100E87843 /* CRRoastItemResultViewController.m */,
 				42C8B4F818AD140C006DBA4A /* CRMainViewController.h */,
 				42C8B4F918AD140C006DBA4A /* CRMainViewController.m */,
+				42E23B8B18AFBFE400152E6D /* CRConfigRootViewController.h */,
+				42E23B8C18AFBFE400152E6D /* CRConfigRootViewController.m */,
+				42E23B9518AFD75B00152E6D /* CRLicenceInformationViewController.h */,
+				42E23B9618AFD75B00152E6D /* CRLicenceInformationViewController.m */,
+				42E23B9818AFE34E00152E6D /* CRAboutViewController.h */,
+				42E23B9918AFE34E00152E6D /* CRAboutViewController.m */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -441,6 +471,8 @@
 				42CCF34A18A613DD00E87843 /* CRResultItemHeaderCell.m */,
 				42FA30EA18A9047C0061B778 /* CRResultMemoCell.h */,
 				42FA30EB18A9047C0061B778 /* CRResultMemoCell.m */,
+				42E23B9018AFC19D00152E6D /* CRConfigCell.h */,
+				42E23B9118AFC19D00152E6D /* CRConfigCell.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -459,6 +491,7 @@
 		42FA30D918A773E70061B778 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				42E23BA118AFF9A100152E6D /* share_button.png */,
 				42E23B6F18AFA85F00152E6D /* default.png */,
 				42E23B7018AFA85F00152E6D /* icon-60@2x.png */,
 				42E23B7118AFA85F00152E6D /* icon-72.png */,
@@ -597,6 +630,7 @@
 				42E23B7D18AFA85F00152E6D /* default.png in Resources */,
 				42FA30F618A937F20061B778 /* Localizable.strings in Resources */,
 				42CCF33118A2510900E87843 /* RoastItemCell.xib in Resources */,
+				42E23B9418AFD62800152E6D /* LICENSE in Resources */,
 				42E23B8918AFA85F00152E6D /* icon.png in Resources */,
 				42CCF34318A6015300E87843 /* ResultItemCell.xib in Resources */,
 				42E23B8618AFA85F00152E6D /* icon-small-50@2x.png in Resources */,
@@ -604,6 +638,7 @@
 				42FA30DB18A7743A0061B778 /* table_indicator.png in Resources */,
 				428AA43818840D1400401165 /* Main.storyboard in Resources */,
 				42E23B8318AFA85F00152E6D /* icon-small-40.png in Resources */,
+				42E23BA218AFF9A100152E6D /* share_button.png in Resources */,
 				42E23B8518AFA85F00152E6D /* icon-small-50.png in Resources */,
 				42E23B8218AFA85F00152E6D /* icon-76@2x.png in Resources */,
 				42E23B8718AFA85F00152E6D /* icon-small.png in Resources */,
@@ -616,6 +651,7 @@
 				42CCF2D11897C0AC00E87843 /* TwoItemsCell.xib in Resources */,
 				42E23B8818AFA85F00152E6D /* icon-small@2x.png in Resources */,
 				42D0A5F9189E304A00CCE450 /* ImageRootCell.xib in Resources */,
+				42E23B8F18AFC15F00152E6D /* ConfigCell.xib in Resources */,
 				42CCF322189D56EC00E87843 /* EmptyCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -641,6 +677,7 @@
 				42D0A5F2189D086C00CCE450 /* CRUtility.m in Sources */,
 				428AA49A18842DEB00401165 /* CREnvironmentInformation.m in Sources */,
 				42FA30EC18A9047C0061B778 /* CRResultMemoCell.m in Sources */,
+				42E23B9718AFD75B00152E6D /* CRLicenceInformationViewController.m in Sources */,
 				42D0A5FF189E338200CCE450 /* CRAlbumContentsViewController.m in Sources */,
 				42CCF31B1897E80900E87843 /* CRDateEditingViewController.m in Sources */,
 				42C8B4E718AA6815006DBA4A /* CRHeating.m in Sources */,
@@ -648,6 +685,7 @@
 				42CCF32F18A12BFC00E87843 /* CRDatePickerAlertView.m in Sources */,
 				42CCF34618A601E700E87843 /* CRResultItemCell.m in Sources */,
 				42CCF34B18A613DD00E87843 /* CRResultItemHeaderCell.m in Sources */,
+				42E23B9A18AFE34E00152E6D /* CRAboutViewController.m in Sources */,
 				42CCF33418A2519D00E87843 /* CRRoastItemCell.m in Sources */,
 				42CCF328189FC93A00E87843 /* CRSelectedPhotoViewController.m in Sources */,
 				42C8B4FD18AE8B29006DBA4A /* CRTypes.m in Sources */,
@@ -661,6 +699,8 @@
 				428AA49018842B9800401165 /* CRRoastManager.m in Sources */,
 				428AA43518840D1400401165 /* CRAppDelegate.m in Sources */,
 				42D0A5EE189CF6B500CCE450 /* CRMemoTextView.m in Sources */,
+				42E23B9218AFC19D00152E6D /* CRConfigCell.m in Sources */,
+				42E23B8D18AFBFE400152E6D /* CRConfigRootViewController.m in Sources */,
 				428AA49418842D3400401165 /* CRRoastInformation.m in Sources */,
 				42FA30D818A6969F0061B778 /* CRConfiguration.m in Sources */,
 				42CCF33A18A295FB00E87843 /* CRTwoItemsCellButton.m in Sources */,

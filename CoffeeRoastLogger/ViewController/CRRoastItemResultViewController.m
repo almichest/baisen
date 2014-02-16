@@ -5,7 +5,6 @@
 //  Created by Hiraku Ohno on 2014/02/05.
 //  Copyright (c) 2014年 Hiraku Ohno. All rights reserved.
 //
-
 #import "CRRoastItemResultViewController.h"
 #import "CRRoast.h"
 #import "CREnvironment.h"
@@ -21,7 +20,9 @@
 #import "CRUtility.h"
 #import "CRConfiguration.h"
 
-@interface CRRoastItemResultViewController ()
+#import <Social/Social.h>
+
+@interface CRRoastItemResultViewController ()<UIActionSheetDelegate>
 
 @property(nonatomic, readonly) UIImage *image;
 
@@ -60,6 +61,29 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"ResultItemHeaderCell" bundle:nil] forCellReuseIdentifier:kResultItemHeaderCellIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"ResultMemoCell" bundle:nil] forCellReuseIdentifier:kResultMemoCellIdentifier];
     
+//    UIImage *shareImage = [UIImage imageNamed:@"share_button"];
+//    UIImageView *shareImageView = [[UIImageView alloc] initWithImage:shareImage];
+//    shareImageView.frame = CGRectMake(0, 0, 30, 30);
+//    shareImageView.backgroundColor = [UIColor clearColor];
+//    shareImageView.userInteractionEnabled = YES;
+//    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:shareImageView];
+//    item.target = self;
+//    item.action = @selector(hoge);
+//    item.enabled = YES;
+    
+    UIImage *shareImage = [UIImage imageNamed:@"share_button"];
+    UIImage *scaledImage = [UIImage imageWithCGImage:shareImage.CGImage scale:3.0f orientation:shareImage.imageOrientation];
+    
+    UIBarButtonItem *shareItem = [[UIBarButtonItem alloc] initWithImage:scaledImage style:UIBarButtonItemStylePlain target:self action:@selector(shareRoastInformation)];
+    
+    self.navigationItem.rightBarButtonItems = @[self.navigationItem.rightBarButtonItem, shareItem];
+    
+}
+
+- (void)shareRoastInformation
+{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Share", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Twitter", nil), NSLocalizedString(@"Facebook", nil), nil];
+    [actionSheet showInView:self.view];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -277,6 +301,68 @@
         CRRoastItemEditingViewController *viewController = navigationController.viewControllers[0];
         viewController.roastItem = self.roast;
     }
+}
+
+#pragma mark - UIActionSheetDelegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0 :
+            [self showTwitterPostView];
+            break;
+        case 1 :
+            [self showFacebookPostView];
+            break;
+        default :
+            break;
+    }
+}
+
+#pragma mark - Share
+- (void)showTwitterPostView
+{
+    SLComposeViewController *twitterPostViewController = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+    NSString *postMessage = [self postMessage];
+    if(postMessage == nil) {
+        return;
+    }
+    
+    [twitterPostViewController setInitialText:[self postMessage]];
+    [self presentViewController:twitterPostViewController animated:YES completion:nil];
+}
+
+- (void)showFacebookPostView
+{
+    SLComposeViewController *facebookPostViewController = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+    NSString *postMessage = [self postMessage];
+    if(postMessage == nil) {
+        return;
+    }
+    
+    [facebookPostViewController setInitialText:[self postMessage]];
+    [self presentViewController:facebookPostViewController animated:YES completion:nil];
+}
+
+- (NSString *)postMessage
+{
+    NSMutableString *message = @"".mutableCopy;
+    for(CRBean *bean in self.roast.beans) {
+        if([bean.area isEqualToString:NSLocalizedString(@"NotInput", nil)]) {
+            [self showSharingErrorAlertView];
+            return nil;
+        }
+        [message appendFormat:@"%@を", bean.area];
+        [message appendFormat:@"%@gと",@(bean.quantity)];
+    }
+    message = [message substringToIndex:message.length - 1].mutableCopy;
+    [message appendString:@"焙煎しました。#Baisen"];
+    return message.copy;
+}
+
+- (void)showSharingErrorAlertView
+{
+    UIAlertView *shareErrorAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Share error" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [shareErrorAlertView show];
 }
 
 @end

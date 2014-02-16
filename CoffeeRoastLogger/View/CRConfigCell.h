@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CRiCloudSettingCell : UITableViewCell
+@interface CRConfigCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UISwitch *settingSwitch;
+@property (weak, nonatomic) IBOutlet UILabel *settingLabel;
 
 @end

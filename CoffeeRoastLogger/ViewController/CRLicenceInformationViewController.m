@@ -9,24 +9,18 @@
 #import "CRLicenceInformationViewController.h"
 
 @interface CRLicenceInformationViewController ()
+@property (weak, nonatomic) IBOutlet UILabel *textLabel;
 
 @end
 
 @implementation CRLicenceInformationViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"LICENSE" ofType:nil];
+    NSString *text = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
+    self.textLabel.text = text;
 }
 
 - (void)didReceiveMemoryWarning

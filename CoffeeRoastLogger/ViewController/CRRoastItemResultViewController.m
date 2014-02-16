@@ -19,6 +19,7 @@
 
 #import "CRUtility.h"
 #import "CRConfiguration.h"
+#import "CRSocialUtility.h"
 
 #import <Social/Social.h>
 
@@ -321,47 +322,43 @@
 #pragma mark - Share
 - (void)showTwitterPostView
 {
-    SLComposeViewController *twitterPostViewController = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
     NSString *postMessage = [self postMessage];
-    if(postMessage == nil) {
-        return;
+    if(postMessage) {
+        [CRSocialUtility showTwitterPostViewWithMessage:postMessage onViewController:self];
+    } else {
+        [self showSharingErrorAlertView];
     }
-    
-    [twitterPostViewController setInitialText:[self postMessage]];
-    [self presentViewController:twitterPostViewController animated:YES completion:nil];
 }
 
 - (void)showFacebookPostView
 {
-    SLComposeViewController *facebookPostViewController = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
     NSString *postMessage = [self postMessage];
-    if(postMessage == nil) {
-        return;
+    if(postMessage) {
+        [CRSocialUtility showFacebookPostViewWithMessage:postMessage onViewController:self];
+    } else {
+        [self showSharingErrorAlertView];
     }
-    
-    [facebookPostViewController setInitialText:[self postMessage]];
-    [self presentViewController:facebookPostViewController animated:YES completion:nil];
 }
 
 - (NSString *)postMessage
 {
     NSMutableString *message = @"".mutableCopy;
+    [message appendString:NSLocalizedString(@"SharingMessageHead", nil)];
     for(CRBean *bean in self.roast.beans) {
         if([bean.area isEqualToString:NSLocalizedString(@"NotInput", nil)]) {
-            [self showSharingErrorAlertView];
             return nil;
         }
-        [message appendFormat:@"%@を", bean.area];
-        [message appendFormat:@"%@gと",@(bean.quantity)];
+        [message appendFormat:@"%@",bean.area];
+        [message appendFormat:@"%@g%@",@(bean.quantity), NSLocalizedString(@"And", nil)];
     }
-    message = [message substringToIndex:message.length - 1].mutableCopy;
-    [message appendString:@"焙煎しました。#Baisen"];
+    message = [message substringToIndex:message.length - NSLocalizedString(@"And", nil).length].mutableCopy;
+    [message appendString:NSLocalizedString(@"SharingMessageFoot", nil)];
     return message.copy;
 }
 
 - (void)showSharingErrorAlertView
 {
-    UIAlertView *shareErrorAlertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Share error" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    UIAlertView *shareErrorAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"SharingError", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
     [shareErrorAlertView show];
 }
 

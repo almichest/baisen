@@ -12,9 +12,10 @@
 #import "CRRoastManager.h"
 #import "CRRoastDataSource.h"
 
-#define kSettingSwitchTag   10
-#define kLoadintViewTag     20
-@interface CRConfigRootViewController ()<CRRoastDataSourceSettingDelegate>
+#define kiCloudSettingSwitchTag     10
+#define kLoadintViewTag             20
+#define kiCloudAlertViewTag         30
+@interface CRConfigRootViewController ()<CRRoastDataSourceSettingDelegate, UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeButton;
 
@@ -87,7 +88,7 @@
         case kiCloudSettingSection :
             cell.settingSwitch.hidden = NO;
             cell.settingSwitch.on = [CRConfiguration sharedConfiguration].iCloudAvailable;
-            cell.settingSwitch.tag = kSettingSwitchTag;
+            cell.settingSwitch.tag = kiCloudSettingSwitchTag;
             [cell.settingSwitch addTarget:self action:@selector(iCloudSettingChanged:) forControlEvents:UIControlEventValueChanged];
             cell.settingLabel.text = NSLocalizedString(@"EnableICloud", nil);
             cell.accessoryType = UITableViewCellAccessoryNone;
@@ -114,8 +115,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    MyLog(@"section = %d", indexPath.section);
-    MyLog(@"row = %d", indexPath.row);
     switch (indexPath.section) {
         case kAboutSection :
             [self performSegueWithIdentifier:@"about" sender:nil];
@@ -130,15 +129,48 @@
 
 - (void)iCloudSettingChanged:(UISwitch *)sender
 {
-    [self willStartICloudSettings];
-    [CRRoastManager sharedManager].dataSource.iCloudAvailable = sender.on;
+    [self showiCloudSettingChangeAlertViewToOn:sender.on];
+}
+
+- (void)showiCloudSettingChangeAlertViewToOn:(BOOL)on
+{
+    NSString *message = on ? NSLocalizedString(@"SwitchiCloudOn", nil) : NSLocalizedString(@"SwitchiCloudOff", nil);
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SwitchiCloudSettingTitle", nil) message:message delegate:self cancelButtonTitle:NSLocalizedString(@"NO", nil) otherButtonTitles:NSLocalizedString(@"YES", nil), nil];
+    alertView.tag = kiCloudAlertViewTag;
+    [alertView show];
+}
+
+#pragma mark - UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    MyLog(@"Tag = %@", @(alertView.tag));
+    if(alertView.tag == kiCloudAlertViewTag) {
+        UISwitch *iCloudSwitch = (UISwitch *)[self.view viewWithTag:kiCloudSettingSwitchTag];
+        switch (buttonIndex) {
+            case 0 :
+                iCloudSwitch.on = !iCloudSwitch.on;
+                break;
+            case 1 :
+                [self willStartICloudSettings];
+                [CRRoastManager sharedManager].dataSource.iCloudAvailable = iCloudSwitch.on;
+                break;
+            default :
+                break;
+        }
+    }
+}
+
+- (void)alertViewCancel:(UIAlertView *)alertView
+{
+    UISwitch *iCloudSwitch = (UISwitch *)[self.view viewWithTag:kiCloudSettingSwitchTag];
+    iCloudSwitch.on = !iCloudSwitch.on;
 }
 
 #pragma mark - CRRoastDataSoruceSettingDelegate
 - (void)dataSource:(CRRoastDataSource *)dataSource didLoadDataWithCloud:(BOOL)isCloud
 {
     [self didFinishICloudSettings];
-    UISwitch *iCloudSwitch = (UISwitch *)[self.view viewWithTag:kSettingSwitchTag];
+    UISwitch *iCloudSwitch = (UISwitch *)[self.view viewWithTag:kiCloudSettingSwitchTag];
     if(iCloudSwitch.on == isCloud) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SettingComplete", nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
         [alertView show];
@@ -148,7 +180,7 @@
 - (void)dataSourceCannotUseCloud:(CRRoastDataSource *)dataSource
 {
     [self didFinishICloudSettings];
-    UISwitch *iCloudSwitch = (UISwitch *)[self.view viewWithTag:kSettingSwitchTag];
+    UISwitch *iCloudSwitch = (UISwitch *)[self.view viewWithTag:kiCloudSettingSwitchTag];
     iCloudSwitch.on = NO;
     
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"iCloudUnavailable", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];

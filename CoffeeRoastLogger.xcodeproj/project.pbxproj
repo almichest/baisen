@@ -64,6 +64,7 @@
 		42D0A5F9189E304A00CCE450 /* ImageRootCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42D0A5F8189E304A00CCE450 /* ImageRootCell.xib */; };
 		42D0A5FC189E30DD00CCE450 /* CRImageRootViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 42D0A5FB189E30DD00CCE450 /* CRImageRootViewCell.m */; };
 		42D0A5FF189E338200CCE450 /* CRAlbumContentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42D0A5FE189E338200CCE450 /* CRAlbumContentsViewController.m */; };
+		42D0A60818B092AC00CCE450 /* CRSocialUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 42D0A60718B092AC00CCE450 /* CRSocialUtility.m */; };
 		42E23B7D18AFA85F00152E6D /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = 42E23B6F18AFA85F00152E6D /* default.png */; };
 		42E23B7E18AFA85F00152E6D /* icon-60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42E23B7018AFA85F00152E6D /* icon-60@2x.png */; };
 		42E23B7F18AFA85F00152E6D /* icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 42E23B7118AFA85F00152E6D /* icon-72.png */; };
@@ -199,6 +200,8 @@
 		42D0A5FB189E30DD00CCE450 /* CRImageRootViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRImageRootViewCell.m; path = View/CRImageRootViewCell.m; sourceTree = "<group>"; };
 		42D0A5FD189E338200CCE450 /* CRAlbumContentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRAlbumContentsViewController.h; path = ViewController/CRAlbumContentsViewController.h; sourceTree = "<group>"; };
 		42D0A5FE189E338200CCE450 /* CRAlbumContentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRAlbumContentsViewController.m; path = ViewController/CRAlbumContentsViewController.m; sourceTree = "<group>"; };
+		42D0A60618B092AC00CCE450 /* CRSocialUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRSocialUtility.h; path = Utility/CRSocialUtility.h; sourceTree = "<group>"; };
+		42D0A60718B092AC00CCE450 /* CRSocialUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRSocialUtility.m; path = Utility/CRSocialUtility.m; sourceTree = "<group>"; };
 		42E23B6F18AFA85F00152E6D /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = default.png; path = Images/default.png; sourceTree = "<group>"; };
 		42E23B7018AFA85F00152E6D /* icon-60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-60@2x.png"; path = "Images/icon-60@2x.png"; sourceTree = "<group>"; };
 		42E23B7118AFA85F00152E6D /* icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-72.png"; path = "Images/icon-72.png"; sourceTree = "<group>"; };
@@ -484,6 +487,8 @@
 				42D0A5F1189D086C00CCE450 /* CRUtility.m */,
 				42FA30D618A6969F0061B778 /* CRConfiguration.h */,
 				42FA30D718A6969F0061B778 /* CRConfiguration.m */,
+				42D0A60618B092AC00CCE450 /* CRSocialUtility.h */,
+				42D0A60718B092AC00CCE450 /* CRSocialUtility.m */,
 			);
 			name = Uitility;
 			sourceTree = "<group>";
@@ -689,6 +694,7 @@
 				42CCF33418A2519D00E87843 /* CRRoastItemCell.m in Sources */,
 				42CCF328189FC93A00E87843 /* CRSelectedPhotoViewController.m in Sources */,
 				42C8B4FD18AE8B29006DBA4A /* CRTypes.m in Sources */,
+				42D0A60818B092AC00CCE450 /* CRSocialUtility.m in Sources */,
 				42D0A5F7189E28A700CCE450 /* CRImagePickerRootViewController.m in Sources */,
 				42CCF325189D570400E87843 /* CREmptyCell.m in Sources */,
 				42C8B4FA18AD140C006DBA4A /* CRMainViewController.m in Sources */,

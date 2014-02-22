@@ -35,6 +35,16 @@
     [CRRoastManager sharedManager].dataSource.settingDelegate = self;
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    if(![CRConfiguration sharedConfiguration].iCloudConfigured) {
+        [self showiCloudConfirmationAlertView];
+    } else {
+        BOOL useCloud = [CRConfiguration sharedConfiguration].iCloudAvailable;
+        [[CRRoastManager sharedManager].dataSource refreshToUseCloud:useCloud];
+    }
+}
+
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
@@ -48,16 +58,11 @@
 }
 
 #pragma mark - InitialLoadingDelegate
-- (void)dataSource:(CRRoastDataSource *)dataSource didLoadDataWithCloud:(BOOL)isCloud
+- (void)dataSourceDidBecomeAvailable:(CRRoastDataSource *)dataSource
 {
-    if([CRConfiguration sharedConfiguration].iCloudConfigured) {
-        if(isCloud || ![CRConfiguration sharedConfiguration].iCloudAvailable) {
-            [self performSegueWithIdentifier:@"loadingComplete" sender:nil];
-        }
-    } else {
-        [self showiCloudConfirmationAlertView];
-    }
+    [self transitToNextView];
 }
+
 
 - (void)dataSourceCannotUseCloud:(CRRoastDataSource *)dataSource
 {
@@ -82,22 +87,21 @@
             break;
         case kCloudUnavailableAlertViewTag :
             [self handleCloudUnavailableAlertViewDismissed];
-            [self performSegueWithIdentifier:@"loadingComplete" sender:nil];
             break;
         default :
             break;
     }
 }
 
+#pragma mark - AlertView next action
 - (void)handleCloudAlertViewSelectionWithButtonIndex:(NSInteger)buttonIndex
 {
     switch (buttonIndex) {
         case 0 :
-            [CRRoastManager sharedManager].dataSource.iCloudAvailable = NO;
-            [self performSegueWithIdentifier:@"loadingComplete" sender:nil];
+            [[CRRoastManager sharedManager].dataSource refreshToUseCloud:NO];
             break;
         case 1 :
-            [CRRoastManager sharedManager].dataSource.iCloudAvailable = YES;
+            [[CRRoastManager sharedManager].dataSource refreshToUseCloud:YES];
             break;
         default :
             break;
@@ -107,6 +111,12 @@
 
 - (void)handleCloudUnavailableAlertViewDismissed
 {
+    [self transitToNextView];
+}
+
+- (void)transitToNextView
+{
+    [CRConfiguration sharedConfiguration].iCloudConfigured = YES;
     [self performSegueWithIdentifier:@"loadingComplete" sender:nil];
 }
 

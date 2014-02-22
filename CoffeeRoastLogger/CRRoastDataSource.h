@@ -24,7 +24,8 @@ typedef NS_ENUM(NSUInteger, CRRoastDataSourceChangeType)
 
 @property(nonatomic, weak) id<CRRoastDataSourceDelegate> delegate;
 @property(nonatomic, weak) id<CRRoastDataSourceSettingDelegate> settingDelegate;
-@property(nonatomic) BOOL iCloudAvailable;
+
+- (void)refreshToUseCloud:(BOOL)useCloud;
 
 - (CRRoast *)addRoastInformation:(CRRoastInformation *)information;
 - (CRRoast *)updateRoastItem:(CRRoast *)roast withRoastInformation:(CRRoastInformation *)information;
@@ -47,7 +48,7 @@ typedef NS_ENUM(NSUInteger, CRRoastDataSourceChangeType)
 @end
 
 @protocol CRRoastDataSourceSettingDelegate <NSObject>
-- (void)dataSource:(CRRoastDataSource *)dataSource didLoadDataWithCloud:(BOOL)isCloud;
+- (void)dataSourceDidBecomeAvailable:(CRRoastDataSource *)dataSource;
 - (void)dataSourceCannotUseCloud:(CRRoastDataSource *)dataSource;
 @end
 

@@ -152,7 +152,7 @@
                 break;
             case 1 :
                 [self willStartICloudSettings];
-                [CRRoastManager sharedManager].dataSource.iCloudAvailable = iCloudSwitch.on;
+                [[CRRoastManager sharedManager].dataSource refreshToUseCloud:iCloudSwitch.on];
                 break;
             default :
                 break;
@@ -167,14 +167,11 @@
 }
 
 #pragma mark - CRRoastDataSoruceSettingDelegate
-- (void)dataSource:(CRRoastDataSource *)dataSource didLoadDataWithCloud:(BOOL)isCloud
+- (void)dataSourceDidBecomeAvailable:(CRRoastDataSource *)dataSource
 {
     [self didFinishICloudSettings];
-    UISwitch *iCloudSwitch = (UISwitch *)[self.view viewWithTag:kiCloudSettingSwitchTag];
-    if(iCloudSwitch.on == isCloud) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SettingComplete", nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
-        [alertView show];
-    }
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SettingComplete", nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
+    [alertView show];
 }
 
 - (void)dataSourceCannotUseCloud:(CRRoastDataSource *)dataSource

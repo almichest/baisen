@@ -30,31 +30,35 @@
 
 @end
 
+static CRRoastInformation *roastInformationFromRoastItem(CRRoast *roastItem);
+
 @implementation CRRoastDataSource
 {
     UbiquityStoreManager *_storeManager;
-}
-
-- (instancetype)init
-{
-    self = super.init;
-    if(self) {
-        NSURL *storeURL = [[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject] URLByAppendingPathComponent:@"CRCoffeeData.sqlite"];
-        _storeManager = [[UbiquityStoreManager alloc] initStoreNamed:nil withManagedObjectModel:self.managedObjectModel localStoreURL:storeURL containerIdentifier:nil storeConfiguration:nil storeOptions:nil delegate:self];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(iCloudContentsWillChange:)
-                                                     name:USMStoreWillChangeNotification
-                                                   object:_storeManager];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(iCloudContentsDidChange:)
-                                                     name:USMStoreDidChangeNotification
-                                                   object:_storeManager];
-    }
-    
-    return self;
+    NSArray *_tempRoastInformations;
+    BOOL _useCloud;
 }
 
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)refreshToUseCloud:(BOOL)useCloud
+{
+    _useCloud = useCloud;
+    
+    if(useCloud != [CRConfiguration sharedConfiguration].iCloudAvailable && _managedObjectContext) {
+        [self willMigrate];
+    }
+    NSURL *storeURL = [[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject] URLByAppendingPathComponent:@"CRCoffeeData.sqlite"];
+    _storeManager = [[UbiquityStoreManager alloc] initStoreNamed:nil withManagedObjectModel:self.managedObjectModel localStoreURL:storeURL containerIdentifier:nil storeConfiguration:nil storeOptions:nil delegate:self];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(iCloudContentsWillChange:)
+                                                 name:USMStoreWillChangeNotification
+                                               object:_storeManager];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(iCloudContentsDidChange:)
+                                                 name:USMStoreDidChangeNotification
+                                               object:_storeManager];
 }
 
 - (void)iCloudContentsWillChange:(NSNotification *)notification
@@ -65,6 +69,31 @@
 - (void)iCloudContentsDidChange:(NSNotification *)notification
 {
     MyLog(@"iCloudContentsDidChange");
+}
+
+#pragma mark - migration
+- (void)willMigrate
+{
+    NSArray *roastItems = self.fetchedResultsController.fetchedObjects;
+    NSMutableArray *mutableItems = [[NSMutableArray alloc] initWithCapacity:roastItems.count];
+    for(CRRoast *roastItem in roastItems) {
+        [mutableItems addObject:roastInformationFromRoastItem(roastItem)];
+        [self.managedObjectContext deleteObject:roastItem];
+    }
+    
+    _tempRoastInformations = mutableItems.copy;
+    [self save];
+}
+
+- (void)performMigration
+{
+    [self addRoastInformations:_tempRoastInformations];
+    [self save];
+}
+
+- (void)didMigrate
+{
+    _tempRoastInformations = nil;
 }
 
 #pragma mark - get
@@ -78,18 +107,22 @@
 - (CRRoast *)addRoastInformation:(CRRoastInformation *)information
 {
     CRRoast *roast = [self roastWithRoastInformation:information];
-    roast.environment = [self environmentWithEnvironmentInformation:information.environment];
-    roast.beans = [self beansWithBeansInformations:information.beans];
-    roast.heating = [self heatingsWithHeatingInformations:information.heatingInformations];
-    
-    roast.score = information.score;
-    roast.result = information.result;
-    if(information.image) {
-        roast.imageData = [self dataFromImage:information.image];
-    }
     [self save];
     
     return roast;
+}
+
+- (NSArray *)addRoastInformations:(NSArray *)informations
+{
+    NSMutableArray *mutableRoastItems = [[NSMutableArray alloc] initWithCapacity:informations.count];
+    for(CRRoastInformation *information in informations) {
+        CRRoast *roast = [self roastWithRoastInformation:information];
+        [mutableRoastItems addObject:roast];
+    }
+    
+    [self save];
+    
+    return mutableRoastItems.copy;
 }
 
 - (CRRoast *)updateRoastItem:(CRRoast *)roast withRoastInformation:(CRRoastInformation *)information
@@ -115,7 +148,12 @@
     CRRoast *roast = [NSEntityDescription insertNewObjectForEntityForName:@"Roast" inManagedObjectContext:self.managedObjectContext];
     roast.result = information.result;
     roast.score = information.score;
-    
+    roast.environment = [self environmentWithEnvironmentInformation:information.environment];
+    roast.beans = [self beansWithBeansInformations:information.beans];
+    roast.heating = [self heatingsWithHeatingInformations:information.heatingInformations];
+    if(information.image) {
+        roast.imageData = [self dataFromImage:information.image];
+    }
     return roast;
 }
 
@@ -161,7 +199,7 @@
 
 - (NSData *)dataFromImage:(UIImage *)image
 {
-    return UIImageJPEGRepresentation(image, 0.7f);
+    return UIImageJPEGRepresentation(image, 0.8f);
 }
 
 #pragma mark - remove
@@ -293,39 +331,69 @@
         context.mergePolicy = NSOverwriteMergePolicy;
         _managedObjectContext = context;
         
-        [self.settingDelegate dataSource:self didLoadDataWithCloud:isCloudStore];
+        BOOL complete = NO;
         
+        if(!_useCloud || isCloudStore) {
+            complete = YES;
+        } else  {
+            if(!_storeManager.cloudAvailable) {
+                [self notifyCloudUnavailable];
+            }
+        }
+        
+        if(complete) {
+            [self performMigration];
+            [self didMigrate];
+            [self.settingDelegate dataSourceDidBecomeAvailable:self];
+        }
     });
 }
 
 - (void)notifyCloudUnavailable
 {
+    [self performMigration];
+    [self didMigrate];
     [self.settingDelegate dataSourceCannotUseCloud:self];
 }
 
-#pragma mark - iCloudAvailable
-- (void)setICloudAvailable:(BOOL)iCloudAvailable
-{
-    if(iCloudAvailable) {
-        if(_storeManager.cloudAvailable) {
-            [_storeManager setCloudEnabled:YES];
-            [CRConfiguration sharedConfiguration].iCloudAvailable = YES;
-        } else {
-            [CRConfiguration sharedConfiguration].iCloudAvailable = NO;
-            [self notifyCloudUnavailable];
-        }
-    } else {
-        [_storeManager setCloudEnabled:NO];
-        [CRConfiguration sharedConfiguration].iCloudAvailable = NO;
-    }
-}
-
-- (BOOL)iCloudAvailable
-{
-    return [CRConfiguration sharedConfiguration].iCloudAvailable;
-}
-
 @end
+
+static CRRoastInformation *roastInformationFromRoastItem(CRRoast *roastItem)
+{
+    CRRoastInformation *information = [[CRRoastInformation alloc] init];
+    information.result = roastItem.result;
+    information.score = roastItem.score;
+    information.image = [UIImage imageWithData:roastItem.imageData];
+    
+    CREnvironmentInformation *environmentInformation = [[CREnvironmentInformation alloc] init];
+    environmentInformation.temperature = roastItem.environment.temperature;
+    environmentInformation.humidity = roastItem.environment.humidity;
+    environmentInformation.date = roastItem.environment.date;
+    
+    NSMutableArray *beanInformations = [[NSMutableArray alloc] initWithCapacity:roastItem.beans.count];
+    for(CRBean *bean in roastItem.beans) {
+        @autoreleasepool {
+            CRBeanInformation *beanInformation = [[CRBeanInformation alloc] init];
+            beanInformation.area = bean.area;
+            beanInformation.quantity = bean.quantity;
+            [beanInformations addObject:beanInformation];
+        }
+    }
+    information.beans = beanInformations.copy;
+    
+    NSMutableArray *heatingInformations = [[NSMutableArray alloc] initWithCapacity:roastItem.heating.count];
+       for(CRHeating *heating in roastItem.heating) {
+        @autoreleasepool {
+            CRHeatingInformation *heatingInformation = [[CRHeatingInformation alloc] init];
+            heatingInformation.temperature = heating.temperature;
+            heatingInformation.time = heating.time;
+            [heatingInformations addObject:heatingInformation];
+        }
+    }
+    information.heatingInformations = heatingInformations.copy;
+    
+    return information;
+}
 
 NSString *const CRRoastDataSourceDidFailSavingNotification = @"CRRoastDataSourceDidFailSavingNotification";
 

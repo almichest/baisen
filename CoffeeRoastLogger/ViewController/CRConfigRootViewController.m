@@ -15,6 +15,7 @@
 #define kiCloudSettingSwitchTag     10
 #define kLoadintViewTag             20
 #define kiCloudAlertViewTag         30
+#define kCannotUseCloudAlertViewTag 40
 @interface CRConfigRootViewController ()<CRRoastDataSourceSettingDelegate, UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *closeButton;
@@ -148,7 +149,7 @@
         UISwitch *iCloudSwitch = (UISwitch *)[self.view viewWithTag:kiCloudSettingSwitchTag];
         switch (buttonIndex) {
             case 0 :
-                iCloudSwitch.on = !iCloudSwitch.on;
+                [iCloudSwitch setOn:!iCloudSwitch.on animated:YES];
                 break;
             case 1 :
                 [self willStartICloudSettings];
@@ -157,13 +158,17 @@
             default :
                 break;
         }
-    }
+    } 
 }
 
 - (void)alertViewCancel:(UIAlertView *)alertView
 {
     UISwitch *iCloudSwitch = (UISwitch *)[self.view viewWithTag:kiCloudSettingSwitchTag];
-    iCloudSwitch.on = !iCloudSwitch.on;
+    if(alertView.tag == kiCloudAlertViewTag) {
+        [iCloudSwitch setOn:!iCloudSwitch.on animated:YES];
+    } else if(alertView.tag == kCannotUseCloudAlertViewTag) {
+        [iCloudSwitch setOn:NO animated:YES];
+    }
 }
 
 #pragma mark - CRRoastDataSoruceSettingDelegate
@@ -176,12 +181,10 @@
 
 - (void)dataSourceCannotUseCloud:(CRRoastDataSource *)dataSource
 {
-    [self didFinishICloudSettings];
-    UISwitch *iCloudSwitch = (UISwitch *)[self.view viewWithTag:kiCloudSettingSwitchTag];
-    iCloudSwitch.on = NO;
-    
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"iCloudUnavailable", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
+    alertView.tag = kCannotUseCloudAlertViewTag;
     [alertView show];
+    [self performSelector:@selector(didFailICloudSettings) withObject:nil afterDelay:0.5];
 }
 
 - (void)willStartICloudSettings
@@ -199,6 +202,13 @@
 - (void)didFinishICloudSettings
 {
     [[self.navigationController.view viewWithTag:kLoadintViewTag] removeFromSuperview];
+}
+
+- (void)didFailICloudSettings
+{
+    [[self.navigationController.view viewWithTag:kLoadintViewTag] removeFromSuperview];
+    UISwitch *iCloudSwitch = (UISwitch *)[self.view viewWithTag:kiCloudSettingSwitchTag];
+    [iCloudSwitch setOn:NO animated:YES];
 }
 
 @end

@@ -37,6 +37,9 @@ static CRRoastInformation *roastInformationFromRoastItem(CRRoast *roastItem);
     UbiquityStoreManager *_storeManager;
     NSArray *_tempRoastInformations;
     BOOL _useCloud;
+    BOOL _completed;
+    
+    NSManagedObjectContext *_oldContext;
 }
 
 - (void)dealloc
@@ -47,6 +50,10 @@ static CRRoastInformation *roastInformationFromRoastItem(CRRoast *roastItem);
 - (void)refreshToUseCloud:(BOOL)useCloud
 {
     _useCloud = useCloud;
+    _completed = NO;
+    _oldContext = _managedObjectContext;
+    
+    [self reset];
     
     if(useCloud != [CRConfiguration sharedConfiguration].iCloudAvailable && _managedObjectContext) {
         [self willMigrate];
@@ -59,6 +66,14 @@ static CRRoastInformation *roastInformationFromRoastItem(CRRoast *roastItem);
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(iCloudContentsDidChange:)
                                                  name:USMStoreDidChangeNotification
                                                object:_storeManager];
+}
+
+- (void)reset
+{
+    _managedObjectContext = nil;
+    _managedObjectModel = nil;
+    _fetchedResultsController = nil;
+    _persistentStoreCoordinator = nil;
 }
 
 - (void)iCloudContentsWillChange:(NSNotification *)notification
@@ -87,6 +102,7 @@ static CRRoastInformation *roastInformationFromRoastItem(CRRoast *roastItem);
 
 - (void)performMigration
 {
+    NSArray *allObjects = self.fetchedResultsController.fetchedObjects;
     [self addRoastInformations:_tempRoastInformations];
     [self save];
 }
@@ -320,7 +336,7 @@ static CRRoastInformation *roastInformationFromRoastItem(CRRoast *roastItem);
         [self.managedObjectContext reset];
     }];
     
-    _managedObjectContext = nil;
+    [self reset];
 }
 
 - (void)ubiquityStoreManager:(UbiquityStoreManager *)manager didLoadStoreForCoordinator:(NSPersistentStoreCoordinator *)coordinator isCloud:(BOOL)isCloudStore
@@ -332,16 +348,23 @@ static CRRoastInformation *roastInformationFromRoastItem(CRRoast *roastItem);
         _managedObjectContext = context;
         
         BOOL complete = NO;
+        [CRConfiguration sharedConfiguration].iCloudAvailable = isCloudStore;
         
-        if(!_useCloud || isCloudStore) {
-            complete = YES;
-        } else  {
+        /* _oldContextが nilのときもこれで問題ない */
+        complete = (_useCloud == isCloudStore) && (_managedObjectContext != _oldContext);
+        
+        if(!_useCloud) {
+            _storeManager.cloudEnabled = NO;
+        } else {
             if(!_storeManager.cloudAvailable) {
                 [self notifyCloudUnavailable];
+            } else {
+                _storeManager.cloudEnabled = YES;
             }
         }
-        
-        if(complete) {
+                
+        if(complete && !_completed) {
+            _completed = YES;
             [self performMigration];
             [self didMigrate];
             [self.settingDelegate dataSourceDidBecomeAvailable:self];
@@ -369,6 +392,7 @@ static CRRoastInformation *roastInformationFromRoastItem(CRRoast *roastItem)
     environmentInformation.temperature = roastItem.environment.temperature;
     environmentInformation.humidity = roastItem.environment.humidity;
     environmentInformation.date = roastItem.environment.date;
+    information.environment = environmentInformation;
     
     NSMutableArray *beanInformations = [[NSMutableArray alloc] initWithCapacity:roastItem.beans.count];
     for(CRBean *bean in roastItem.beans) {

@@ -100,18 +100,6 @@ static CRRoastInformation *roastInformationFromRoastItem(CRRoast *roastItem);
     [self save];
 }
 
-- (void)performMigration
-{
-    NSArray *allObjects = self.fetchedResultsController.fetchedObjects;
-    [self addRoastInformations:_tempRoastInformations];
-    [self save];
-}
-
-- (void)didMigrate
-{
-    _tempRoastInformations = nil;
-}
-
 #pragma mark - get
 - (CRRoast *)roastInformationAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -260,7 +248,7 @@ static CRRoastInformation *roastInformationFromRoastItem(CRRoast *roastItem);
     
     NSError *error;
     if(![self.fetchedResultsController performFetch:&error]) {
-        abort();
+        [[NSNotificationCenter defaultCenter] postNotificationName:CRRoastDataSourceDidFailInitializationNotification object:self];
     }
     
     _fetchedResultsController.delegate = self;
@@ -283,9 +271,8 @@ static CRRoastInformation *roastInformationFromRoastItem(CRRoast *roastItem);
     NSError *error = nil;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:self.managedObjectModel];
     if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }    
+        [[NSNotificationCenter defaultCenter] postNotificationName:CRRoastDataSourceDidFailInitializationNotification object:self];
+    }
     
     return _persistentStoreCoordinator;
 }
@@ -329,8 +316,7 @@ static CRRoastInformation *roastInformationFromRoastItem(CRRoast *roastItem);
         
         NSError *error = nil;
         if([self.managedObjectContext hasChanges] && ![self.managedObjectContext save:&error]) {
-#warning abort
-            abort();
+            [[NSNotificationCenter defaultCenter] postNotificationName:CRRoastDataSourceDidFailSavingNotification object:self];
         }
         
         [self.managedObjectContext reset];
@@ -365,8 +351,6 @@ static CRRoastInformation *roastInformationFromRoastItem(CRRoast *roastItem);
                 
         if(complete && !_completed) {
             _completed = YES;
-            [self performMigration];
-            [self didMigrate];
             [self.settingDelegate dataSourceDidBecomeAvailable:self];
         }
     });
@@ -374,8 +358,6 @@ static CRRoastInformation *roastInformationFromRoastItem(CRRoast *roastItem);
 
 - (void)notifyCloudUnavailable
 {
-    [self performMigration];
-    [self didMigrate];
     [self.settingDelegate dataSourceCannotUseCloud:self];
 }
 

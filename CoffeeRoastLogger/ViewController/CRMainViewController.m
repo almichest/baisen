@@ -33,6 +33,12 @@
 {
     [super viewDidLoad];
     [CRRoastManager sharedManager].dataSource.settingDelegate = self;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initializationFailed:) name:CRRoastDataSourceDidFailInitializationNotification object:nil];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -118,6 +124,12 @@
 {
     [CRConfiguration sharedConfiguration].iCloudConfigured = YES;
     [self performSegueWithIdentifier:@"loadingComplete" sender:nil];
+}
+
+- (void)initializationFailed:(NSNotification *)notification
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"SorryMessageLabel", nil) message:NSLocalizedString(@"InitializationFailed", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles: nil];
+    [alertView show];
 }
 
 @end

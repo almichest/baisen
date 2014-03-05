@@ -22,9 +22,9 @@
 
 @end
 
-#define kiCloudSettingSection       0
-#define kAboutSection               1
-#define kLicenceInformationSection  2
+#define kiCloudSettingSection       100
+#define kAboutSection               0
+#define kLicenceInformationSection  1
 
 #define kConfigCellIdentifier   @"ConfigCell"
 
@@ -54,7 +54,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

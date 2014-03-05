@@ -53,5 +53,6 @@ typedef NS_ENUM(NSUInteger, CRRoastDataSourceChangeType)
 @end
 
 extern NSString *const CRRoastDataSourceDidFailSavingNotification;
+extern NSString *const CRRoastDataSourceDidFailInitializationNotification;
 
 extern NSString *const CRRoastDataSourceDidFailSavingErrorKey;

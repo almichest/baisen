@@ -367,7 +367,7 @@
             return nil;
         }
         [message appendFormat:@"%@",bean.area];
-        [message appendFormat:@"%@g%@",@(bean.quantity), NSLocalizedString(@"And", nil)];
+        [message appendFormat:@" %@g%@",@(bean.quantity), NSLocalizedString(@"And", nil)];
     }
     message = [message substringToIndex:message.length - NSLocalizedString(@"And", nil).length].mutableCopy;
     [message appendString:NSLocalizedString(@"SharingMessageFoot", nil)];

@@ -27,7 +27,7 @@
 {
     [super viewDidLoad];
     ALAssetRepresentation *assetRepresentation = [self.selectedAsset defaultRepresentation];
-    self.selectedPhotoImageView.image = [UIImage imageWithCGImage:[assetRepresentation fullScreenImage] scale:[assetRepresentation scale] orientation:ALAssetOrientationUp];
+    self.selectedPhotoImageView.image = [UIImage imageWithCGImage:[assetRepresentation fullScreenImage] scale:[assetRepresentation scale] orientation:UIImageOrientationUp];
        UIBarButtonItem *submitButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"OK" style:UIBarButtonItemStyleBordered target:self action:@selector(didPushSubmitButton:)];
     self.navigationItem.rightBarButtonItem = submitButtonItem;
 }

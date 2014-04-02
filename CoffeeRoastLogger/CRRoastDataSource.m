@@ -402,5 +402,6 @@ static CRRoastInformation *roastInformationFromRoastItem(CRRoast *roastItem)
 }
 
 NSString *const CRRoastDataSourceDidFailSavingNotification = @"CRRoastDataSourceDidFailSavingNotification";
+NSString *const CRRoastDataSourceDidFailInitializationNotification = @"CRRoastDataSourceDidFailInitializationNotification";
 
 NSString *const CRRoastDataSourceDidFailSavingErrorKey = @"Error";

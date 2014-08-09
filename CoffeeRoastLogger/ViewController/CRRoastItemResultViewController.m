@@ -29,13 +29,17 @@
 
 @end
 
-#define kDateSection            0
-#define kImageSection           1
-#define kBeanSection            2
-#define kHeatingSection         3
-#define kOtherConditionSection  4
-#define kResultSection          5
-#define kMemoSection            6
+typedef NS_ENUM(NSUInteger, TableViewSection)
+{
+    TableViewSectionDate            = 0,
+    TableViewSectionImage           = 1,
+    TableViewSectionBean            = 2,
+    TableViewSectionHeating         = 3,
+    TableViewSectionOtherCondition  = 4,
+    TableViewSectionResult          = 5,
+    TableViewSectionMemo            = 6,
+    
+};
 
 #define kResultItemCellIdentifier           @"ResultItemCell"
 #define kResultItemHeaderCellIdentifier     @"ResultItemHeaderCell"
@@ -109,19 +113,19 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     switch (section) {
-        case kDateSection :
+        case TableViewSectionDate :
             return 1;
-        case kImageSection :
+        case TableViewSectionImage :
             return 1;
-        case kBeanSection :
+        case TableViewSectionBean :
             return self.roast.beans.count + 1;
-        case kHeatingSection :
+        case TableViewSectionHeating :
             return self.roast.heating.count + 1;
-        case kOtherConditionSection :
+        case TableViewSectionOtherCondition :
             return 2;
-        case kResultSection :
+        case TableViewSectionResult :
             return 1;
-        case kMemoSection :
+        case TableViewSectionMemo :
             return 1;
         default :
             return 0;
@@ -131,27 +135,27 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     switch (indexPath.section) {
-        case kDateSection :
+        case TableViewSectionDate :
             return 44;
-        case kImageSection :
+        case TableViewSectionImage :
             return self.image.size.height + 8;
-        case kBeanSection :
+        case TableViewSectionBean :
             if(indexPath.row == 0) {
                 return 20;
             } else {
                 return 44;
             }
-        case kHeatingSection :
+        case TableViewSectionHeating :
             if(indexPath.row == 0) {
                 return 20;
             } else {
                 return 44;
             }
-        case kOtherConditionSection :
+        case TableViewSectionOtherCondition :
             return 44;
-        case kResultSection :
+        case TableViewSectionResult :
             return 44;
-        case kMemoSection :
+        case TableViewSectionMemo :
             return [self memoLabelFrame].size.height + 30;
         default :
             return 0;
@@ -161,19 +165,19 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     switch (section) {
-        case kDateSection :
+        case TableViewSectionDate :
             return NSLocalizedString(@"DateLabel", nil);
-        case kImageSection :
+        case TableViewSectionImage :
             return NSLocalizedString(@"PhotoLabel", nil);
-        case kBeanSection :
+        case TableViewSectionBean :
             return NSLocalizedString(@"BeansLabel", nil);
-        case kHeatingSection :
+        case TableViewSectionHeating :
             return NSLocalizedString(@"HeatingsLabel", nil);
-        case kOtherConditionSection :
+        case TableViewSectionOtherCondition :
             return NSLocalizedString(@"OtherConditionLabel", nil);
-        case kResultSection :
+        case TableViewSectionResult :
             return NSLocalizedString(@"ResultLabel", nil);
-        case kMemoSection :
+        case TableViewSectionMemo :
             return NSLocalizedString(@"MemoLabel", nil);
         default :
             return @"";
@@ -184,13 +188,13 @@
 {
     UITableViewCell *cell;
        switch (indexPath.section) {
-           case kDateSection : {
+           case TableViewSectionDate : {
                cell = [tableView dequeueReusableCellWithIdentifier:@"DefaultCell"forIndexPath:indexPath];
                NSDate *date = [NSDate dateWithTimeIntervalSince1970:self.roast.environment.date];
                cell.textLabel.text = dateStringFromNSDate(date);
                break;
            }
-           case kImageSection : {
+           case TableViewSectionImage : {
                cell = [[UITableViewCell alloc] init];
                cell.frame = CGRectMake(0, 0, 320, self.image.size.height);
                UIImageView *imageView = [[UIImageView alloc] initWithFrame:cell.frame];
@@ -199,7 +203,7 @@
                [cell addSubview:imageView];
                break;
            }
-           case kBeanSection : {
+           case TableViewSectionBean : {
                if(indexPath.row == 0) {
                    cell = [tableView dequeueReusableCellWithIdentifier:kResultItemHeaderCellIdentifier];
                    CRResultItemHeaderCell *headerCell = (CRResultItemHeaderCell *)cell;
@@ -215,7 +219,7 @@
                }
                break;
            }
-           case kHeatingSection : {
+           case TableViewSectionHeating : {
                if(indexPath.row == 0) {
                    cell = [tableView dequeueReusableCellWithIdentifier:kResultItemHeaderCellIdentifier];
                    CRResultItemHeaderCell *headerCell = (CRResultItemHeaderCell *)cell;
@@ -238,7 +242,7 @@
                }
                break;
            }
-           case kOtherConditionSection : {
+           case TableViewSectionOtherCondition : {
                cell = [tableView dequeueReusableCellWithIdentifier:kResultItemCellIdentifier];
                CRResultItemCell *itemCell = (CRResultItemCell *)cell;
                itemCell.separetorView.hidden = NO;
@@ -252,7 +256,7 @@
                }
                break;
            }
-           case kResultSection : {
+           case TableViewSectionResult : {
                cell = [tableView dequeueReusableCellWithIdentifier:kResultItemCellIdentifier];
                CRResultItemCell *itemCell = (CRResultItemCell *)cell;
                itemCell.separetorView.hidden = NO;
@@ -266,7 +270,7 @@
                }
                break;
            }
-           case kMemoSection : {
+           case TableViewSectionMemo : {
                cell = [tableView dequeueReusableCellWithIdentifier:kResultMemoCellIdentifier];
                CRResultMemoCell *memoCell = (CRResultMemoCell *)cell;
                memoCell.memoLabel.text = self.roast.result;

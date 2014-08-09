@@ -387,9 +387,8 @@
         itemCell.secondItemFieldButton.userInteractionEnabled = NO;
         itemCell.secondItemIndicator.hidden = YES;
         
-        NSString *quantityString = information.quantity > 0 ? [NSString stringWithFormat:@"%d", information.quantity] : @"";
+        NSString *quantityString = information.quantity > 0 ? [NSString stringWithFormat:@"%@", @(information.quantity)] : @"";
         itemCell.secondItemField.text = quantityString;
-        
         _beanButtonsArray[indexPath.row] = itemCell.button;
         itemCell.button.indexPath = indexPath;
         
@@ -536,7 +535,7 @@
         conditionCell.valueTextField.tag = kScoreFieldTag;
         conditionCell.valueTextField.delegate = self;
         if(_roastInformation.score != INT16_MIN) {
-            conditionCell.valueTextField.text = [NSString stringWithFormat:@"%d", _roastInformation.score];
+            conditionCell.valueTextField.text = [NSString stringWithFormat:@"%@", @(_roastInformation.score)];
         }
         conditionCell.indicatorImage.hidden = YES;
         
@@ -882,7 +881,6 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    MyLog(@"tag = %d", textField.tag);
     if(textField.tag == kScoreFieldTag) {
         NSInteger score = textField.text.integerValue;
         if(score < -100 || score > 100) {

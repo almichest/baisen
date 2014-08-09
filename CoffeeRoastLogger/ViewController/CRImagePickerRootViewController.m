@@ -140,8 +140,6 @@
     
     if ([[segue identifier] isEqualToString:@"showContents"]) {
         NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
-        MyLog(@"section - %d", selectedIndexPath.section);
-        MyLog(@"row - %d", selectedIndexPath.row);
         if (self.groups.count > (NSUInteger)selectedIndexPath.row) {
             
             // hand off the asset group (i.e. album) to the next view controller

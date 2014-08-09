@@ -33,6 +33,7 @@ typedef NS_ENUM(NSUInteger, CRRoastDataSourceChangeType)
 
 - (NSUInteger)countOfRoastInformation;
 - (CRRoast *)roastInformationAtIndexPath:(NSIndexPath *)indexPath;
+- (NSUInteger)indexOfRoastInformation:(CRRoast*)roast;
 
 - (void)save;
 

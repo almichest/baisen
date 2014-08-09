@@ -106,6 +106,11 @@ static CRRoastInformation *roastInformationFromRoastItem(CRRoast *roastItem);
     return [self.fetchedResultsController objectAtIndexPath:indexPath];
 }
 
+- (NSUInteger)indexOfRoastInformation:(CRRoast*)roast
+{
+    return [self.fetchedResultsController indexPathForObject:roast].row;
+}
+
 
 #pragma mark - add
 - (CRRoast *)addRoastInformation:(CRRoastInformation *)information

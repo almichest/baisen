@@ -21,11 +21,16 @@
 #import "CRConfiguration.h"
 #import "CRSocialUtility.h"
 
-#import <Social/Social.h>
+#import "CRRoastManager.h"
+#import "CRRoastDataSource.h"
 
+#import <Social/Social.h>
 @interface CRRoastItemResultViewController ()<UIActionSheetDelegate>
 
 @property(nonatomic, readonly) UIImage *image;
+
+@property CRRoastManager *manager;
+@property CRRoastDataSource *dataSource;
 
 @end
 
@@ -66,15 +71,7 @@ typedef NS_ENUM(NSUInteger, TableViewSection)
     [self.tableView registerNib:[UINib nibWithNibName:@"ResultItemHeaderCell" bundle:nil] forCellReuseIdentifier:kResultItemHeaderCellIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"ResultMemoCell" bundle:nil] forCellReuseIdentifier:kResultMemoCellIdentifier];
     
-//    UIImage *shareImage = [UIImage imageNamed:@"share_button"];
-//    UIImageView *shareImageView = [[UIImageView alloc] initWithImage:shareImage];
-//    shareImageView.frame = CGRectMake(0, 0, 30, 30);
-//    shareImageView.backgroundColor = [UIColor clearColor];
-//    shareImageView.userInteractionEnabled = YES;
-//    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:shareImageView];
-//    item.target = self;
-//    item.action = @selector(hoge);
-//    item.enabled = YES;
+    self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     
     UIImage *shareImage = [UIImage imageNamed:@"share_button"];
     UIImage *scaledImage = [UIImage imageWithCGImage:shareImage.CGImage scale:3.0f orientation:shareImage.imageOrientation];
@@ -83,6 +80,52 @@ typedef NS_ENUM(NSUInteger, TableViewSection)
     
     self.navigationItem.rightBarButtonItems = @[self.navigationItem.rightBarButtonItem, shareItem];
     
+    UISwipeGestureRecognizer *leftGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeFromRightToLeft:)];
+    leftGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
+    [self.view addGestureRecognizer:leftGestureRecognizer];
+    
+    UISwipeGestureRecognizer *rightGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeFromLeftToRight:)];
+    rightGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
+    [self.view addGestureRecognizer:rightGestureRecognizer];
+    
+}
+
+- (void)swipeFromLeftToRight:(id)sender
+{
+    NSUInteger nextIndex;
+    NSUInteger currentIndex = [self indexOfCurrentItem];
+    if(currentIndex == 0) {
+        return;
+    } else {
+        nextIndex = currentIndex - 1;
+    }
+    [self showRoastItemAtIndex:nextIndex];
+}
+
+- (void)swipeFromRightToLeft:(id)sender
+{
+    NSUInteger nextIndex;
+    NSUInteger currentIndex = [self indexOfCurrentItem];
+    if(currentIndex == self.dataSource.countOfRoastInformation - 1) {
+        return;
+    } else {
+        nextIndex = currentIndex + 1;
+    }
+    
+    [self showRoastItemAtIndex:nextIndex];
+}
+
+- (void)showRoastItemAtIndex:(NSUInteger)index
+{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+    CRRoast *nextRoast = [self.dataSource roastInformationAtIndexPath:indexPath];
+    self.roast = nextRoast;
+    [self.tableView reloadData];
+}
+
+- (NSUInteger)indexOfCurrentItem
+{
+    return  [self.dataSource indexOfRoastInformation:self.roast];
 }
 
 - (void)shareRoastInformation
@@ -388,6 +431,17 @@ typedef NS_ENUM(NSUInteger, TableViewSection)
 {
     UIAlertView *shareErrorAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"CannotShare", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
     [shareErrorAlertView show];
+}
+
+#pragma mark - getter
+- (CRRoastManager *)manager
+{
+    return [CRRoastManager sharedManager];
+}
+
+- (CRRoastDataSource *)dataSource
+{
+    return self.manager.dataSource;
 }
 
 @end

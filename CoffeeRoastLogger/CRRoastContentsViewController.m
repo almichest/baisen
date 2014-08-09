@@ -12,6 +12,7 @@
 #import "CRRoastDataSource.h"
 #import "CRRoast.h"
 #import "CREnvironment.h"
+#import "CRBean.h"
 #import "CRRoastItemCell.h"
 
 #import "CRUtility.h"
@@ -25,6 +26,7 @@
 @property(nonatomic, readonly) CRRoastDataSource *dataSource;
 @end
 
+static NSString *beansNamesStringFromBeans(NSSet *beans);
 @implementation CRRoastContentsViewController
 
 - (void)awakeFromNib
@@ -77,6 +79,7 @@
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:interval];
     cell.numberLabel.text = [NSString stringWithFormat:@"%u", (unsigned int)(indexPath.row + 1)];
     cell.dateLabel.text = dateStringFromNSDate(date);
+    cell.beansNameLabel.text = beansNamesStringFromBeans(roast.beans);
     if(roast.imageData) {
         cell.photoImageView.image = [UIImage imageWithData:roast.imageData];
     } else {
@@ -143,3 +146,18 @@
 }
 
 @end
+
+static NSString *beansNamesStringFromBeans(NSSet *beans)
+{
+    NSMutableString *beanNames = [[NSMutableString alloc] init];
+    NSArray *beansArray = beans.allObjects;
+    
+    for(CRBean *bean in beansArray) {
+        [beanNames appendString:bean.area];
+        if(bean != beansArray.lastObject) {
+            [beanNames appendString:@", "];
+        }
+    }
+    
+    return beanNames.copy;
+}

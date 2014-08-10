@@ -19,7 +19,6 @@
 
 - (NSString *)temperatureDescription
 {
-    MyLog(@"temp - %f", self.temperature);
     if(self.temperature == kHeatingTemperatureDefaultValue) {
         return NSLocalizedString(@"NotInput", nil);
     } else {

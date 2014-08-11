@@ -88,6 +88,32 @@ typedef NS_ENUM(NSUInteger, TableViewSection)
     rightGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
     [self.view addGestureRecognizer:rightGestureRecognizer];
     
+    self.view.backgroundColor = [UIColor redColor];
+    
+}
+
+- (void)swipeFromRightToLeft:(id)sender
+{
+    NSUInteger nextIndex;
+    NSUInteger currentIndex = [self indexOfCurrentItem];
+    if(currentIndex == self.dataSource.countOfRoastInformation - 1) {
+        return;
+    } else {
+        nextIndex = currentIndex + 1;
+    }
+    
+    UIImage *currentImage = [self currentViewImage];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:currentImage];
+    [self.view addSubview:imageView];
+    [self showRoastItemAtIndex:nextIndex];
+    self.view.frame = CGRectOffset(self.view.frame, self.view.frame.size.width, 0);
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        self.view.frame = CGRectOffset(self.view.frame, -self.view.frame.size.width, 0);
+    } completion:^(BOOL finished) {
+        [imageView removeFromSuperview];
+    }];
+    
 }
 
 - (void)swipeFromLeftToRight:(id)sender
@@ -102,25 +128,24 @@ typedef NS_ENUM(NSUInteger, TableViewSection)
     [self showRoastItemAtIndex:nextIndex];
 }
 
-- (void)swipeFromRightToLeft:(id)sender
-{
-    NSUInteger nextIndex;
-    NSUInteger currentIndex = [self indexOfCurrentItem];
-    if(currentIndex == self.dataSource.countOfRoastInformation - 1) {
-        return;
-    } else {
-        nextIndex = currentIndex + 1;
-    }
-    
-    [self showRoastItemAtIndex:nextIndex];
-}
-
 - (void)showRoastItemAtIndex:(NSUInteger)index
 {
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
     CRRoast *nextRoast = [self.dataSource roastInformationAtIndexPath:indexPath];
     self.roast = nextRoast;
     [self.tableView reloadData];
+}
+
+- (UIImage *)currentViewImage
+{
+    UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, self.view.opaque, 0.0);
+    [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    return image;
 }
 
 - (NSUInteger)indexOfCurrentItem

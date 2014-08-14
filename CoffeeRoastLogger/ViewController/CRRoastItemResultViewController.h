@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class CRRoast;
-@interface CRRoastItemResultViewController : UITableViewController
+@interface CRRoastItemResultViewController : UIViewController
 
 @property(nonatomic) CRRoast *roast;
 

@@ -90,7 +90,7 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <segue destination="Kdq-3Q-agF" kind="push" identifier="showItem" id="PXX-Dm-J2e"/>
+                                    <segue destination="Fx8-cI-Uva" kind="push" identifier="ShowResult" id="crD-zu-gIV"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -116,6 +116,55 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Cn-md-YlS" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="459" y="64"/>
+        </scene>
+        <!--Roast Item Result View Controller-->
+        <scene sceneID="nYb-Qs-Tif">
+            <objects>
+                <viewController id="Fx8-cI-Uva" customClass="CRRoastItemResultViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="nrw-t6-HVE"/>
+                        <viewControllerLayoutGuide type="bottom" id="jEC-p4-HXn"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="LSV-OR-noP">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="dYq-o6-R1l">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="Fx8-cI-Uva" id="Zcb-bv-fp5"/>
+                                    <outlet property="delegate" destination="Fx8-cI-Uva" id="7Tp-jj-d5a"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="dYq-o6-R1l" secondAttribute="trailing" id="8D3-aj-Rs5"/>
+                            <constraint firstItem="jEC-p4-HXn" firstAttribute="top" secondItem="dYq-o6-R1l" secondAttribute="bottom" id="FZJ-UX-tYj"/>
+                            <constraint firstItem="dYq-o6-R1l" firstAttribute="top" secondItem="LSV-OR-noP" secondAttribute="top" id="hPt-2A-Xj2"/>
+                            <constraint firstItem="dYq-o6-R1l" firstAttribute="leading" secondItem="LSV-OR-noP" secondAttribute="leading" id="pGW-Tk-Wfg"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems>
+                        <barButtonItem title="Item" id="FId-9d-kTd"/>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" id="Bdy-46-tAm">
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="IMo-dR-zXg">
+                            <connections>
+                                <segue destination="Ur6-EN-CrB" kind="modal" identifier="EditItem" id="7Ux-9B-a8a"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="tableView" destination="dYq-o6-R1l" id="iYf-0V-3o5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OYb-tJ-5rF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="459" y="843"/>
         </scene>
         <!--Config Root View Controller - Config-->
         <scene sceneID="sHL-Fm-eM9">
@@ -239,41 +288,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nIf-fY-5rX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-472" y="954"/>
-        </scene>
-        <!--Roast Item Result View Controller-->
-        <scene sceneID="OIW-jn-10g">
-            <objects>
-                <tableViewController id="Kdq-3Q-agF" customClass="CRRoastItemResultViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="8hN-25-PGt">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DefaultCell" id="3V2-2K-7QN">
-                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3V2-2K-7QN" id="tdL-kh-NRg">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="Kdq-3Q-agF" id="K3X-2e-nI1"/>
-                            <outlet property="delegate" destination="Kdq-3Q-agF" id="y9i-cp-PWD"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="r9y-14-sx2">
-                        <barButtonItem key="rightBarButtonItem" title="Edit" id="Px7-HT-TqQ">
-                            <connections>
-                                <segue destination="Ur6-EN-CrB" kind="modal" identifier="EditItem" id="dhu-b4-fhE"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cGk-fX-gwX" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="446" y="868"/>
         </scene>
         <!--Roast Item Editing View Controller - New Item-->
         <scene sceneID="IjD-Wk-V3Y">
@@ -530,6 +544,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="dhu-b4-fhE"/>
+        <segue reference="7Ux-9B-a8a"/>
     </inferredMetricsTieBreakers>
 </document>

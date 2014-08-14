@@ -16,6 +16,7 @@
 #import "CRResultItemCell.h"
 #import "CRResultItemHeaderCell.h"
 #import "CRResultMemoCell.h"
+#import "CREmptyCell.h"
 
 #import "CRUtility.h"
 #import "CRConfiguration.h"
@@ -26,6 +27,7 @@
 
 #import <Social/Social.h>
 @interface CRRoastItemResultViewController ()<UIActionSheetDelegate>
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property(nonatomic, readonly) UIImage *image;
 
@@ -49,19 +51,11 @@ typedef NS_ENUM(NSUInteger, TableViewSection)
 #define kResultItemCellIdentifier           @"ResultItemCell"
 #define kResultItemHeaderCellIdentifier     @"ResultItemHeaderCell"
 #define kResultMemoCellIdentifier           @"ResultMemoCell"
+#define kResultEmptyCellIdentifier          @"EmptyCell"
 
 @implementation CRRoastItemResultViewController
 {
     CGRect _memoFrame;
-}
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
 }
 
 - (void)viewDidLoad
@@ -70,6 +64,7 @@ typedef NS_ENUM(NSUInteger, TableViewSection)
     [self.tableView registerNib:[UINib nibWithNibName:@"ResultItemCell" bundle:nil] forCellReuseIdentifier:kResultItemCellIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"ResultItemHeaderCell" bundle:nil] forCellReuseIdentifier:kResultItemHeaderCellIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"ResultMemoCell" bundle:nil] forCellReuseIdentifier:kResultMemoCellIdentifier];
+    [self.tableView registerNib:[UINib nibWithNibName:@"EmptyCell" bundle:nil] forCellReuseIdentifier:kResultEmptyCellIdentifier];
     
     self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     
@@ -87,8 +82,6 @@ typedef NS_ENUM(NSUInteger, TableViewSection)
     UISwipeGestureRecognizer *rightGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeFromLeftToRight:)];
     rightGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
     [self.view addGestureRecognizer:rightGestureRecognizer];
-    
-    self.view.backgroundColor = [UIColor redColor];
     
 }
 
@@ -257,7 +250,7 @@ typedef NS_ENUM(NSUInteger, TableViewSection)
     UITableViewCell *cell;
        switch (indexPath.section) {
            case TableViewSectionDate : {
-               cell = [tableView dequeueReusableCellWithIdentifier:@"DefaultCell"forIndexPath:indexPath];
+               cell = [tableView dequeueReusableCellWithIdentifier:kResultEmptyCellIdentifier forIndexPath:indexPath];
                NSDate *date = [NSDate dateWithTimeIntervalSince1970:self.roast.environment.date];
                cell.textLabel.text = dateStringFromNSDate(date);
                break;

@@ -19,7 +19,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 #define kRoastItemCellIdentifier    @"RoastItemCell"
-#define kShowItemSegueIdentifier    @"showItem"
+#define kShowItemSegueIdentifier    @"ShowResult"
 @interface CRRoastContentsViewController ()<CRRoastDataSourceDelegate>
 
 @property(nonatomic, readonly) CRRoastManager *manager;

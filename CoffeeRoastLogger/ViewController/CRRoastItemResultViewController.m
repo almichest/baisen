@@ -30,9 +30,11 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property(nonatomic, readonly) UIImage *image;
+@property(weak, nonatomic) IBOutlet UILabel *nextItemLabel;
+@property(weak, nonatomic) IBOutlet UILabel *previousItemLabel;
 
-@property CRRoastManager *manager;
-@property CRRoastDataSource *dataSource;
+@property(nonatomic, readonly) CRRoastManager *manager;
+@property(nonatomic, readonly) CRRoastDataSource *dataSource;
 
 @end
 
@@ -46,6 +48,13 @@ typedef NS_ENUM(NSUInteger, TableViewSection)
     TableViewSectionResult          = 5,
     TableViewSectionMemo            = 6,
     
+};
+
+typedef NS_ENUM(NSUInteger, ItemIndexState)
+{
+    ItemIndexStateFirst,
+    ItemIndexStateNormal,
+    ItemIndexStateLast,
 };
 
 #define kResultItemCellIdentifier           @"ResultItemCell"
@@ -66,8 +75,6 @@ typedef NS_ENUM(NSUInteger, TableViewSection)
     [self.tableView registerNib:[UINib nibWithNibName:@"ResultMemoCell" bundle:nil] forCellReuseIdentifier:kResultMemoCellIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"EmptyCell" bundle:nil] forCellReuseIdentifier:kResultEmptyCellIdentifier];
     
-    self.navigationController.interactivePopGestureRecognizer.enabled = NO;
-    
     UIImage *shareImage = [UIImage imageNamed:@"share_button"];
     UIImage *scaledImage = [UIImage imageWithCGImage:shareImage.CGImage scale:3.0f orientation:shareImage.imageOrientation];
     
@@ -75,17 +82,49 @@ typedef NS_ENUM(NSUInteger, TableViewSection)
     
     self.navigationItem.rightBarButtonItems = @[self.navigationItem.rightBarButtonItem, shareItem];
     
-    UISwipeGestureRecognizer *leftGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeFromRightToLeft:)];
-    leftGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
-    [self.view addGestureRecognizer:leftGestureRecognizer];
+    UIGestureRecognizer *nextRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showNextItem:)];
+    [self.nextItemLabel addGestureRecognizer:nextRecognizer];
     
-    UISwipeGestureRecognizer *rightGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeFromLeftToRight:)];
-    rightGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
-    [self.view addGestureRecognizer:rightGestureRecognizer];
+    UIGestureRecognizer *previousRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showPreviousItem:)];
+    [self.previousItemLabel addGestureRecognizer:previousRecognizer];
     
+    [self updateLabelState];
 }
 
-- (void)swipeFromRightToLeft:(id)sender
+- (void)updateLabelState
+{
+    ItemIndexState state = ItemIndexStateNormal;
+    
+    NSUInteger currentIndex = [self indexOfCurrentItem];
+    if(currentIndex == 0) {
+        state = ItemIndexStateFirst;
+    } else if(currentIndex == self.dataSource.countOfRoastInformation - 1) {
+        state = ItemIndexStateLast;
+    }
+    
+    switch (state) {
+        case ItemIndexStateFirst:
+            self.nextItemLabel.hidden = NO;
+            self.nextItemLabel.userInteractionEnabled = YES;
+            self.previousItemLabel.hidden = YES;
+            self.previousItemLabel.userInteractionEnabled = NO;
+            return;
+        case ItemIndexStateLast :
+            self.nextItemLabel.hidden = YES;
+            self.nextItemLabel.userInteractionEnabled = NO;
+            self.previousItemLabel.hidden = NO;
+            self.previousItemLabel.userInteractionEnabled = YES;
+            return;
+        case ItemIndexStateNormal :
+        default :
+            self.nextItemLabel.hidden = NO;
+            self.nextItemLabel.userInteractionEnabled = YES;
+            self.previousItemLabel.hidden = NO;
+            self.previousItemLabel.userInteractionEnabled = YES;
+    }
+}
+
+- (void)showNextItem:(id)sender
 {
     NSUInteger nextIndex;
     NSUInteger currentIndex = [self indexOfCurrentItem];
@@ -95,21 +134,10 @@ typedef NS_ENUM(NSUInteger, TableViewSection)
         nextIndex = currentIndex + 1;
     }
     
-    UIImage *currentImage = [self currentViewImage];
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:currentImage];
-    [self.view addSubview:imageView];
     [self showRoastItemAtIndex:nextIndex];
-    self.view.frame = CGRectOffset(self.view.frame, self.view.frame.size.width, 0);
-    
-    [UIView animateWithDuration:0.5 animations:^{
-        self.view.frame = CGRectOffset(self.view.frame, -self.view.frame.size.width, 0);
-    } completion:^(BOOL finished) {
-        [imageView removeFromSuperview];
-    }];
-    
 }
 
-- (void)swipeFromLeftToRight:(id)sender
+- (void)showPreviousItem:(id)sender
 {
     NSUInteger nextIndex;
     NSUInteger currentIndex = [self indexOfCurrentItem];
@@ -127,6 +155,7 @@ typedef NS_ENUM(NSUInteger, TableViewSection)
     CRRoast *nextRoast = [self.dataSource roastInformationAtIndexPath:indexPath];
     self.roast = nextRoast;
     [self.tableView reloadData];
+    [self updateLabelState];
 }
 
 - (UIImage *)currentViewImage
@@ -156,6 +185,14 @@ typedef NS_ENUM(NSUInteger, TableViewSection)
 {
     [super viewWillAppear:animated];
     [self.tableView reloadData];
+    
+    self.nextItemLabel.textColor = RGB(19, 85, 250);
+    self.previousItemLabel.textColor = RGB(19, 85, 250);
+}
+
+- (void)refreshButtonsState
+{
+    
 }
 
 - (void)didReceiveMemoryWarning

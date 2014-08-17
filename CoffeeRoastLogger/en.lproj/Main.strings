@@ -41,10 +41,6 @@
 
 "zLn-wh-0ZX.title" = "About Baisen";
 
-"BNV-Vh-31e.title" = "Previous";
+"BNV-Vh-31e.normalTitle" = "Previous";
 
-"3BW-z2-M2t.title" = "Next";
-
-"BNV-Vh-31e.text" = "Previous";
-
-"3BW-z2-M2t.text" = "Next";
+"3BW-z2-M2t.normalTitle" = "Next";

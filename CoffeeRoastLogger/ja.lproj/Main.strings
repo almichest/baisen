@@ -41,10 +41,6 @@
 
 "zLn-wh-0ZX.title" = "Baisenについて";
 
-"BNV-Vh-31e.title" = "前";
+"BNV-Vh-31e.normalTitle" = "前";
 
-"3BW-z2-M2t.title" = "次";
-
-"BNV-Vh-31e.text" = "前";
-
-"3BW-z2-M2t.text" = "次";
+"3BW-z2-M2t.normalTitle" = "次";

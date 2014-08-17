@@ -28,10 +28,10 @@
 #import <Social/Social.h>
 @interface CRRoastItemResultViewController ()<UIActionSheetDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIButton *previousButton;
+@property (weak, nonatomic) IBOutlet UIButton *nextButton;
 
 @property(nonatomic, readonly) UIImage *image;
-@property(weak, nonatomic) IBOutlet UILabel *nextItemLabel;
-@property(weak, nonatomic) IBOutlet UILabel *previousItemLabel;
 
 @property(nonatomic, readonly) CRRoastManager *manager;
 @property(nonatomic, readonly) CRRoastDataSource *dataSource;
@@ -52,12 +52,14 @@ typedef NS_ENUM(NSUInteger, TableViewSection)
 
 typedef NS_ENUM(NSInteger, MovingLabelTag)
 {
+    MovingLabelTagMain     = 500,
     MovingLabelTagPrevious = 501,
     MovingLabelTagNext     = 502,
 };
 
 typedef NS_ENUM(NSUInteger, ItemIndexState)
 {
+    ItemIndexStateOnlyOne,
     ItemIndexStateFirst,
     ItemIndexStateNormal,
     ItemIndexStateLast,
@@ -88,8 +90,8 @@ typedef NS_ENUM(NSUInteger, ItemIndexState)
     
     self.navigationItem.rightBarButtonItems = @[self.navigationItem.rightBarButtonItem, shareItem];
     
-    self.nextItemLabel.tag = MovingLabelTagNext;
-    self.previousItemLabel.tag = MovingLabelTagPrevious;
+    [self.nextButton addTarget:self action:@selector(showNextItem:) forControlEvents:UIControlEventTouchUpInside];
+    [self.previousButton addTarget:self action:@selector(showPreviousItem:) forControlEvents:UIControlEventTouchUpInside];
     
     [self updateLabelState];
 }
@@ -99,31 +101,39 @@ typedef NS_ENUM(NSUInteger, ItemIndexState)
     ItemIndexState state = ItemIndexStateNormal;
     
     NSUInteger currentIndex = [self indexOfCurrentItem];
-    if(currentIndex == 0) {
+    if(self.dataSource.countOfRoastInformation == 1) {
+        state = ItemIndexStateOnlyOne;
+    } else if(currentIndex == 0) {
         state = ItemIndexStateFirst;
     } else if(currentIndex == self.dataSource.countOfRoastInformation - 1) {
         state = ItemIndexStateLast;
     }
     
     switch (state) {
+        case ItemIndexStateOnlyOne :
+            self.nextButton.hidden = YES;
+            self.nextButton.userInteractionEnabled = NO;
+            self.previousButton.hidden = YES;
+            self.previousButton.userInteractionEnabled = NO;
+            return;
         case ItemIndexStateFirst:
-            self.nextItemLabel.hidden = NO;
-            self.nextItemLabel.userInteractionEnabled = YES;
-            self.previousItemLabel.hidden = YES;
-            self.previousItemLabel.userInteractionEnabled = NO;
+            self.nextButton.hidden = NO;
+            self.nextButton.userInteractionEnabled = YES;
+            self.previousButton.hidden = YES;
+            self.previousButton.userInteractionEnabled = NO;
             return;
         case ItemIndexStateLast :
-            self.nextItemLabel.hidden = YES;
-            self.nextItemLabel.userInteractionEnabled = NO;
-            self.previousItemLabel.hidden = NO;
-            self.previousItemLabel.userInteractionEnabled = YES;
+            self.nextButton.hidden = YES;
+            self.nextButton.userInteractionEnabled = NO;
+            self.previousButton.hidden = NO;
+            self.previousButton.userInteractionEnabled = YES;
             return;
         case ItemIndexStateNormal :
         default :
-            self.nextItemLabel.hidden = NO;
-            self.nextItemLabel.userInteractionEnabled = YES;
-            self.previousItemLabel.hidden = NO;
-            self.previousItemLabel.userInteractionEnabled = YES;
+            self.nextButton.hidden = NO;
+            self.nextButton.userInteractionEnabled = YES;
+            self.previousButton.hidden = NO;
+            self.previousButton.userInteractionEnabled = YES;
     }
 }
 
@@ -154,9 +164,6 @@ typedef NS_ENUM(NSUInteger, ItemIndexState)
 {
     [super viewWillAppear:animated];
     [self.tableView reloadData];
-    
-    self.nextItemLabel.textColor = RGB(24, 109, 250);
-    self.previousItemLabel.textColor = RGB(24, 109, 250);
 }
 
 - (void)refreshButtonsState
@@ -468,83 +475,9 @@ typedef NS_ENUM(NSUInteger, ItemIndexState)
     return self.manager.dataSource;
 }
 
-#pragma mark - UIEvent
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    UIView *touchedView = ((UITouch *)event.allTouches.anyObject).view;
-    switch ((MovingLabelTag)touchedView.tag) {
-        case MovingLabelTagNext :
-        case MovingLabelTagPrevious : {
-            [UIView animateWithDuration:0.2 animations:^{
-                touchedView.alpha = 0.5;
-            }];
-            break;
-        }
-        default:
-            return;
-    }
-}
 
-- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    MyLog(@"Cancelled");
-    UIView *touchedView = ((UITouch *)event.allTouches.anyObject).view;
-    switch ((MovingLabelTag)touchedView.tag) {
-        case MovingLabelTagNext :
-        case MovingLabelTagPrevious :
-            break;
-        default:
-            return;
-    }
-    [UIView animateWithDuration:0.2 animations:^{
-        touchedView.alpha = 1.0;
-    }];
-}
-
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    MyLog(@"Moved");
-}
-
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    MyLog(@"Ended");
-    UITouch *touch = event.allTouches.anyObject;
-    UIView *touchedView = touch.view;
-    switch ((MovingLabelTag)touchedView.tag) {
-        case MovingLabelTagNext : {
-            [UIView animateWithDuration:0.2 animations:^{
-                touchedView.alpha = 1.0;
-                self.tableView.alpha = 0;
-            } completion:^(BOOL finished) {
-                [UIView animateWithDuration:0.2 animations:^{
-                    [self showNextItem];
-                    [self updateLabelState];
-                    self.tableView.alpha = 1;
-                }];
-            }];
-            break;
-        }
-        case MovingLabelTagPrevious : {
-            [UIView animateWithDuration:0.2 animations:^{
-                touchedView.alpha = 1.0;
-                self.tableView.alpha = 0;
-            } completion:^(BOOL finished) {
-                [UIView animateWithDuration:0.2 animations:^{
-                    [self showPreviousItem];
-                    [self updateLabelState];
-                    self.tableView.alpha = 1;
-                }];
-            }];
-            break;
-            
-        }
-        default:
-            return;
-    }
-}
-
-- (void)showNextItem
+#pragma mark - Prev/Next
+- (void)showNextItem:(id)sender
 {
     NSUInteger nextIndex;
     NSUInteger currentIndex = [self indexOfCurrentItem];
@@ -557,7 +490,7 @@ typedef NS_ENUM(NSUInteger, ItemIndexState)
     [self showRoastItemAtIndex:nextIndex];
 }
 
-- (void)showPreviousItem
+- (void)showPreviousItem:(id)sender
 {
     NSUInteger nextIndex;
     NSUInteger currentIndex = [self indexOfCurrentItem];
@@ -574,7 +507,16 @@ typedef NS_ENUM(NSUInteger, ItemIndexState)
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
     CRRoast *nextRoast = [self.dataSource roastInformationAtIndexPath:indexPath];
     self.roast = nextRoast;
-    [self.tableView reloadData];
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        self.tableView.alpha = 0;
+        [self updateLabelState];
+    } completion:^(BOOL finished) {
+        [self.tableView reloadData];
+        [UIView animateWithDuration:0.2 animations:^{
+            self.tableView.alpha = 1;
+        }];
+    }];
 }
 
 @end

@@ -50,6 +50,12 @@ typedef NS_ENUM(NSUInteger, TableViewSection)
     
 };
 
+typedef NS_ENUM(NSInteger, MovingLabelTag)
+{
+    MovingLabelTagPrevious = 501,
+    MovingLabelTagNext     = 502,
+};
+
 typedef NS_ENUM(NSUInteger, ItemIndexState)
 {
     ItemIndexStateFirst,
@@ -82,11 +88,8 @@ typedef NS_ENUM(NSUInteger, ItemIndexState)
     
     self.navigationItem.rightBarButtonItems = @[self.navigationItem.rightBarButtonItem, shareItem];
     
-    UIGestureRecognizer *nextRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showNextItem:)];
-    [self.nextItemLabel addGestureRecognizer:nextRecognizer];
-    
-    UIGestureRecognizer *previousRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showPreviousItem:)];
-    [self.previousItemLabel addGestureRecognizer:previousRecognizer];
+    self.nextItemLabel.tag = MovingLabelTagNext;
+    self.previousItemLabel.tag = MovingLabelTagPrevious;
     
     [self updateLabelState];
 }
@@ -124,40 +127,6 @@ typedef NS_ENUM(NSUInteger, ItemIndexState)
     }
 }
 
-- (void)showNextItem:(id)sender
-{
-    NSUInteger nextIndex;
-    NSUInteger currentIndex = [self indexOfCurrentItem];
-    if(currentIndex == self.dataSource.countOfRoastInformation - 1) {
-        return;
-    } else {
-        nextIndex = currentIndex + 1;
-    }
-    
-    [self showRoastItemAtIndex:nextIndex];
-}
-
-- (void)showPreviousItem:(id)sender
-{
-    NSUInteger nextIndex;
-    NSUInteger currentIndex = [self indexOfCurrentItem];
-    if(currentIndex == 0) {
-        return;
-    } else {
-        nextIndex = currentIndex - 1;
-    }
-    [self showRoastItemAtIndex:nextIndex];
-}
-
-- (void)showRoastItemAtIndex:(NSUInteger)index
-{
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-    CRRoast *nextRoast = [self.dataSource roastInformationAtIndexPath:indexPath];
-    self.roast = nextRoast;
-    [self.tableView reloadData];
-    [self updateLabelState];
-}
-
 - (UIImage *)currentViewImage
 {
     UIGraphicsBeginImageContextWithOptions(self.view.bounds.size, self.view.opaque, 0.0);
@@ -186,8 +155,8 @@ typedef NS_ENUM(NSUInteger, ItemIndexState)
     [super viewWillAppear:animated];
     [self.tableView reloadData];
     
-    self.nextItemLabel.textColor = RGB(19, 85, 250);
-    self.previousItemLabel.textColor = RGB(19, 85, 250);
+    self.nextItemLabel.textColor = RGB(24, 109, 250);
+    self.previousItemLabel.textColor = RGB(24, 109, 250);
 }
 
 - (void)refreshButtonsState
@@ -497,6 +466,115 @@ typedef NS_ENUM(NSUInteger, ItemIndexState)
 - (CRRoastDataSource *)dataSource
 {
     return self.manager.dataSource;
+}
+
+#pragma mark - UIEvent
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    UIView *touchedView = ((UITouch *)event.allTouches.anyObject).view;
+    switch ((MovingLabelTag)touchedView.tag) {
+        case MovingLabelTagNext :
+        case MovingLabelTagPrevious : {
+            [UIView animateWithDuration:0.2 animations:^{
+                touchedView.alpha = 0.5;
+            }];
+            break;
+        }
+        default:
+            return;
+    }
+}
+
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    MyLog(@"Cancelled");
+    UIView *touchedView = ((UITouch *)event.allTouches.anyObject).view;
+    switch ((MovingLabelTag)touchedView.tag) {
+        case MovingLabelTagNext :
+        case MovingLabelTagPrevious :
+            break;
+        default:
+            return;
+    }
+    [UIView animateWithDuration:0.2 animations:^{
+        touchedView.alpha = 1.0;
+    }];
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    MyLog(@"Moved");
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    MyLog(@"Ended");
+    UITouch *touch = event.allTouches.anyObject;
+    UIView *touchedView = touch.view;
+    switch ((MovingLabelTag)touchedView.tag) {
+        case MovingLabelTagNext : {
+            [UIView animateWithDuration:0.2 animations:^{
+                touchedView.alpha = 1.0;
+                self.tableView.alpha = 0;
+            } completion:^(BOOL finished) {
+                [UIView animateWithDuration:0.2 animations:^{
+                    [self showNextItem];
+                    [self updateLabelState];
+                    self.tableView.alpha = 1;
+                }];
+            }];
+            break;
+        }
+        case MovingLabelTagPrevious : {
+            [UIView animateWithDuration:0.2 animations:^{
+                touchedView.alpha = 1.0;
+                self.tableView.alpha = 0;
+            } completion:^(BOOL finished) {
+                [UIView animateWithDuration:0.2 animations:^{
+                    [self showPreviousItem];
+                    [self updateLabelState];
+                    self.tableView.alpha = 1;
+                }];
+            }];
+            break;
+            
+        }
+        default:
+            return;
+    }
+}
+
+- (void)showNextItem
+{
+    NSUInteger nextIndex;
+    NSUInteger currentIndex = [self indexOfCurrentItem];
+    if(currentIndex == self.dataSource.countOfRoastInformation - 1) {
+        return;
+    } else {
+        nextIndex = currentIndex + 1;
+    }
+    
+    [self showRoastItemAtIndex:nextIndex];
+}
+
+- (void)showPreviousItem
+{
+    NSUInteger nextIndex;
+    NSUInteger currentIndex = [self indexOfCurrentItem];
+    if(currentIndex == 0) {
+        return;
+    } else {
+        nextIndex = currentIndex - 1;
+    }
+    [self showRoastItemAtIndex:nextIndex];
+}
+
+- (void)showRoastItemAtIndex:(NSUInteger)index
+{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+    CRRoast *nextRoast = [self.dataSource roastInformationAtIndexPath:indexPath];
+    self.roast = nextRoast;
+    [self.tableView reloadData];
 }
 
 @end

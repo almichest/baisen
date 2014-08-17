@@ -78,12 +78,10 @@ static CRRoastInformation *roastInformationFromRoastItem(CRRoast *roastItem);
 
 - (void)iCloudContentsWillChange:(NSNotification *)notification
 {
-    MyLog(@"iCloudContentsWillChange");
 }
 
 - (void)iCloudContentsDidChange:(NSNotification *)notification
 {
-    MyLog(@"iCloudContentsDidChange");
 }
 
 #pragma mark - migration

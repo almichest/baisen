@@ -21,17 +21,17 @@ NSString *const USMStoreURLsErrorKey = @"USMStoreURLsErrorKey";
     self = [self init_USM_WithDomain:domain code:code userInfo:dict];
     if ([domain isEqualToString:NSCocoaErrorDomain] && code == 134302) {
         if (![self handleError:self]) {
-            NSLog( @"===" );
-            NSLog( @"Detected unknown ubiquity import error." );
-            NSLog( @"Please report this at http://lhunath.github.io/UbiquityStoreManager" );
-            NSLog( @"and provide details of the conditions and whether or not you notice" );
-            NSLog( @"any sync issues afterwards.  Error userInfo:" );
+            MyLog( @"===" );
+            MyLog( @"Detected unknown ubiquity import error." );
+            MyLog( @"Please report this at http://lhunath.github.io/UbiquityStoreManager" );
+            MyLog( @"and provide details of the conditions and whether or not you notice" );
+            MyLog( @"any sync issues afterwards.  Error userInfo:" );
             for (id key in dict) {
                 id value = dict[key];
-                NSLog( @"[%@] %@ => [%@] %@", [key class], key, [value class], value );
+                MyLog( @"[%@] %@ => [%@] %@", [key class], key, [value class], value );
             }
-            NSLog( @"Error Debug Description:\n%@", [self debugDescription] );
-            NSLog( @"===" );
+            MyLog( @"Error Debug Description:\n%@", [self debugDescription] );
+            MyLog( @"===" );
         }
     }
 

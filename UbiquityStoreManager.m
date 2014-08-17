@@ -158,7 +158,7 @@ extern NSString *NSStringFromUSMCause(UbiquityStoreErrorCause cause) {
 + (void)initialize {
 
     if (![self respondsToSelector:@selector(jr_swizzleMethod:withMethod:error:)]) {
-        NSLog( @"UbiquityStoreManager: Warning: JRSwizzle not present, won't be able to detect desync issues." );
+        MyLog( @"UbiquityStoreManager: Warning: JRSwizzle not present, won't be able to detect desync issues." );
         return;
     }
 
@@ -166,7 +166,7 @@ extern NSString *NSStringFromUSMCause(UbiquityStoreErrorCause cause) {
     if (![NSError jr_swizzleMethod:@selector(initWithDomain:code:userInfo:)
                         withMethod:@selector(init_USM_WithDomain:code:userInfo:)
                              error:&error])
-        NSLog( @"UbiquityStoreManager: Warning: Failed to swizzle, won't be able to detect desync issues.  Cause: %@", error );
+        MyLog( @"UbiquityStoreManager: Warning: Failed to swizzle, won't be able to detect desync issues.  Cause: %@", error );
 }
 
 - (id)initWithDelegate:(id<UbiquityStoreManagerDelegate>)delegate {
@@ -552,7 +552,7 @@ extern NSString *NSStringFromUSMCause(UbiquityStoreErrorCause cause) {
     if ([self.delegate respondsToSelector:@selector(ubiquityStoreManager:log:)])
         [self.delegate ubiquityStoreManager:self log:message];
     else
-        NSLog( @"UbiquityStoreManager: %@", message );
+        MyLog( @"UbiquityStoreManager: %@", message );
 }
 
 - (void)logError:(NSString *)error cause:(UbiquityStoreErrorCause)cause context:(id)context {

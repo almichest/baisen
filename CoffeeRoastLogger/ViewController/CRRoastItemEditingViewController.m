@@ -184,9 +184,9 @@
         [self.tableView reloadData];
     }];
     
-    [[CRConfiguration sharedConfiguration] addObserver:self forKeyPath:@"useFahrenheitForRoom" options:NSKeyValueObservingOptionNew context:nil];
-    [[CRConfiguration sharedConfiguration] addObserver:self forKeyPath:@"useFahrenheitForRoast" options:NSKeyValueObservingOptionNew context:nil];
-    [[CRConfiguration sharedConfiguration] addObserver:self forKeyPath:@"useMinutesForHeatingLength" options:NSKeyValueObservingOptionNew context:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(roomTempratureUnitDidChange:) name:CRConfigurationRoomTempratureUnitDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(roastTempratureUnitDidChange:) name:CRConfigurationRoastTempratureUnitDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(roastLengthUnitDidChange:) name:CRConfigurationRoastLengthUnitDidChangeNotification object:nil];
     
 }
 
@@ -198,22 +198,24 @@
 
 - (void)dealloc
 {
-    [[CRConfiguration sharedConfiguration] removeObserver:self forKeyPath:@"useFahrenheitForRoom"];
-    [[CRConfiguration sharedConfiguration] removeObserver:self forKeyPath:@"useFahrenheitForRoast"];
-    [[CRConfiguration sharedConfiguration] removeObserver:self forKeyPath:@"useMinutesForHeatingLength"];
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSNotificationCenter defaultCenter] removeObserver:_observer];
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+#pragma mark - Notification
+- (void)roomTempratureUnitDidChange:(NSNotification *)notification
 {
-    if([keyPath isEqualToString:@"useFahrenheitForRoom"]) {
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:kOtherConditionSection] withRowAnimation:UITableViewRowAnimationAutomatic];
-    } else if([keyPath isEqualToString:@"useFahrenheitForRoast"]) {
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:kHeatingSection] withRowAnimation:UITableViewRowAnimationAutomatic];
-    } else if([keyPath isEqualToString:@"useMinutesForHeatingLength"]) {
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:kHeatingSection] withRowAnimation:UITableViewRowAnimationAutomatic];
-    }
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:kOtherConditionSection] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+- (void)roastTempratureUnitDidChange:(NSNotification *)notification
+{
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:kHeatingSection] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+- (void)roastLengthUnitDidChange:(NSNotification *)notification
+{
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:kHeatingSection] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 - (void)closeSoftKeyboard

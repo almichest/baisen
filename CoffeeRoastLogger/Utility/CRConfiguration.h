@@ -21,3 +21,10 @@
 @property(nonatomic) BOOL iCloudConfigured;
 
 @end
+
+extern NSString *const CRConfigurationRoomTempratureUnitDidChangeNotification;
+extern NSString *const CRConfigurationRoastTempratureUnitDidChangeNotification;
+
+extern NSString *const CRConfigurationRoastLengthUnitDidChangeNotification;
+
+extern NSString *const CRConfigurationiClundAvailabilityDidChangeNotification;

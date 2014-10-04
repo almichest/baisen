@@ -49,6 +49,7 @@ static CRConfiguration *_sharedConfiguration;
 - (void)setUseFahrenheitForRoom:(BOOL)useFahrenheitForRoom
 {
     [[NSUserDefaults standardUserDefaults] setBool:useFahrenheitForRoom forKey:kRoomFahrenheitKey];
+    [[NSNotificationCenter defaultCenter] postNotificationName:CRConfigurationRoomTempratureUnitDidChangeNotification object:nil];
 }
 
 - (BOOL)useFahrenheitForRoast
@@ -59,6 +60,7 @@ static CRConfiguration *_sharedConfiguration;
 - (void)setUseFahrenheitForRoast:(BOOL)useFahrenheitForRoast
 {
     [[NSUserDefaults standardUserDefaults] setBool:useFahrenheitForRoast forKey:kRoastFahrenheitKey];
+    [[NSNotificationCenter defaultCenter] postNotificationName:CRConfigurationRoastTempratureUnitDidChangeNotification object:nil];
 }
 
 - (BOOL)useMinutesForHeatingLength
@@ -69,6 +71,7 @@ static CRConfiguration *_sharedConfiguration;
 - (void)setUseMinutesForHeatingLength:(BOOL)useMinitesForHeatingLength
 {
     [[NSUserDefaults standardUserDefaults] setBool:useMinitesForHeatingLength forKey:kRoastUnitMinutesKey];
+    [[NSNotificationCenter defaultCenter] postNotificationName:CRConfigurationRoastLengthUnitDidChangeNotification object:nil];
 }
 
 - (BOOL)iCloudAvailable
@@ -79,6 +82,7 @@ static CRConfiguration *_sharedConfiguration;
 - (void)setICloudAvailable:(BOOL)iCloudAvailable
 {
     [[NSUserDefaults standardUserDefaults] setBool:iCloudAvailable forKey:kICloudKey];
+    [[NSNotificationCenter defaultCenter] postNotificationName:CRConfigurationiClundAvailabilityDidChangeNotification object:nil];
 }
 
 - (BOOL)iCloudConfigured
@@ -92,3 +96,10 @@ static CRConfiguration *_sharedConfiguration;
 }
 
 @end
+
+NSString *const CRConfigurationRoomTempratureUnitDidChangeNotification = @"CRConfigurationRoomTempratureUnitDidChangeNotification";
+NSString *const CRConfigurationRoastTempratureUnitDidChangeNotification = @"CRConfigurationRoastTempratureUnitDidChangeNotification";
+
+NSString *const CRConfigurationRoastLengthUnitDidChangeNotification = @"CRConfigurationRoastLengthUnitDidChangeNotification";
+
+NSString *const CRConfigurationiClundAvailabilityDidChangeNotification = @"CRConfigurationiCloudAvailabilityDidChangeNotification";
